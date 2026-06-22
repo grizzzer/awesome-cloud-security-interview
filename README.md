@@ -1,232 +1,1226 @@
-# Awesome Cloud Security Interview Questions 2026 :+1:
-[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# Вопросы для собеседования по облачной безопасности — 2026 (с развёрнутыми ответами)
 
-![CloudSecurityBysecuritydojo](images/logo-1.png)
+> **Об этом документе.** Это русский перевод и подробный разбор вопросов из репозитория [peachycloudsecurity/awesome-cloud-security-interview](https://github.com/peachycloudsecurity/awesome-cloud-security-interview). Под каждым вопросом добавлен развёрнутый ответ, написанный так, чтобы его понял человек без предыдущего опыта в облачной безопасности: все новые термины объясняются на месте.
 
-[YouTube Channel](https://www.youtube.com/@peachycloudsecurity) | [Website](https://peachycloudsecurity.com) | [1:1 Consultations](https://topmate.io/peachycloudsecurity)
+> **Авторство и лицензия.** Оригинальный список вопросов создан **The Shukla Duo (Anjali & Divyanshu), Peachycloud Security** и распространяется под лицензией **GPL-3.0**. Этот документ является производной работой и распространяется на тех же условиях GPL-3.0 с сохранением указания авторства. Оригинал: https://github.com/peachycloudsecurity/awesome-cloud-security-interview · Сайт: https://peachycloudsecurity.com · YouTube: https://www.youtube.com/@peachycloudsecurity
+>
+> Перед применением в реальных системах сверяйтесь с актуальной официальной документацией провайдеров — сервисы меняются.
 
-## General Cloud Security Knowledge
+---
 
-### Basic
-- What are the core principles of cloud security?
-- Explain the shared responsibility model in cloud security.
-- What is the principle of least privilege, and why is it important in cloud security?
-- How do you ensure data encryption in transit and at rest in a cloud environment?
-- Describe the importance of identity and access management in cloud security.
-- What is a security group in AWS, and how does it differ from a network ACL?
-- How can you secure data stored in cloud storage buckets like S3 or Blob Storage?
-- Explain the concept of data classification and how it's used in cloud security.
-- What are some common threats to cloud environments, and how can they be mitigated?
-- What is the significance of a Virtual Private Cloud (VPC) in AWS?
-- What are some common cloud misconfigurations that can lead to security vulnerabilities, and how can they be prevented?
-- Describe a scenario where a misconfigured IAM policy resulted in a data breach. How would you identify and rectify such misconfigurations?
-- How do you ensure that security groups and network ACLs in AWS are correctly configured to prevent unintended exposure of resources?
-- What is AWS Identity and Access Management (IAM) Access Analyzer, and how can it help identify and fix misconfigurations in access policies?
-- Should you expose Database access publicly or to a web application directly?
-- How do you secure sensitive data stored in S3 or databases when accessed by applications?
-- What are the most common cloud misconfigurations you look for during a security review?
+## Как пользоваться документом
 
-### Advance Scenario Based Questions
-- Can you describe the process of designing a Cloud Security Standard for scanning and ensuring its consistent application across AWS environments?
-- How would you define security baselines and metrics for auditing and threat modeling in a cloud environment, and what benefits does this bring to an organization?
-- Walk me through the process of setting up automated backups for your cloud-based databases while ensuring their security.
-- Explain how you would implement Zero Trust Architecture in a hybrid cloud environment that includes AWS and Azure.
-- Your company is migrating to the cloud. How would you ensure a secure transition, including data migration and application security?
-- Describe a scenario where you had to respond to a critical security incident in your cloud environment. What steps did you take to contain and mitigate the incident?
-- How would you use Infrastructure as Code (IaC) tools like Terraform to automate security controls and ensure consistent security across cloud resources?
-- What is an SBOM (Software Bill of Materials), and why is it important in cloud security?
-- How can you generate and maintain an SBOM for the software components used in your cloud applications?
-- Describe the role of SBOMs in vulnerability management and supply chain security.
-- What challenges may arise when implementing SBOMs in a multi-cloud environment, and how can they be addressed?
-- Explain how SBOMs can be used to track and mitigate security vulnerabilities in containerized applications.
-- How do you approach vulnerability management at scale in a cloud environment with numerous resources?
-- Describe the steps involved in conducting automated vulnerability scanning of cloud resources.
-- What is the role of asset discovery in effective vulnerability management, and how can it be automated?
-- How do you prioritize and remediate vulnerabilities based on their severity and impact in a large-scale cloud environment?
-- Explain the importance of continuous monitoring and re-assessment in vulnerability management at scale.
-- How do you control access between a Kubernetes workload and cloud services like S3 or RDS
-- How do you balance security controls with developer velocity in cloud environments?
+Вопросы сгруппированы так же, как в оригинале: общие знания об облачной безопасности, специфика AWS, GCP, Azure, Kubernetes и DevSecOps. Каждый ответ — это 2–4 абзаца сути плюс врезки с объяснением терминов. Если термин уже объяснялся ранее, он не дублируется — пользуйтесь поиском по странице (Ctrl+F).
 
-### Compliance:
-- How can automation be used to enforce security policies and compliance in a cloud environment?
-- Describe how you would automate the patching and updating of cloud resources to address security vulnerabilities.
-- What is Infrastructure as Code (IaC), and how does it improve cloud security?
-- How do you ensure compliance with industry standards like PCI DSS or ISO 27001 in a cloud environment?
-- Explain the benefits of continuous security monitoring and how it can be achieved in the cloud.
-- How would you use cloud-native security services to automate threat detection and response?
-- Describe a scenario where you implemented automated incident response in a cloud environment.
-- What are the key components of a cloud security posture management (CSPM) system, and how would you use it to maintain security?
-- Explain the concept of a Security Information and Event Management (SIEM) system and its role in cloud security.
+> **Базовая терминология, которая встречается везде.**
+> - **CSP (Cloud Service Provider)** — поставщик облака: AWS (Amazon), GCP (Google), Azure (Microsoft).
+> - **Ресурс (resource)** — любая сущность в облаке: виртуальная машина, хранилище, база, сеть.
+> - **IAM (Identity and Access Management)** — управление тем, кто и что может делать.
+> - **At rest / in transit** — данные «в покое» (на диске) и «в движении» (по сети).
+> - **Принципал (principal)** — тот, кто выполняет действие: пользователь, роль, сервис.
 
-    
+---
 
-## AWS-Specific Questions
+## Содержание
 
-### Attack & Defense
-- How do you secure an AWS EC2 instance?
-- What is AWS Identity and Access Management (IAM), and how does it work?
-- How can you protect against DDoS attacks in AWS?
-- What is AWS GuardDuty, and how does it help in security?
-- Explain the purpose of AWS CloudTrail and CloudWatch in security monitoring.
-- What is AWS Key Management Service (KMS), and how does it handle encryption keys?
-- Describe AWS Security Groups and Network ACLs. How do they differ?
-- How do you implement security best practices for AWS Lambda functions?
-- What is the AWS Well-Architected Framework, and why is it important for security?
-- How do you securely manage secrets and credentials in AWS?
-- How do you enforce HTTPS (TLS v1.2 and TLSv1.3) on all external applications in a cloud environment, and why is this important for security?
-- How can you protect against data exfiltration in a cloud environment?
-- What is a privilege escalation attack, and how do you prevent it in a cloud environment?
-- Explain the importance of web application firewalls (WAFs) in cloud security.
-- How can you detect and respond to insider threats in a cloud environment?
-- Describe a scenario where a misconfigured IAM policy in AWS posed a security risk. How would you identify and rectify such misconfigurations?
-- What is a Distributed Denial-of-Service (DDoS) attack, and how can cloud providers help mitigate it?
-- How do you ensure the security of data transferred between on-premises infrastructure and the cloud?
-- Imagine you are responsible for reviewing the security of AWS Lambda functions in your organization's environment. You discover a Lambda function that has an SSRF (Server-Side Request Forgery) vulnerability, and specifically at "http://127.0.0.1:9001/2018-06-01/runtime/invocation/next." Explain the potential security risks associated with this SSRF vulnerability and how you would recommend mitigating these risks.
-- Have you worked on AWS WAF/Azure/GCP Cloud Armor. How will you test & implement core rule set in production. Provide the strategy. 
-- Explain AWS S3 buckets ransomware attacks, and what best practices would you recommend?
-- Describe the steps you would take to detect and respond to a ransomware attack on an S3 bucket in real-time.
-- How cloud ransomware uses KMS to encrypt objects within Amazon S3 buckets of a compromised AWS account.
-- Explain how you would implement versioning and lifecycle policies to prevent data loss in the event of a ransomware attack on S3.
-- Your organization needs to implement multi-cloud security. What strategies and tools would you use to ensure consistent security across AWS, GCP, and Azure?
-- Describe a scenario where a misconfigured security group in AWS led to a security breach. How would you prevent such misconfigurations in the future?
-- What is AWS segmentation, and why is it important for securing cloud environments?
-- Explain the concept of VPC peering in AWS. How can it be used to implement network segmentation?
-- How do you configure security groups and network ACLs to enforce network segmentation within an AWS VPC?
-- Describe the benefits and use cases of using AWS Transit Gateway for network segmentation.
-- What are the key considerations when implementing cross-account access controls for AWS resources in a segmented environment?
-- What is the purpose of the IAM PassRole permission, and how is it used in AWS?
-- Explain the potential security risks associated with granting the PassRole permission to IAM roles.
-- How do you restrict the usage of the PassRole permission to specific roles and resources while ensuring security?
-- Describe a scenario where you would use the PassRole permission in AWS IAM, and how would you ensure its security?
-- What best practices would you follow when managing IAM roles with PassRole permissions in a AWS environment?
-- What is the AWS CIS (Center for Internet Security) Benchmark, and why is it important for securing AWS resources?
-- Describe some key security checks included in the AWS CIS Benchmark for AWS Identity and Access Management (IAM).
-- How do you use AWS Config to check compliance with the AWS CIS Benchmark, and what actions would you take if non-compliance is detected?
-- Explain the importance of enabling AWS CloudTrail and AWS Config to align with the CIS Benchmark requirements.
-- How would you address vulnerabilities identified by AWS Inspector that are related to the AWS CIS Benchmark?
-- CloudTrail vs. CloudWatch and explain in-depth from a security perspective.
-- Why is IMDSv1 vulnerable to SSRF, and can you explain it?
-- Have you implemented IMDSv2, and how does it fix SSRF?
-- What is the Instance Metadata Service (IMDS 169.254.169.254) in AWS, and why is it a potential security concern for EC2 instances? Explain how attackers can abuse the IMDS to compromise an EC2 instance's security.
-- Describe the security implications of IAM credentials stored in the Instance Metadata Service (IMDS) for EC2 instances. How can organizations protect against unauthorized access to IAM credentials via the IMDS, and what best practices should be followed to mitigate this risk?
-- When should you use TGW (Transit Gateway), and is there any security improvement for using this?
-- Why security group named "default" with ports 22, 25, 53, 80, 443, 8080, 6443, 3679, 3306, 9001 is an issue?
-- Can you explain how to use and when to use Access Key ID and Principal ID with one example?
-- Explain the given IAM policy and its purpose.
-- Explain the given policy and identify any issues with it.
-- What comes to your mind when a service needs cross-account access?
-- What security needs be taken care when giving cross acount access & what is confused deputy in IAM?
-- Do you agree that we need to enable data encryption at rest by default?
-- What checks do you perform in IAM to ensure a Lambda function triggered by an event works correctly?
+- [Общие знания об облачной безопасности](#общие-знания-об-облачной-безопасности)
+  - [Базовый уровень](#базовый-уровень)
+  - [Продвинутые сценарные вопросы](#продвинутые-сценарные-вопросы)
+  - [Соответствие требованиям (Compliance)](#соответствие-требованиям-compliance)
+- [Вопросы по AWS](#вопросы-по-aws)
+  - [Атака и защита](#атака-и-защита)
+  - [Обнаружение и мониторинг](#обнаружение-и-мониторинг)
+- [Вопросы по GCP](#вопросы-по-gcp)
+- [Вопросы по Azure](#вопросы-по-azure)
+- [Управляемый Kubernetes в облаке](#управляемый-kubernetes-в-облаке)
+- [DevSecOps-конвейер](#devsecops-конвейер)
 
+---
 
+## Общие знания об облачной безопасности
 
-### Detection & Monitoring
--  What steps would you take to develop or enhance real-time alerting and detection mechanisms for critical cloud resources like EC2, IAM, S3, VPC, and Security Groups?
--  How can you enable comprehensive logging for EC2, IAM, S3, VPC, and Security Group activities in AWS to improve detection and monitoring capabilities?
--  How do you configure AWS CloudTrail and Amazon S3 Event Notifications to monitor and respond to changes in S3 bucket permissions to prevent unauthorized access?
-- Imagine you detect suspicious activity in your AWS environment. Walk me through the steps you would take to investigate and respond to the incident.
--  Explain how you would use AWS Config to detect and remediate cloud misconfigurations automatically.
--  How can you automate the detection and remediation of misconfigured security groups in AWS?
--  How to integrate AWS guardduty with Slack for real time detection.
--  Have you worked on GuardDuty, and do you have any suggestions to reduce false positives?
--  How to create a lambda function for config rules and sending email using SES, with multi-account aggregator data.
--  How do you ensure data integrity for CloudTrail logs?
-- How do you get unencrypted EBS volumes easily using Config filters?
-- How do you use CloudWatch metrics filters?
-- How do you manage EC2 vulnerability patching in an automated way?
-- What checks does AWS Inspector perform to identify instance vulnerabilities?
-- When is encryption by default not enough?
-- Would you suggest key rotation, and what should be the rotation period?
+### Базовый уровень
 
+#### Каковы ключевые принципы облачной безопасности?
 
+Облачная безопасность стоит на нескольких фундаментальных принципах. Первый и главный — **триада CIA**: конфиденциальность (Confidentiality — данные видят только те, кому положено), целостность (Integrity — данные не искажены и не подменены) и доступность (Availability — система работает, когда нужна). Всё остальное так или иначе служит этим трём целям. Второй принцип — **наименьшие привилегии** (выдавать минимум прав). Третий — **защита в глубину** (несколько независимых слоёв защиты, чтобы пробитие одного не открывало всё). Четвёртый — **нулевое доверие** (не доверять по умолчанию никому, даже «внутри» сети).
 
-## GCP-Specific Questions
-- What is Google Cloud Identity and Access Management (IAM)?
-- Explain the role of Google Cloud Security Command Center in GCP.
-- How can you secure Google Kubernetes Engine (GKE) clusters?
-- Describe how Google Cloud Armor helps protect applications running on GCP.
-- What are Google Cloud Key Management Service (KMS) and Cloud HSM?
-- How does Google Cloud Logging and Monitoring assist in security?
-- How do you enable VPC Service Controls in GCP, and why is it important?
-- Explain the concept of Identity-Aware Proxy (IAP) in GCP.
-- What is the purpose of Google Cloud Security Scanner?
-- How can you secure data stored in Google Cloud Storage?
-- You're responsible for securing a GCP Kubernetes cluster. What measures would you put in place to ensure its security?
+К этому добавляются практики, специфичные для облака: **разделение ответственности** между вами и провайдером (см. следующий вопрос), **шифрование** данных в покое и в движении, **непрерывный мониторинг и аудит** (всё логируется), **автоматизация безопасности** (правила применяются кодом, а не вручную) и **управление конфигурациями** (большинство облачных утечек — это не «взлом», а неправильная настройка). Хороший инженер держит все эти принципы в голове как чек-лист при проектировании любой системы.
 
+> **Новый термин — триада CIA.** Confidentiality, Integrity, Availability. Базовая модель целей безопасности: защитить данные от посторонних глаз, от искажения и от недоступности.
 
+> **Новый термин — защита в глубину (defense in depth).** Подход, при котором ставят много слоёв защиты (сеть, identity, шифрование, мониторинг). Если злоумышленник пробил один слой, его останавливает следующий.
 
-## Azure-Specific Questions
-- What is Azure Active Directory (Azure AD), and how does it relate to cloud security?
-- How do you secure Azure Virtual Machines (VMs)?
-- Explain Azure Security Center and its key features.
-- How does Azure DDoS Protection mitigate distributed denial-of-service attacks?
-- What is Azure Key Vault, and how does it manage cryptographic keys?
-- Describe the Azure Monitor and Azure Sentinel services in security monitoring.
-- How do you implement network security groups (NSGs) in Azure?
-- What are the security implications of Azure Functions, and how can they be addressed?
-- How can you secure Azure Blob Storage and Azure SQL Database?
-- What is Azure Bastion, and how does it enhance security in Azure?
-- An Azure VM is showing signs of compromise. How would you isolate the VM, investigate the issue, and remediate it?
+#### Объясните модель разделённой ответственности (shared responsibility model) в облачной безопасности.
 
+Это, пожалуй, самая важная концепция в облаке. Суть: за безопасность отвечают **двое — провайдер и клиент**, но за разные части. Провайдер отвечает за безопасность **самого облака** («security *of* the cloud»): физические дата-центры, оборудование, сеть провайдера, гипервизоры, управляемые сервисы. Клиент отвечает за безопасность **в облаке** («security *in* the cloud»): свои данные, настройки доступа (IAM), конфигурацию сетей, шифрование, патчи на своих виртуальных машинах.
 
-## Cloud (CSP) Managed Kubernetes
+Граница ответственности **сдвигается в зависимости от типа сервиса**. Для виртуальной машины (модель IaaS) клиент отвечает за многое — ОС, патчи, приложения. Для управляемой базы данных или serverless-функции (PaaS) провайдер берёт на себя больше (ОС, патчи движка), а клиент отвечает за данные, доступ и конфигурацию. Для готового SaaS-приложения клиент отвечает в основном за свои данные и управление пользователями. Главная ошибка новичков — думать, что «облако само всё защитит». Нет: настройка прав, закрытие публичных бакетов, шифрование — это зона ответственности клиента, и именно тут случается большинство инцидентов.
 
-#### Kubernetes
-- If a pod is compromised, how do you prevent it from impacting the rest of the cluster or the cloud account?
-- If a pod is compromised, what can an attacker do next, and how do you limit the blast radius?
-- How do you control what a Kubernetes workload can access in the cloud?
-- What are the most common Kubernetes misconfigurations you see in production?
-- How do you secure communication between services inside a Kubernetes cluster?
-- How do you detect suspicious activity in a Kubernetes cluster at runtime?
+> **Новые термины — IaaS, PaaS, SaaS.** Модели облачных услуг по степени управления провайдером. **IaaS** (Infrastructure as a Service) — вам дают «железо/ВМ», остальное ваше (пример: EC2). **PaaS** (Platform as a Service) — дают платформу, вы приносите код/данные (пример: управляемая БД). **SaaS** (Software as a Service) — готовое приложение (пример: почта в браузере). Чем «выше» модель, тем больше берёт на себя провайдер.
 
-#### Types of Pod Creation:
-- In Kubernetes, what are the different methods for creating pods, and when would you use each method?
-- Describe the differences between Imperative and Declarative pod creation in Kubernetes.
-- How do you ensure that security configurations and policies are consistently applied regardless of the method used for pod creation?
-- What role does container image scanning play in securing pods created in a Kubernetes cluster?
-- Walk me through the process of creating a pod using Kubernetes YAML manifests and explain how you would apply security best practices.
+#### Что такое принцип наименьших привилегий и почему он важен в облачной безопасности?
 
+Принцип наименьших привилегий (least privilege) означает: каждому пользователю, сервису или приложению выдаётся **ровно столько прав, сколько нужно для выполнения задачи, и ни на одно действие больше**. Если функции нужно только читать из одного бакета — она получает право читать именно этот бакет, а не «полный доступ к S3» и тем более не «администратора».
 
+Важность его в облаке трудно переоценить, потому что в облаке **права — это и есть периметр**. Здесь нет физической стены вокруг сервера; есть IAM-политики, которые определяют, кто что может. Если они слишком широки, то одна утёкшая учётка или одна скомпрометированная функция открывает злоумышленнику доступ ко всему — это называется **эскалация привилегий** и **расширение радиуса поражения (blast radius)**. Наименьшие привилегии напрямую ограничивают ущерб: даже если что-то скомпрометировано, атакующий получает мало. На практике принцип реализуют через узкие политики, регулярный аудит неиспользуемых прав (инструменты вроде IAM Access Analyzer) и постепенное расширение прав по фактической потребности, а не «на всякий случай».
 
-## DevSecOps Pipeline :
-- What is a DevSecOps pipeline bypass, and how can it occur in a CI/CD environment?
-- Describe the techniques and tools that attackers might use to bypass security controls in a DevSecOps pipeline.
-- How do you ensure the integrity and security of the CI/CD pipeline to prevent bypass attempts?
-- What strategies can you implement to detect and respond to DevSecOps pipeline bypass attempts effectively?
-- Explain how you would conduct a security assessment of a DevSecOps pipeline to identify potential vulnerabilities.
+> **Новый термин — blast radius (радиус поражения).** Насколько широко распространится ущерб при компрометации одного компонента. Наименьшие привилегии его сокращают.
 
-## Reference :pray:
+#### Как обеспечить шифрование данных в движении и в покое в облачной среде?
 
-- Additional reference: https://github.com/jassics/security-interview-questions/blob/main/aws-security-interview-questions.md
+**В движении (in transit)** данные защищают шифрованием канала связи — практически всегда это **TLS** (минимум версии 1.2, лучше 1.3). Все внешние эндпоинты (сайты, API) переводят на HTTPS, запрещают незашифрованные подключения, используют современные наборы шифров. Внутри инфраструктуры между сервисами тоже включают TLS, а для строгих требований — **mTLS** (взаимная проверка сертификатов обеими сторонами). Сертификаты удобно выпускать и автоматически продлевать управляемым сервисом провайдера (в AWS это ACM).
 
-## License
+**В покое (at rest)** данные шифруют на уровне хранилища ключами, которыми управляет сервис управления ключами провайдера (**KMS** в AWS/GCP, **Key Vault** в Azure). Большинство облачных хранилищ поддерживают «серверное шифрование» (SSE) — провайдер шифрует данные прозрачно при записи и расшифровывает при чтении, а доступ к ключам регулируется политиками. Для самых чувствительных данных применяют **шифрование на стороне клиента** (данные шифруются до отправки в облако, провайдер видит только шифротекст) или выделенный аппаратный модуль (**CloudHSM**). Ключевые практики: включать шифрование по умолчанию везде, разделять ключи по назначению, включать автоматическую ротацию ключей и логировать каждое их использование.
 
-GPL-3.0. See LICENSE file for details.
+> **Новый термин — TLS (Transport Layer Security).** Протокол, шифрующий данные при передаче по сети (основа HTTPS). Защищает от перехвата и подмены трафика.
 
-## Disclaimer
+> **Новый термин — KMS (Key Management Service).** Управляемый сервис хранения и использования криптографических ключей. Сами ключи не покидают защищённое хранилище; сервисы обращаются к KMS, чтобы зашифровать/расшифровать данные.
 
-This document, associated website, apps, scanner and results are provided strictly for educational purposes, independently authored and not endorsed by the author's employers or any corporate entity, provided without warranties or guarantees, with no liability accepted for misuse or misapplication. Chatgpt & Gemini has been used to modify as well reframe the questions based on real life patterns.
+#### Опишите важность управления идентификацией и доступом (IAM) в облачной безопасности.
 
+IAM — это **фундамент всей облачной безопасности**, потому что в облаке почти любое действие — это вызов API, а каждый вызов API проходит проверку «кто это и что ему можно». Если IAM настроен правильно, то даже при прочих ошибках ущерб ограничен; если неправильно — никакие другие меры не спасут. IAM отвечает на два вопроса: **аутентификация** (кто ты — проверка личности) и **авторизация** (что тебе можно — проверка прав).
 
-## Peachycloud Security
+Хороший IAM строится на нескольких столпах: **наименьшие привилегии** (узкие права), **временные учётные данные вместо постоянных ключей** (доступ выдаётся ролями на короткое время через механизм вроде STS, а не вечными паролями/ключами), **многофакторная аутентификация (MFA)** для людей, **федерация** (вход через корпоративный провайдер идентичности, а не отдельные облачные пароли) и **полный аудит** (каждый вход и действие логируются). Большинство громких облачных утечек начинались именно с проблем IAM: утёкший ключ доступа, слишком широкая роль, забытый администраторский доступ. Поэтому на собеседовании IAM-вопросам уделяют особое внимание.
 
-Hands-On Multi-Cloud & Cloud-Native Security Education
+> **Новый термин — MFA (многофакторная аутентификация).** Подтверждение личности несколькими факторами: пароль + одноразовый код/аппаратный ключ. Даже укравший пароль не войдёт без второго фактора.
 
-Created by The Shukla Duo (Anjali & Divyanshu), this tool is part of our mission to make cloud security accessible through practical, hands-on learning. We specialize in AWS, GCP, Kubernetes security, and DevSecOps practices.
+> **Новый термин — федерация (federation).** Механизм, при котором облако доверяет вашему внешнему провайдеру идентичности (Active Directory, Okta), и пользователи входят своими корпоративными учётками, не заводя отдельные облачные пароли.
 
-### Learn & Grow
+#### Что такое security group в AWS и чем она отличается от network ACL?
 
-Explore our educational content and training programs:
+И **security group (SG)**, и **network ACL (NACL)** — это виртуальные фаерволы в AWS, но работают на разных уровнях и по-разному. Security group работает **на уровне ресурса** (например, конкретной виртуальной машины EC2 или базы) и является **stateful**: если вы разрешили входящее подключение, ответный исходящий трафик разрешается автоматически, без отдельного правила. В SG можно задавать только разрешающие (allow) правила — всё, что не разрешено, по умолчанию запрещено.
 
-[YouTube Channel](https://www.youtube.com/@peachycloudsecurity) | [Website](https://peachycloudsecurity.com) | [1:1 Consultations](https://topmate.io/peachycloudsecurity)
+**Network ACL** работает **на уровне подсети** (защищает все ресурсы внутри неё) и является **stateless**: входящий и исходящий трафик контролируются независимо, поэтому для двустороннего обмена нужны правила в обе стороны. В отличие от SG, в NACL можно задавать и разрешающие, и **запрещающие (deny)** правила, а правила обрабатываются по номеру по порядку. На практике их используют слоями: SG — основной инструмент тонкого контроля доступа к конкретным ресурсам, а NACL — грубая защита на границе подсети (например, заблокировать целый диапазон вредоносных IP).
 
-Learn cloud security through hands-on labs, real-world scenarios, and practical tutorials covering GCP & AWS, GKE & EKS, Kubernetes, Containers, DevSecOps, and Threat Modeling.
+> **Новые термины — stateful / stateless.** **Stateful** («с памятью состояния») — система помнит установленные соединения и автоматически пропускает ответный трафик (так работают security groups). **Stateless** («без памяти») — каждый пакет оценивается отдельно, для ответа нужно отдельное правило (так работают NACL).
 
-### Support Our Work
+#### Как защитить данные в облачных хранилищах вроде S3 или Blob Storage?
 
-- If this tool helps you secure your infrastructure, consider supporting our educational mission:
+Защита объектного хранилища (S3 в AWS, Blob Storage в Azure, Cloud Storage в GCP) строится на нескольких слоях. Первое и самое важное — **закрыть публичный доступ**. Подавляющее большинство громких утечек — это случайно открытый наружу бакет. В AWS для этого есть настройка **Block Public Access** на уровне аккаунта и бакета; её включают по умолчанию. Доступ выдают не «всем», а конкретным принципалам через узкие IAM-политики и политики бакета.
 
-[Sponsor on GitHub](https://github.com/sponsors/peachycloudsecurity)
+Дальше — **шифрование** (серверное через KMS как минимум, клиентское для самого чувствительного), **принуждение TLS** (запрет обращений по незашифрованному HTTP через условие в политике), **версионирование** (хранение прежних версий объектов — защита от случайного/злонамеренного удаления и от ransomware) и **неизменяемость** через Object Lock (WORM — объект нельзя удалить до конца срока). Для контроля используют инструменты обнаружения чувствительных данных (в AWS — **Macie**, который машинным обучением находит в бакетах номера карт, персональные данные и сигналит, если они открыты или лежат не там), а также логирование всех обращений к данным и регулярный аудит прав.
 
-- Your support helps us create more free educational content and security tools for the community.
+> **Новый термин — объектное хранилище.** Тип хранилища, где данные — это «объекты» (файлы) в «бакетах» (контейнерах), доступные по API. Масштабируется почти безгранично; используется для файлов, бэкапов, логов, статики. Примеры: S3, Azure Blob, GCS.
+
+> **Новый термин — версионирование (versioning).** Режим, при котором хранилище держит все прежние версии объекта. Если объект перезаписали или удалили (по ошибке или злым умыслом), можно вернуть предыдущую версию.
+
+#### Объясните концепцию классификации данных и как она используется в облачной безопасности.
+
+**Классификация данных** — это разделение всех данных организации на категории по чувствительности: например, «публичные», «внутренние», «конфиденциальные», «строго конфиденциальные» (или с тегами вроде PII, PHI, PCI). Смысл в том, что не все данные одинаково важны, и защищать всё на максимальном уровне дорого и непрактично. Классификация позволяет применять меры **пропорционально риску**: к строго конфиденциальным данным — жёсткое шифрование, узкий доступ, расширенный аудит; к публичным — минимум.
+
+В облаке классификация обычно реализуется через **теги** (метки на ресурсах, например `DataClassification=Confidential`) и через автоматическое обнаружение чувствительных данных (Macie в AWS, аналоги в других облаках). На основе классификации строятся политики: какие данные можно хранить в каких регионах (важно для GDPR и резидентности данных), кто к ним имеет доступ, как они шифруются, сколько хранятся. Классификация — это ещё и требование многих стандартов (PCI DSS, HIPAA): нельзя защитить данные, не зная, где они и насколько важны.
+
+> **Новые термины — PII, PHI, PCI.** Типичные категории чувствительных данных. **PII** (Personally Identifiable Information) — персональные данные (имя, паспорт). **PHI** (Protected Health Information) — медицинские данные (защищены HIPAA). **PCI** — данные платёжных карт (защищены стандартом PCI DSS).
+
+#### Какие распространённые угрозы существуют для облачных сред и как их смягчить?
+
+Основные классы угроз в облаке: **неправильные конфигурации** (открытые бакеты, слишком широкие права — причина большинства реальных инцидентов); **компрометация учётных данных** (утёкшие ключи доступа, фишинг паролей); **небезопасные API и приложения** (инъекции, SSRF, уязвимости); **инсайдерские угрозы** (злонамеренные или небрежные сотрудники); **DDoS-атаки** (перегрузка сервиса трафиком); **утечка данных (exfiltration)**; и угрозы цепочки поставок (уязвимости в сторонних библиотеках и образах).
+
+Смягчают их комплексно: для конфигураций — автоматические проверки и guardrails (CSPM-инструменты, AWS Config); для учётных данных — MFA, временные креды, отказ от долгоживущих ключей, мониторинг аномальных входов (GuardDuty); для приложений — WAF, сканирование уязвимостей, безопасная разработка; для инсайдеров — наименьшие привилегии, разделение обязанностей, аудит; для DDoS — защита на периферии (Shield/Cloud Armor, CDN); для утечек — контроль исходящего трафика, шифрование, обнаружение чувствительных данных; для цепочки поставок — SBOM и сканирование зависимостей. Общая идея: defense in depth плюс непрерывный мониторинг.
+
+> **Новый термин — CSPM (Cloud Security Posture Management).** Класс инструментов, которые непрерывно проверяют облачные конфигурации на ошибки и несоответствия и сигналят/чинят их. Отвечают на вопрос «нет ли у нас опасных настроек прямо сейчас».
+
+> **Новый термин — DDoS (Distributed Denial of Service).** Атака, при которой сервис заваливают огромным количеством запросов с множества источников, чтобы он стал недоступен для легитимных пользователей.
+
+#### В чём значимость виртуального частного облака (VPC) в AWS?
+
+**VPC (Virtual Private Cloud)** — это ваша изолированная виртуальная сеть внутри AWS, логический аналог собственного дата-центра. Внутри VPC вы полностью контролируете сетевую топологию: создаёте **подсети** (subnets), решаете, какие из них публичные (с выходом в интернет), а какие приватные (изолированные), задаёте таблицы маршрутизации, шлюзы, фаерволы (security groups и NACL). Значимость в том, что VPC даёт **сетевую изоляцию и сегментацию** — фундамент сетевой безопасности в облаке.
+
+С точки зрения безопасности VPC позволяет реализовать ключевые практики: держать базы данных и внутренние сервисы в **приватных подсетях** без прямого доступа из интернета; контролировать трафик между сегментами; подключаться к сервисам AWS по приватным путям (VPC Endpoints / PrivateLink) без выхода в публичную сеть; вести журнал сетевого трафика (VPC Flow Logs) для расследований. Правильно спроектированная VPC резко сокращает поверхность атаки: то, что не доступно по сети, нельзя атаковать снаружи.
+
+> **Новый термин — подсеть (subnet).** Часть адресного пространства VPC. **Публичная** подсеть имеет маршрут в интернет, **приватная** — нет. Критичные ресурсы (базы) держат в приватных подсетях.
+
+> **Новый термин — VPC Flow Logs.** Журнал метаданных сетевых соединений в VPC (кто с кем, по какому порту, разрешено/отброшено). Используется для расследования сетевых аномалий.
+
+#### Какие распространённые облачные мисконфигурации ведут к уязвимостям и как их предотвратить?
+
+Самые частые мисконфигурации: **публично открытые хранилища** (S3-бакеты, доступные всему интернету); **слишком широкие IAM-права** (роли с правами администратора «на всякий случай», использование root для повседневных задач); **открытые наружу порты** (security group с `0.0.0.0/0` на портах SSH/RDP/баз данных); **отсутствие шифрования** (незашифрованные тома, базы, бакеты); **выключенное логирование** (нет CloudTrail/Flow Logs); **незащищённый сервис метаданных** (IMDSv1, уязвимый к SSRF); и **открытые наружу базы данных**.
+
+Предотвращают их в первую очередь **автоматизацией и guardrails**, а не надеждой на внимательность людей. Конкретно: политики уровня организации (SCP в AWS), запрещающие опасные действия; CSPM/AWS Config-правила, которые непрерывно находят и часто автоматически чинят отклонения; проверка инфраструктурного кода до развёртывания (policy-as-code: checkov, cfn-guard); включение безопасных настроек по умолчанию (Block Public Access, шифрование по умолчанию); регулярный аудит прав (Access Analyzer). Ключевая мысль: «безопасно по умолчанию» (secure by default) — настройки должны быть безопасными изначально, чтобы ошибиться было трудно.
+
+> **Новый термин — guardrails («ограждения»).** Автоматические правила-ограничители, которые либо не дают сделать опасное действие (превентивные), либо обнаруживают нарушение (детективные). Применяются ко всем аккаунтам/ресурсам централизованно.
+
+> **Новый термин — policy-as-code.** Правила безопасности, записанные кодом, которые автоматически проверяют конфигурацию (например, инфраструктурные шаблоны) в процессе разработки — до того, как ресурс будет создан.
+
+#### Опишите сценарий, где неправильно настроенная IAM-политика привела к утечке данных. Как выявить и исправить такие мисконфигурации?
+
+Типичный сценарий: команда создала роль для приложения и, чтобы «не возиться», дала ей политику `AmazonS3FullAccess` (полный доступ ко всем бакетам) вместо доступа к одному нужному. Приложение оказалось уязвимым (скажем, к SSRF), злоумышленник через него получил временные креды роли из сервиса метаданных и, поскольку права были широкими, прочитал и выкачал данные из *всех* бакетов аккаунта, включая бакет с персональными данными клиентов. Корень проблемы — нарушение наименьших привилегий: широкие права превратили локальную уязвимость в полномасштабную утечку.
+
+**Выявление:** анализируют политики на избыточность с помощью **IAM Access Analyzer** (показывает, к чему реально открыт доступ, и какие выданные права не используются), смотрят отчёты last-accessed (какие действия роль реально совершала), проверяют политики на наличие `"*"` в действиях и ресурсах. **Исправление:** сузить политику до фактически нужных действий и конкретных ресурсов (Access Analyzer умеет генерировать политику по реальной активности из CloudTrail), включить permission boundaries как «потолок» прав, добавить условия (например, доступ только из нужной VPC), включить мониторинг аномального доступа. И, как превентивную меру, — встроить проверку политик в CI/CD, чтобы широкие права не доходили до прода.
+
+> **Новый термин — IAM Access Analyzer.** Сервис AWS, анализирующий политики: показывает, к каким ресурсам открыт внешний доступ, подсвечивает неиспользуемые права и помогает сгенерировать узкую политику на основе реальной активности.
+
+> **Новый термин — permission boundary.** «Потолок» прав для роли/пользователя: даже если приложить более широкую политику, реальные права не выйдут за этот предел. Защищает от эскалации привилегий.
+
+#### Как убедиться, что security groups и network ACL в AWS настроены правильно и не открывают ресурсы непреднамеренно?
+
+Подход состоит из проверки текущего состояния, автоматического контроля и принципов проектирования. Сначала — **аудит существующих правил** на типичные опасности: открытые наружу (`0.0.0.0/0`) административные порты (22/SSH, 3389/RDP), порты баз данных (3306, 5432, 1433), доступные из интернета. Для этого используют **AWS Config** с правилами вроде «security group не должна разрешать неограниченный доступ к порту 22», которые непрерывно сканируют все группы и помечают нарушителей, а также Security Hub и сторонние CSPM.
+
+Для **предотвращения** будущих ошибок: проектировать по наименьшим привилегиям (открывать только нужные порты только нужным источникам — ссылаться на другие security group, а не на широкие диапазоны IP); держать критичные ресурсы в приватных подсетях; описывать сети через IaC и проверять шаблоны policy-as-code до деплоя; применять SCP/guardrails, запрещающие создание чрезмерно открытых групп; настроить автоматическое реагирование (EventBridge замечает создание опасного правила → Lambda откатывает или сигналит). Регулярные проверки + автоматизация надёжнее, чем разовый ручной аудит.
+
+> **Новый термин — AWS Config.** Сервис, который записывает состояние ресурсов во времени и проверяет их на соответствие правилам. Отвечает на вопросы «как был настроен ресурс вчера» и «какие ресурсы нарушают наши правила прямо сейчас».
+
+#### Что такое IAM Access Analyzer и как он помогает находить и исправлять мисконфигурации в политиках доступа?
+
+**IAM Access Analyzer** — сервис AWS, который математически (на основе формальной логики) анализирует политики и определяет, к каким вашим ресурсам открыт доступ **извне** вашей зоны доверия (другого аккаунта, организации или вообще из интернета). Он находит, например, бакет S3, роль или ключ KMS, к которым по политике может обратиться сторонний аккаунт, — даже если вы об этом забыли. Это прямой способ обнаружить непреднамеренный внешний доступ.
+
+Кроме поиска внешнего доступа, у него есть ещё несколько полезных режимов. **Unused access** — находит выданные, но не используемые права, роли и ключи, чтобы их урезать или удалить (помогает поддерживать наименьшие привилегии). **Policy generation** — генерирует узкую политику на основе того, что принципал реально делал (по данным CloudTrail) — отличный способ заменить раздутую политику на минимально необходимую. **Policy validation** — проверяет политики на ошибки и небезопасные паттерны при их написании. Вместе это превращает управление доступом из «написали и забыли» в непрерывный контролируемый процесс.
+
+#### Стоит ли открывать доступ к базе данных публично или напрямую веб-приложению?
+
+Короткий ответ: **базу данных нельзя выставлять в публичный интернет почти никогда**, и доступ к ней следует строго ограничивать даже со стороны приложения. Публично доступная база — одна из самых опасных мисконфигураций: её немедленно начинают сканировать и брутфорсить боты, и любая слабость (слабый пароль, уязвимость движка) ведёт к компрометации и утечке/шифрованию данных (ransomware).
+
+Правильная архитектура: база живёт в **приватной подсети** VPC, без публичного IP и без маршрута в интернет. Доступ к ней разрешён **только от серверов приложения** — через security group, которая ссылается на security group приложения (а не на диапазон IP), и только на нужном порту. Само приложение обращается к базе по приватной сети. Дополнительно: шифрование в покое и в движении (TLS до базы), аутентификация по IAM или секретам из менеджера секретов с ротацией (а не зашитый в код пароль), аудит подключений. Принцип: между интернетом и базой всегда должен быть слой приложения и несколько слоёв сетевой изоляции.
+
+#### Как защитить чувствительные данные в S3 или базах данных при доступе со стороны приложений?
+
+Ключевая идея — приложение должно получать доступ **по временным правам и по наименьшим привилегиям, без зашитых секретов**. В AWS приложение (на EC2, в контейнере, в Lambda) получает доступ к S3/базе через привязанную **IAM-роль**, которая выдаёт временные учётные данные автоматически — никаких ключей доступа в коде или конфигах. Права роли сужают до конкретных операций над конкретными ресурсами (этот бакет, эта таблица, только чтение).
+
+Дальше накладываются слои защиты самих данных: **шифрование в покое** (KMS) и **в движении** (TLS до хранилища/базы); для паролей и API-ключей, которые всё же нужны (например, доступ к не-IAM базе) — хранение в **Secrets Manager** с автоматической ротацией вместо хранения в коде; **сетевая изоляция** (доступ к данным только по приватным путям/из нужной VPC через VPC Endpoints); **аудит** всех обращений к данным (CloudTrail data events). Для особо чувствительных полей применяют **шифрование на уровне поля или токенизацию**, чтобы даже при доступе к базе реальные значения (номера карт) не были видны. Итог — несколько независимых барьеров: даже компрометация одного слоя не открывает данные напрямую.
+
+> **Новый термин — Secrets Manager.** Сервис безопасного хранения секретов (пароли БД, API-ключи) с шифрованием и автоматической ротацией. Приложение получает секрет по запросу с проверкой прав, а не хранит его у себя в коде.
+
+> **Новый термин — токенизация.** Замена чувствительного значения (номер карты) на бессмысленный «токен»; реальное значение хранится отдельно в защищённом хранилище. Системы работают с токенами, снижая риск и объём данных под защитой.
+
+#### Какие самые частые облачные мисконфигурации вы ищете при security review?
+
+При ревью безопасности облачной среды опытный инженер первым делом проверяет «большую тройку» рисков. **Identity:** использование root для повседневных задач, отсутствие MFA (особенно на root и привилегированных аккаунтах), политики с `Action: "*"` и `Resource: "*"`, долгоживущие access keys, неиспользуемые широкие роли, опасные права вроде `iam:PassRole` без ограничений. **Хранилища и данные:** публично открытые бакеты, отсутствие шифрования, выключенное версионирование на важных бакетах, открытые наружу базы данных. **Сеть:** security group с `0.0.0.0/0` на админ-портах и портах баз, отсутствие сегментации.
+
+Дальше проверяют **видимость и реагирование:** включён ли CloudTrail во всех регионах и защищён ли от изменения, включены ли GuardDuty/Config/Security Hub, есть ли VPC Flow Logs, настроено ли оповещение. И **гигиену конфигураций:** IMDSv1 вместо IMDSv2 на инстансах (уязвимость к SSRF), незашифрованные тома EBS, отсутствие patch-менеджмента, секреты в переменных окружения или в коде. На практике такой обзор автоматизируют CSPM-инструментами и Security Hub-стандартами (CIS Benchmark), которые прогоняют сотни проверок разом, а ручной анализ оставляют для логики прав и архитектурных решений.
+
+> **Новый термин — root-аккаунт.** Всемогущий владелец AWS-аккаунта с неограниченными правами. Его используют только в исключительных случаях, защищают MFA и не создают для него ключей доступа.
+
+> **Новый термин — iam:PassRole.** Право «передать роль» сервису — позволяет указать, с какой ролью будет работать создаваемый ресурс (например, Lambda). Опасно без ограничений: можно передать более привилегированную роль и так повысить свои права. Поэтому его всегда ограничивают конкретными ролями.
+
+---
+
+### Продвинутые сценарные вопросы
+
+#### Опишите процесс разработки стандарта облачной безопасности для сканирования и его единообразного применения в средах AWS.
+
+Стандарт облачной безопасности — это **документированный набор обязательных требований** к тому, как должны быть настроены ресурсы (например: «все бакеты зашифрованы», «MFA включён», «нет открытых наружу админ-портов», «CloudTrail включён»). Разработка начинается с опоры на признанные базисы — **CIS AWS Foundations Benchmark**, **AWS Foundational Security Best Practices**, требования релевантных стандартов (PCI DSS, HIPAA) — которые адаптируют под свою организацию. Результат — конкретный, проверяемый перечень правил.
+
+Дальше стандарт нужно **превратить в автоматические проверки**, иначе он останется бумагой. Каждое требование выражают как правило в **AWS Config** (или Security Hub-контроль, или policy-as-code). Единообразное применение во всех аккаунтах достигается через **AWS Organizations**: Config-правила и conformance packs (наборы правил) разворачивают на всю организацию, новые аккаунты подключаются автоматически (через Control Tower), а превентивные требования закрепляют через **SCP** (запрет нарушающих действий на уровне организации). Контроль состоит из непрерывного сканирования (Config/Security Hub постоянно проверяют сотни ресурсов), дашборда соответствия и автоматического реагирования на нарушения (EventBridge → авто-remediation или алерт). Так стандарт становится живым и самоприменяющимся.
+
+> **Новый термин — CIS Benchmark.** Опубликованный экспертами набор проверяемых правил «как безопасно настроить» конкретную платформу (есть для AWS, Kubernetes и др.). Часто берётся за основу собственного стандарта.
+
+> **Новый термин — conformance pack.** Готовый набор Config-правил (и действий по исправлению), упакованный под стандарт, который разворачивается на аккаунты целиком.
+
+#### Как определить базовые показатели (baselines) и метрики безопасности для аудита и моделирования угроз, и что это даёт организации?
+
+**Security baseline** — это зафиксированный «минимально допустимый уровень безопасности»: набор настроек и контролей, которые обязаны присутствовать в каждом аккаунте/ресурсе по умолчанию (логирование включено, шифрование включено, MFA, базовые guardrails). Базлайн задаёт точку отсчёта: всё, что ниже него, — отклонение, требующее внимания. **Метрики** — это измеримые показатели состояния безопасности: процент ресурсов, соответствующих базлайну; число критичных находок, не закрытых дольше N часов; время обнаружения и реагирования (MTTD/MTTR); доля аккаунтов с включённым GuardDuty; число неиспользуемых привилегированных прав.
+
+Для **моделирования угроз** базлайны и метрики дают объективную картину поверхности атаки: где отклонения, где слабые места, куда смотреть в первую очередь. Организации это даёт несколько выгод: **измеримость** (безопасность перестаёт быть «ощущением» и становится числами, которые можно показать руководству и аудиторам), **приоритизацию** (видно, что чинить первым), **раннее обнаружение дрейфа** (отклонение от базлайна замечается сразу), и **доказательную базу для аудита** (метрики и история соответствия — готовые доказательства непрерывного контроля). Реализуют это через Security Hub (оценка соответствия в процентах), Config (история состояний), CloudWatch-дашборды.
+
+> **Новые термины — MTTD / MTTR.** **MTTD** (Mean Time To Detect) — среднее время до обнаружения инцидента. **MTTR** (Mean Time To Respond/Recover) — до реагирования/восстановления. Ключевые метрики зрелости безопасности: чем меньше, тем лучше.
+
+#### Проведите меня через настройку автоматических бэкапов облачных баз данных с обеспечением их безопасности.
+
+Сначала — **механизм бэкапов**. Для управляемых баз AWS (RDS, Aurora, DynamoDB) есть встроенные автоматические бэкапы и снапшоты: включается ежедневное резервное копирование с заданным окном хранения (retention) и **point-in-time recovery** (возможность восстановиться на любой момент в пределах окна — на случай, когда нужно «отмотать» до момента до инцидента). Для централизованного управления по многим сервисам и аккаунтам используют **AWS Backup** — он задаёт политики (расписание, срок хранения, копирование в другой регион) единообразно.
+
+Теперь — **безопасность самих бэкапов**, что критично и часто упускается. Бэкапы **шифруют** (KMS) — причём ключом, доступ к которому ограничен. Их **изолируют**: копируют в отдельный аккаунт и/или регион с минимальным доступом, чтобы компрометация основного аккаунта не уничтожила бэкапы. Делают их **неизменяемыми** через **AWS Backup Vault Lock** (WORM-режим: бэкап нельзя удалить или сократить срок хранения досрочно — защита от ransomware и от злонамеренного администратора). Доступ к управлению бэкапами и восстановлению дают по наименьшим привилегиям и логируют. И обязательно — **регулярно тестируют восстановление**: бэкап, из которого ни разу не восстанавливались, нельзя считать рабочим. Цели восстановления формулируют через RPO (сколько данных допустимо потерять) и RTO (за сколько восстановить).
+
+> **Новый термин — point-in-time recovery (PITR).** Возможность восстановить базу на произвольный момент времени в пределах окна хранения, а не только на момент последнего снапшота. Спасает, когда нужно вернуться к состоянию за секунду до порчи данных.
+
+> **Новые термины — RPO / RTO.** **RPO** (Recovery Point Objective) — допустимый объём потери данных по времени (RPO=1ч → бэкап не старше часа). **RTO** (Recovery Time Objective) — за сколько обязаны восстановиться.
+
+#### Как реализовать архитектуру нулевого доверия (Zero Trust) в гибридной облачной среде с AWS и Azure?
+
+**Zero Trust («нулевое доверие»)** — модель, в которой не доверяют никому и ничему по умолчанию, только из-за нахождения «внутри сети». Каждый запрос к каждому ресурсу проверяется заново по трём вещам: **личность** (кто), **контекст** (откуда, с какого устройства, в какое время) и **состояние устройства** (здорово ли оно, обновлено ли). Девиз — «никогда не доверяй, всегда проверяй». Это противоположность старой модели «крепость со рвом», где внутри периметра всё считалось доверенным.
+
+В гибридной среде AWS+Azure реализация строится вокруг **единой идентичности**: оба облака федерируют к одному провайдеру идентичности (например, Azure AD/Entra ID или Okta), чтобы решения о доступе принимались централизованно и единообразно. Доступ к приложениям дают не через классический VPN с широким доступом в сеть, а через **identity-aware прокси** (AWS Verified Access, Azure-аналоги, либо сторонние ZTNA-решения), проверяющие личность и устройство на каждый запрос. Между сервисами включают **mTLS** и микросегментацию (минимально необходимые сетевые разрешения). Везде — **наименьшие привилегии**, **MFA**, **непрерывный мониторинг** и оценка риска в реальном времени. Сети сегментируют так, чтобы компрометация одного сегмента не давала доступ к другим. Ключ к успеху в мульти-облаке — именно централизованная идентичность и единые политики, иначе AWS и Azure разъедутся по уровню безопасности.
+
+> **Новый термин — ZTNA (Zero Trust Network Access).** Класс решений, дающих доступ к конкретному приложению после проверки личности и устройства, вместо доступа ко всей сети (как у классического VPN). Реализует принцип нулевого доверия на практике.
+
+#### Ваша компания мигрирует в облако. Как обеспечить безопасный переход, включая миграцию данных и безопасность приложений?
+
+Безопасная миграция начинается **до переноса** — с подготовки безопасного «фундамента» (landing zone): настроенная мультиаккаунт-структура (AWS Organizations/Control Tower), включённые логирование (CloudTrail), мониторинг (GuardDuty, Config, Security Hub), базовые guardrails (SCP), централизованная идентичность (федерация, MFA). Нельзя мигрировать в небезопасную среду и «потом навести порядок». Параллельно проводят **инвентаризацию и классификацию данных** (что переносим, насколько оно чувствительно, какие требования соответствия применимы) и **моделирование угроз** для будущей архитектуры.
+
+При **миграции данных** ключевое — шифрование в движении (TLS/защищённые каналы, для больших объёмов — Snowball с шифрованием) и в покое в облаке (KMS), контроль целостности (контрольные суммы), узкий временный доступ на время переноса, аудит. Для **безопасности приложений** — не «поднимать как было», а пересмотреть: убрать зашитые секреты (перевести в Secrets Manager), заменить статические ключи на роли, закрыть лишние порты, поставить WAF перед публичными приложениями, просканировать на уязвимости (Inspector) и зависимости (SCA). Хороший подход — миграция волнами (сначала некритичное, отладить процесс, потом критичное), с проверкой безопасности на каждом этапе и планом отката. После миграции — непрерывный мониторинг и проверка соответствия базлайну.
+
+> **Новый термин — landing zone.** Заранее подготовленный безопасный каркас облачной среды (структура аккаунтов, базовые настройки безопасности, логирование), на который «приземляют» рабочие нагрузки. В AWS автоматизируется через Control Tower.
+
+#### Опишите случай, когда вам пришлось реагировать на критический инцидент безопасности в облаке. Какие шаги вы предприняли для локализации и устранения?
+
+Хороший ответ структурируют по стадиям модели реагирования (NIST): **подготовка → обнаружение и анализ → локализация → устранение → восстановление → выводы**. Пример: GuardDuty выдал находку о том, что EC2-инстанс обращается к известному командному серверу (C2) и совершает нетипичные API-вызовы. Сначала — **анализ**: по CloudTrail смотрим, какая роль и какие действия, по VPC Flow Logs — куда инстанс ходил, через Detective — масштаб (какие ещё ресурсы затронуты). Цель — понять тип, охват и какие данные под угрозой.
+
+Затем — **локализация (containment)**: инстанс изолируют, переведя в «карантинную» security group без исходящего трафика, выводят из балансировщика, снимают снапшот диска и памяти в отдельный forensics-аккаунт для расследования (важно сохранить улики, а не сразу всё стирать). Если скомпрометированы креды — деактивируют ключ, отзывают сессии, прикладывают Deny-политику. **Устранение (eradication)**: находят и убирают первопричину (уязвимость, через которую вошли, — патчат; вредонос — удаляют; секреты — ротируют). Скомпрометированный инстанс обычно не «лечат», а пересоздают из чистого образа. **Восстановление**: поднимают чистый ресурс из IaC, восстанавливают данные из бэкапа, убеждаются, что аномалия исчезла, прежде чем вернуть в прод. **Выводы**: blameless-постмортем и правки в автоматизацию/guardrails, чтобы не повторилось. Ключевые принципы — действовать по заранее готовому playbook, сохранять улики, и автоматизировать быстрые действия (EventBridge → Lambda).
+
+> **Новый термин — containment (локализация).** Стадия реагирования, на которой останавливают распространение атаки (изолируют ресурс, отзывают доступ), стараясь при этом сохранить улики для расследования.
+
+> **Новый термин — постмортем (blameless postmortem).** Разбор инцидента без поиска виноватых, с фокусом на том, что в процессе/системе позволило инциденту случиться и как это починить.
+
+#### Как использовать Infrastructure as Code (IaC), например Terraform, для автоматизации контролей безопасности и единообразия?
+
+**Infrastructure as Code (IaC)** — описание инфраструктуры кодом (шаблонами) вместо ручной настройки в консоли. Terraform — популярный мультиоблачный инструмент IaC. Главная выгода для безопасности — **повторяемость и контролируемость**: безопасная конфигурация описывается один раз и применяется единообразно везде, изменения проходят через ревью и остаются в истории (Git), что само по себе даёт аудиторский след. Ручные настройки, наоборот, неконтролируемы и со временем «разъезжаются» (configuration drift).
+
+Конкретно IaC автоматизирует безопасность так: **модули с безопасными значениями по умолчанию** (готовый модуль «бакет» уже включает шифрование, блокировку публичного доступа, версионирование — разработчик не может случайно создать небезопасный); **policy-as-code** в конвейере (checkov, tfsec, OPA/Conftest проверяют шаблоны на небезопасные настройки *до* применения и блокируют деплой при нарушении); **управление изменениями** через pull request с обязательным ревью; **обнаружение дрейфа** (Terraform сравнивает реальное состояние с кодом и показывает расхождения). Для самих конвейеров — никаких долгоживущих ключей, доступ через временные роли (OIDC). Итог: безопасность встроена в процесс создания инфраструктуры, а не навешивается потом.
+
+> **Новый термин — configuration drift (дрейф конфигурации).** Постепенное расхождение реального состояния инфраструктуры с задуманным/описанным из-за ручных правок. IaC помогает его обнаруживать и устранять.
+
+#### Что такое SBOM (Software Bill of Materials) и почему он важен в облачной безопасности?
+
+**SBOM (Software Bill of Materials)** — «спецификация состава ПО», полный машиночитаемый список всех компонентов, из которых собрано приложение: все библиотеки, зависимости, их версии и происхождение. По аналогии со списком ингредиентов на упаковке продукта: SBOM говорит, «из чего на самом деле сделан» ваш софт, включая транзитивные зависимости (библиотеки, которые тянут за собой другие библиотеки).
+
+Важность выросла из-за **атак на цепочку поставок** (supply chain attacks) и громких уязвимостей вроде Log4Shell, когда критичная дыра обнаружилась в широко используемой библиотеке, и компании не могли быстро ответить на простой вопрос: «а у нас вообще где-то используется эта библиотека?». Со SBOM ответ мгновенный — можно за минуты найти все приложения с уязвимым компонентом. SBOM нужен для **управления уязвимостями** (знать, что у тебя есть, чтобы знать, что патчить), **безопасности цепочки поставок** (контроль происхождения компонентов), **соответствия** (всё чаще требуется регуляторами) и **реагирования на инциденты**. Форматы — SPDX и CycloneDX. В облаке SBOM генерируют в CI/CD при сборке и хранят вместе с артефактами.
+
+> **Новый термин — атака на цепочку поставок (supply chain attack).** Атака не на вас напрямую, а через скомпрометированный сторонний компонент (библиотеку, образ, инструмент сборки), которому вы доверяете. SBOM и сканирование зависимостей — основные средства защиты.
+
+#### Как генерировать и поддерживать SBOM для компонентов облачных приложений?
+
+**Генерация** SBOM встраивается в конвейер сборки (CI/CD) как автоматический шаг. Инструменты — **Syft**, **Trivy**, **cdxgen**, плагины сборщиков — сканируют исходники, манифесты зависимостей и собранные образы контейнеров и выдают SBOM в стандартном формате (SPDX или CycloneDX). Поскольку SBOM генерируется при каждой сборке, он всегда отражает то, что реально попало в артефакт, включая базовый образ и его содержимое. Сгенерированный SBOM хранят рядом с артефактом (в реестре образов, в хранилище артефактов) и привязывают к конкретной версии релиза.
+
+**Поддержание** — это не разовое действие, а процесс. SBOM обновляют при каждой сборке (компоненты и версии меняются). Хранят историю SBOM по версиям, чтобы можно было по факту обнаружения новой уязвимости найти все затронутые релизы. Подключают непрерывное сопоставление SBOM с базами уязвимостей (когда выходит новый CVE, система сама проверяет, есть ли уязвимый компонент в ваших SBOM, и сигналит). Для подлинности SBOM можно подписывать (например, через cosign/Sigstore), чтобы гарантировать, что его не подменили. В облаке всё это интегрируют с реестрами образов и сканерами (Inspector, registry scanning).
+
+> **Новый термин — CVE (Common Vulnerabilities and Exposures).** Единый публичный идентификатор известной уязвимости (например, CVE-2021-44228 для Log4Shell). Сканеры сопоставляют компоненты из SBOM с базой CVE.
+
+#### Опишите роль SBOM в управлении уязвимостями и безопасности цепочки поставок.
+
+В **управлении уязвимостями** SBOM выполняет роль «карты того, что у вас есть». Управление уязвимостями невозможно без инвентаризации: нельзя защитить или пропатчить то, о существовании чего не знаешь. SBOM даёт точный список компонентов и версий, который автоматически сопоставляется с базами уязвимостей (CVE). Когда выходит новая критичная уязвимость, вместо панического ручного поиска по всем приложениям вы делаете запрос по SBOM и за минуты получаете список всех затронутых сервисов — это резко ускоряет реагирование (как было с Log4Shell).
+
+В **безопасности цепочки поставок** SBOM обеспечивает прозрачность и доверие к компонентам, которые вы не писали сами. Он позволяет проверять происхождение зависимостей, выявлять компоненты с известными проблемами или из ненадёжных источников, отслеживать лицензионные риски, и — в сочетании с подписанием артефактов и проверкой провенанса (SLSA-фреймворк) — убеждаться, что в сборку не проникло ничего постороннего. По сути SBOM превращает «чёрный ящик» из чужого кода в инвентаризируемый и проверяемый набор, что и является основой защиты цепочки поставок.
+
+> **Новый термин — провенанс (provenance) и SLSA.** Провенанс — задокументированное происхождение артефакта (как и из чего он собран). **SLSA** — фреймворк уровней гарантий целостности цепочки поставки ПО. Вместе с SBOM дают доверие к тому, что попадает в прод.
+
+#### Какие сложности возникают при внедрении SBOM в мульти-облачной среде и как их решать?
+
+Главная сложность — **неоднородность и масштаб**. В мульти-облаке (AWS+GCP+Azure) разные платформы, разные реестры образов, разные пайплайны и инструменты, поэтому единый процесс генерации и хранения SBOM выстроить сложнее. Возникают проблемы: несогласованные форматы и инструменты в разных командах; огромный объём SBOM (на каждый сервис, на каждую сборку); трудность централизованного хранения и поиска; поддержание актуальности; интеграция с разными сканерами уязвимостей каждого облака.
+
+Решают это **стандартизацией и централизацией**. Выбирают единый формат (CycloneDX или SPDX) и единый набор инструментов генерации, обязательный для всех команд независимо от облака. Встраивают генерацию SBOM в шаблоны CI/CD-пайплайнов, чтобы это происходило одинаково везде. Складывают все SBOM в **централизованное хранилище/платформу** (часто — сторонний продукт управления цепочкой поставок или единое озеро данных), где можно делать сквозной поиск по всем облакам разом. Подключают единую систему сопоставления с уязвимостями поверх всех SBOM. И автоматизируют подписание/проверку. Ключ — единые стандарты и автоматизация, иначе мульти-облако порождает разрозненные несопоставимые данные.
+
+#### Объясните, как SBOM используются для отслеживания и устранения уязвимостей в контейнерных приложениях.
+
+Контейнеры — особенно удачный случай для SBOM, потому что образ контейнера включает не только ваш код, но и **весь базовый образ** (операционную систему, системные библиотеки, рантаймы) — а это огромный источник уязвимостей, который иначе трудно увидеть. При сборке образа генерируется SBOM, который перечисляет *всё* содержимое: и ваши зависимости приложения, и пакеты ОС из базового образа. Так вы получаете полную видимость того, что реально поедет в прод внутри контейнера.
+
+На основе этого SBOM работает отслеживание и устранение: образ **сканируется при пуше в реестр** (Trivy, Inspector, registry scanning) — SBOM сопоставляется с базами CVE, и уязвимые образы не допускаются в прод (через admission-контроль в Kubernetes). Когда выходит новая уязвимость, по сохранённым SBOM находят все образы (и развёрнутые поды), где есть уязвимый компонент. **Устранение** обычно означает обновить базовый образ или зависимость и пересобрать (контейнеры неизменяемы — их не патчат на месте, а пересоздают). Хорошая практика — использовать минимальные базовые образы (distroless, alpine), чтобы в SBOM было меньше компонентов и, соответственно, меньше уязвимостей. Связка «SBOM + сканирование при сборке + admission-контроль + пересборка» даёт непрерывный контроль уязвимостей контейнеров.
+
+> **Новый термин — admission control (контроль допуска) в Kubernetes.** Механизм, проверяющий объекты перед их созданием в кластере и отклоняющий несоответствующие политике (например, образ с критичными уязвимостями или без подписи).
+
+#### Как вы подходите к управлению уязвимостями в масштабе в облаке с множеством ресурсов?
+
+Управление уязвимостями в масштабе строится на цикле: **обнаружение активов → сканирование → приоритизация → устранение → проверка → непрерывный мониторинг**. Первый и часто недооценённый шаг — **обнаружение активов (asset discovery)**: невозможно защитить то, о чём не знаешь, а в большой облачной среде ресурсы создаются и исчезают постоянно. Поэтому инвентаризацию автоматизируют (AWS Config, Resource Explorer, теги), чтобы всегда иметь актуальную картину.
+
+Дальше — **автоматическое сканирование**: Amazon Inspector непрерывно и без агентов сканирует EC2, образы в ECR и Lambda на уязвимости (CVE); для контейнеров добавляется сканирование в реестре; для конфигураций — Config/Security Hub. Поскольку находок будут тысячи, критична **приоритизация** — нельзя чинить всё сразу. Приоритет считают не по одному CVSS-баллу, а по контексту: эксплуатируется ли уязвимость в дикой природе (EPSS, KEV-список CISA), доступен ли ресурс из интернета, есть ли на нём чувствительные данные, какие у него права. Inspector даёт контекстный риск-скоринг. **Устранение** автоматизируют (патч-менеджмент через Systems Manager, пересборка образов), отслеживают SLA на закрытие по критичности, и **непрерывно перепроверяют**, потому что новые уязвимости и ресурсы появляются ежедневно. Масштаб требует именно автоматизации каждого шага.
+
+> **Новые термины — CVSS, EPSS, KEV.** **CVSS** — стандартная оценка серьёзности уязвимости (0–10). **EPSS** — вероятность того, что уязвимость будут эксплуатировать. **KEV** (Known Exploited Vulnerabilities) — список CISA реально эксплуатируемых уязвимостей. Вместе дают приоритизацию умнее, чем «чини всё с высоким CVSS».
+
+#### Опишите шаги автоматического сканирования уязвимостей облачных ресурсов.
+
+Процесс начинается с **обнаружения и инвентаризации** — система должна знать обо всех ресурсах (инстансы, образы, функции, конфигурации). В облаке это делают через нативные сервисы (Config, теги, Resource Explorer), чтобы охват был полным и автоматически обновлялся при создании новых ресурсов. Без полной инвентаризации сканирование оставит слепые зоны.
+
+Далее — собственно **сканирование разных слоёв**: для ОС и установленного софта на инстансах и для образов контейнеров — сканеры уязвимостей (Amazon Inspector, который работает без агентов и непрерывно; Trivy для образов); для зависимостей приложения — SCA; для облачных конфигураций — Config/Security Hub против базлайна (CIS). Сканирование должно быть **непрерывным и событийным**, а не разовым: новый образ при пуше в реестр сканируется сразу, новый инстанс — при запуске. Результаты **агрегируют** в едином месте (Security Hub) в общем формате, **приоритизируют** по контекстному риску (см. предыдущий вопрос), и направляют в **автоматическое реагирование** (EventBridge → создать тикет / запустить патч через SSM / заблокировать уязвимый образ). Замыкает цикл **повторное сканирование** для подтверждения, что уязвимость устранена. Ключевые качества хорошего процесса — полнота охвата, непрерывность и автоматическая обработка результатов.
+
+#### Какова роль обнаружения активов (asset discovery) в управлении уязвимостями и как его автоматизировать?
+
+**Обнаружение активов** — это процесс постоянного выявления и инвентаризации всех ресурсов в среде. Его роль фундаментальна и формулируется одной фразой: **нельзя защитить то, о чём не знаешь**. Если в инвентаре нет какого-то инстанса или бакета, он не будет сканироваться, патчиться и мониториться — и именно такие «забытые» ресурсы (shadow IT, временные тестовые ВМ, ресурсы поглощённых компаний) чаще всего становятся точкой входа. В облаке проблема острее, чем в классической инфраструктуре, потому что ресурсы создаются и уничтожаются динамически, иногда тысячами в день.
+
+**Автоматизируют** обнаружение через нативные облачные сервисы: **AWS Config** записывает появление/изменение каждого ресурса; **Resource Explorer** и **Resource Groups** дают поиск и группировку; **обязательное тегирование** (через tag policies) позволяет привязывать ресурсы к владельцам и приложениям; для мульти-аккаунта данные агрегируют в Security-аккаунте. Сюда же подключают обнаружение чувствительных данных (Macie для S3) — это «обнаружение активов данных». Важно, чтобы обнаружение было **непрерывным и событийным** (новый ресурс попадает в инвентарь сразу, а не при следующей плановой инвентаризации) и **полным по всем аккаунтам/регионам**. Актуальная автоматическая инвентаризация — это основа, на которую опираются и сканирование уязвимостей, и мониторинг, и реагирование.
+
+#### Как приоритизировать и устранять уязвимости по их серьёзности и влиянию в большой облачной среде?
+
+В большой среде уязвимостей всегда больше, чем рук на их устранение, поэтому **приоритизация — главное умение**. Наивный подход «чинить всё с высоким CVSS» не работает: он тонет в шуме. Зрелый подход учитывает **контекст и реальный риск**. Ключевые факторы приоритизации: эксплуатируется ли уязвимость в реальности (списки KEV от CISA, оценка EPSS); **доступен ли ресурс из интернета** (уязвимость на публичном сервере опаснее той же на изолированном внутреннем); **чувствительность данных и прав** на затронутом ресурсе (есть ли там PII, какие у ресурса IAM-права); есть ли уже эксплойт «в дикой природе». Amazon Inspector рассчитывает такой контекстный риск-скор автоматически.
+
+**Устранение** организуют с **SLA по критичности** (критичные — за дни, высокие — за недели и т.д.) и максимально автоматизируют: патч-менеджмент через **Systems Manager Patch Manager** по расписанию; для контейнеров — пересборка образов с обновлённой базой и redeploy (контейнеры не патчат на месте); для конфигурационных проблем — авто-remediation через Config. Где патч недоступен сразу, применяют **компенсирующие меры** (виртуальный патчинг через WAF, ограничение доступа, изоляция). Прогресс отслеживают метриками (число открытых критичных, время до закрытия) и непрерывно перепроверяют. Итог — фокус усилий на том, что реально опасно, а не на формально высоких баллах.
+
+> **Новый термин — виртуальный патчинг.** Временная защита от эксплуатации уязвимости без изменения самого уязвимого кода — например, правило WAF, блокирующее эксплойт-запросы, пока разработчики готовят настоящий патч.
+
+#### Объясните важность непрерывного мониторинга и переоценки в управлении уязвимостями в масштабе.
+
+Управление уязвимостями — **не разовый проект, а непрерывный процесс**, потому что среда и угрозы постоянно меняются. Каждый день появляются новые ресурсы (которые надо просканировать), новые версии кода и образов (с новыми зависимостями), и — главное — **новые уязвимости в уже работающих компонентах**. Код, который вчера был чистым, сегодня может оказаться уязвимым просто потому, что в его библиотеке нашли новую дыру. Разовое сканирование «на момент Х» устаревает почти сразу.
+
+Поэтому нужны **непрерывный мониторинг** (сканирование при каждом изменении и регулярно по расписанию; новый образ — сканируется при пуше, новый инстанс — при запуске) и **переоценка** (когда выходит новый CVE, система автоматически переоценивает всю среду на его наличие — здесь снова помогают сохранённые SBOM). Без непрерывности возникают опасные слепые зоны и «дрейф» защищённости. Непрерывный мониторинг также даёт **метрики тренда** (растёт или падает число уязвимостей, укладываемся ли в SLA), которые показывают, работает ли программа в целом, и служат доказательством для аудита. Реализуют через Inspector (непрерывное безагентное сканирование), event-driven пайплайны и агрегацию в Security Hub.
+
+#### Как контролировать доступ между Kubernetes-нагрузкой и облачными сервисами вроде S3 или RDS?
+
+Базовый принцип — каждая нагрузка (под) должна получать доступ к облачным сервисам **по своей собственной узкой identity, а не через общие креды узла**. В AWS EKS это решается через **IRSA (IAM Roles for Service Accounts)** или более новый механизм **EKS Pod Identity**: вы привязываете IAM-роль к конкретному Kubernetes service account, и поды, использующие этот account, получают временные AWS-креды именно этой роли — с правами ровно на нужный бакет или базу. В GCP это **Workload Identity**, в Azure — **Workload Identity / Managed Identity**. Так каждый микросервис имеет минимальные права, и компрометация одного пода не даёт доступ к ресурсам других.
+
+Почему это важно и что было бы плохо: альтернатива — дать роль самому узлу (node) кластера, тогда **все** поды на узле унаследуют эти права (нарушение наименьших привилегий и большой blast radius), либо хранить статические ключи доступа в секретах/переменных окружения (риск утечки). IRSA/Pod Identity убирают и то, и другое: нет долгоживущих ключей, права гранулярны на уровень пода. Дополнительно ограничивают доступ сетевыми средствами (доступ к RDS — только из подсетей кластера через security group; доступ к S3 — через VPC Endpoint, не через интернет) и контролируют, какие service accounts какие роли могут использовать. Итог — гранулярный, временный, аудируемый доступ для каждой нагрузки.
+
+> **Новый термин — IRSA / Pod Identity (EKS), Workload Identity (GKE/Azure).** Механизмы, привязывающие облачную IAM-роль к Kubernetes service account, чтобы выдать права отдельному поду (а не всему узлу) через временные креды, без хранения статических ключей.
+
+#### Как балансировать между контролями безопасности и скоростью разработки (developer velocity) в облаке?
+
+Это вечное напряжение: чрезмерная безопасность тормозит разработку и провоцирует обходные пути, а слабая — ведёт к инцидентам. Современный ответ — не выбирать между ними, а **встроить безопасность в рабочий процесс так, чтобы она не мешала** (подход «paved road» / «безопасные рельсы»). Идея: дать разработчикам готовые безопасные шаблоны, модули IaC и пайплайны, в которых правильное делается легко и по умолчанию, а небезопасное требует усилий. Тогда безопасность становится «бесплатной» для скорости.
+
+Конкретные практики баланса: **shift-left** (проверки безопасности — автоматически в CI/CD, быстрая обратная связь прямо в pull request, а не ручной аудит в конце); **guardrails вместо gates** (автоматические ограждения, которые предотвращают по-настоящему опасное, но не требуют ручного одобрения на каждый шаг); **самообслуживание** (разработчик сам разворачивает из заранее одобренных безопасных модулей); **разумная приоритизация** (блокировать деплой только на критичных проблемах, остальное — в тикеты, не останавливая поток); **автоматическое устранение** рутинных проблем без участия человека. Культурно — безопасность как партнёр и enabler, а не «отдел запретов». Цель — чтобы безопасный путь был ещё и самым быстрым путём.
+
+> **Новые термины — shift-left, paved road.** **Shift-left** — перенос проверок безопасности как можно раньше в цикл разработки (на этап кода/сборки). **Paved road («мощёная дорога»)** — набор готовых безопасных инструментов и шаблонов, по которым двигаться легко и безопасно по умолчанию.
+
+---
+
+### Соответствие требованиям (Compliance)
+
+#### Как использовать автоматизацию для принуждения политик безопасности и соответствия в облаке?
+
+Автоматизация — единственный реалистичный способ обеспечивать соответствие в масштабе, потому что вручную проверять сотни и тысячи ресурсов невозможно. Работает она на нескольких уровнях. **Превентивный** — не дать создать нарушающий ресурс: в AWS это **SCP** (политики уровня организации, запрещающие опасные действия), proactive controls и policy-as-code в CI/CD, блокирующие небезопасные шаблоны до развёртывания. **Детективный** — непрерывно находить нарушения: **AWS Config** с правилами и conformance packs постоянно проверяет ресурсы против требований стандарта и помечает несоответствия; Security Hub агрегирует и оценивает соответствие в процентах.
+
+**Корректирующий (авто-remediation)** — автоматически чинить нарушения: связка Config/EventBridge → Lambda/SSM Automation сама исправляет типовые проблемы (включить шифрование, закрыть публичный доступ) или заводит тикет и оповещает. Поверх этого — **непрерывная отчётность** (Audit Manager собирает доказательства соответствия автоматически). Так соответствие превращается из аврального «проекта к аудиту» в постоянно работающий конвейер: правила определены как код, проверяются непрерывно, нарушения чинятся сразу, доказательства копятся сами. Это и снижает риск, и резко удешевляет прохождение аудитов.
+
+> **Новый термин — SCP (Service Control Policy).** Политика уровня AWS Organizations, задающая максимально допустимые действия для аккаунтов (границу). Сама ничего не разрешает — только ограничивает, что вообще можно делать, даже администраторам.
+
+#### Опишите, как автоматизировать патчинг и обновление облачных ресурсов для устранения уязвимостей.
+
+Автоматический патчинг строится вокруг **AWS Systems Manager Patch Manager** (или аналогов). Он позволяет определить **patch baseline** (какие патчи считаются одобренными, через сколько дней после выхода авто-одобряются, какие критичности), сгруппировать ресурсы (patch groups по тегам — например, отдельно прод и dev), и применять патчи по расписанию в заданные **maintenance windows** (окна обслуживания, чтобы не задеть пиковую нагрузку). Сканирование состояния патчей идёт непрерывно, отчётность о соответствии — централизованно.
+
+Чтобы патчинг был безопасным и не ломал прод, применяют практики: сначала катить патчи на dev/staging, потом волнами на прод; использовать **поэтапную выкатку** и health-проверки с автоматическим откатом; для критичных нагрузок предпочитать **immutable-подход** — не патчить работающие инстансы на месте, а собирать новый «золотой» образ (AMI) с патчами в пайплайне (с предварительным сканированием), и заменять инстансы через rolling-обновление в Auto Scaling. Для контейнеров — то же самое: обновить базовый образ, пересобрать, передеплоить. Запускают патчинг и событийно — например, по выходу критичного CVE. Всё это интегрируют с управлением уязвимостями (Inspector нашёл — патч устранил — Inspector подтвердил) и логируют для аудита.
+
+> **Новые термины — patch baseline, maintenance window.** **Patch baseline** — правила, определяющие, какие патчи одобрены к установке. **Maintenance window** — заданное окно времени, когда разрешено проводить обслуживание (патчинг), чтобы не нарушать работу в пиковые часы.
+
+> **Новый термин — immutable infrastructure (неизменяемая инфраструктура).** Подход, при котором работающие серверы не меняют (не патчат на месте), а заменяют целиком на новые из обновлённого образа. Снижает дрейф и делает откат простым.
+
+#### Что такое Infrastructure as Code (IaC) и как он улучшает облачную безопасность?
+
+(Базовое определение IaC уже дано выше — здесь акцент на вкладе в безопасность.) **IaC** — описание инфраструктуры декларативным кодом (CloudFormation, Terraform, CDK), который применяется автоматически. Безопасность он улучшает прежде всего тем, что делает конфигурацию **повторяемой, проверяемой и версионируемой**, устраняя главный источник облачных инцидентов — ручные ошибки конфигурации и дрейф. Когда безопасные настройки заданы в коде один раз, они применяются единообразно везде, а любое изменение проходит через ревью и остаётся в истории — это встроенный аудиторский след.
+
+Конкретные улучшения безопасности от IaC: **безопасные значения по умолчанию** в переиспользуемых модулях (шаблон бакета уже с шифрованием и блокировкой публичного доступа); **policy-as-code** — автоматическая проверка шаблонов на небезопасные настройки до развёртывания (checkov, cfn-guard, tfsec) с блокировкой нарушений; **обнаружение дрейфа** (сравнение реального состояния с кодом); **быстрое и единообразное реагирование** (исправление настройки в коде раскатывается на все среды разом); **воспроизводимость для восстановления** (после инцидента чистую инфраструктуру поднимают из кода). По сути IaC — это фундамент, без которого автоматизация безопасности и соответствия в масштабе невозможна.
+
+#### Как обеспечить соответствие стандартам вроде PCI DSS или ISO 27001 в облаке?
+
+Сначала нужно понять, **что требует стандарт и какие его части применимы** к вашей среде, и сопоставить требования с конкретными техническими контролями. **PCI DSS** (защита данных платёжных карт) требует, среди прочего, сегментации среды с данными карт (чтобы сузить scope), шифрования, WAF перед платёжными приложениями, строгого контроля доступа, логирования и регулярного сканирования. **ISO 27001** — это про систему управления информационной безопасностью (ISMS): риски, политики, процессы, контроли из Annex A. Стратегия — выразить требования как набор обязательных контролей и базлайн.
+
+Дальше — **автоматизировать проверку и доказательство соответствия**. **AWS Config conformance packs** и **Security Hub** имеют готовые наборы под PCI DSS и CIS, которые непрерывно проверяют сотни ресурсов и дают оценку соответствия. Сегментацию реализуют через VPC/аккаунты, шифрование — через KMS, доступ — через IAM с MFA и наименьшими привилегиями, логирование — CloudTrail (неизменяемый), сканирование — Inspector. **AWS Audit Manager** автоматически собирает доказательства и раскладывает их по контролям стандарта, готовя пакеты к аудиту. **AWS Artifact** даёт сертификаты соответствия самой AWS как провайдера (нижний слой ответственности). Ключевая мысль: соответствие должно быть **непрерывным и автоматизированным** (постоянно доказуемое состояние), а не разовой подготовкой к проверке.
+
+> **Новые термины — Audit Manager, AWS Artifact.** **Audit Manager** автоматически собирает доказательства соответствия из ваших данных (Config, CloudTrail и др.) и маппит их на контроли стандарта. **AWS Artifact** — портал с отчётами о соответствии самой AWS (SOC, ISO, PCI), которые нужны вашим аудиторам как доказательство безопасности платформы.
+
+#### Объясните преимущества непрерывного мониторинга безопасности и как его достичь в облаке.
+
+**Непрерывный мониторинг** — это постоянное автоматическое наблюдение за состоянием безопасности (конфигурации, угрозы, доступ, уязвимости) вместо периодических ручных проверок. Его главное преимущество — **скорость обнаружения и реакции**: проблему (открывшийся бакет, новую угрозу, дрейф конфигурации) замечают в момент возникновения, а не спустя месяцы при следующем аудите. Это резко сокращает окно, в течение которого злоумышленник может действовать незамеченным, и уменьшает ущерб. Другие выгоды: доказуемое соответствие (непрерывные данные = готовые доказательства для аудиторов), раннее обнаружение дрейфа, объективные метрики состояния, и возможность автоматического реагирования.
+
+**Достигается** в облаке связкой нативных сервисов (на примере AWS): **CloudTrail** (журнал всех API-действий), **AWS Config** (непрерывная проверка конфигураций против правил), **GuardDuty** (обнаружение угроз по логам и поведению), **Inspector** (непрерывное сканирование уязвимостей), **Security Hub** (агрегация всего этого и оценка соответствия в едином окне), **CloudWatch** (метрики и алармы). Поверх — **EventBridge** для мгновенной маршрутизации событий в оповещения и авто-remediation. Всё это включают на уровне всей организации (через делегированных администраторов и Control Tower), чтобы покрытие было полным и автоматически распространялось на новые аккаунты. Результат — среда, которая сама постоянно проверяет себя и сигналит/реагирует на отклонения.
+
+#### Как использовать облачные сервисы безопасности для автоматизации обнаружения угроз и реагирования?
+
+Автоматизация «обнаружение → реагирование» — стандартный событийный конвейер. **Обнаружение** обеспечивают управляемые сервисы: **GuardDuty** (анализирует CloudTrail, VPC Flow Logs, DNS и поведение, выдавая готовые находки об угрозах — перебор, общение с C2, аномальные вызовы), **Inspector** (уязвимости), **Config** (нарушения конфигураций), **Macie** (чувствительные данные в S3). Они избавляют от написания собственных правил детектирования для типовых атак. Все находки стекаются в **Security Hub** в едином формате.
+
+**Реагирование** автоматизируют через **EventBridge** — шину событий, в которую эти сервисы публикуют находки. Вы пишете правило («если пришла критичная находка типа X») и цель: **SNS** для оповещения дежурных (email/Slack/PagerDuty), **Lambda** для немедленного действия (изолировать инстанс, отозвать ключ, закрыть бакет), или **Step Functions** для сложного многошагового playbook с возможным шагом подтверждения человеком на разрушительные действия. **Systems Manager** служит «руками» для действий на инстансах. Схематично: `GuardDuty/Security Hub → EventBridge → (SNS | Lambda | Step Functions) → SSM`. Так типовые угрозы обрабатываются за секунды без участия человека, а люди подключаются только к сложным случаям. Это и есть основа SOAR в облаке.
+
+> **Новый термин — SOAR (Security Orchestration, Automation and Response).** Подход/класс инструментов для автоматизации реагирования на инциденты: оркестрация действий по playbook-ам в ответ на события безопасности. В AWS реализуется связкой EventBridge + Lambda/Step Functions.
+
+#### Опишите случай, когда вы внедряли автоматическое реагирование на инциденты в облаке.
+
+Хороший пример — **автоматическая реакция на публично открытый S3-бакет**. Сценарий: разработчик по ошибке снял блокировку публичного доступа с бакета, где лежат внутренние данные. Без автоматизации это могло бы оставаться незамеченным днями. Реализованный конвейер: **AWS Config**-правило `s3-bucket-public-read-prohibited` непрерывно проверяет бакеты и при нарушении генерирует событие; **EventBridge** ловит его и запускает **Lambda**, которая немедленно восстанавливает Block Public Access на бакете, и параллельно через **SNS** оповещает команду безопасности с деталями (какой бакет, кто изменил — из CloudTrail). Всё происходит за секунды, окно экспозиции минимально.
+
+Другой типовой пример — **реакция на находку GuardDuty о скомпрометированном инстансе**: EventBridge по находке запускает Step Functions, который снимает снапшот диска для форензики, переводит инстанс в карантинную security group, выводит его из балансировщика и заводит тикет инцидента. Для разрушительных действий в такой playbook встраивают шаг подтверждения человеком. Ключевые уроки из подобных внедрений: автоматизировать в первую очередь **частые и однозначные** случаи (где ложное срабатывание маловероятно и действие безопасно); для рискованных действий оставлять human-in-the-loop; обязательно логировать каждое авто-действие для аудита; и тестировать конвейеры (в т.ч. через GuardDuty sample findings), чтобы убедиться, что реакция срабатывает.
+
+#### Каковы ключевые компоненты системы CSPM и как использовать её для поддержания безопасности?
+
+**CSPM (Cloud Security Posture Management)** — класс инструментов для непрерывного контроля «постуры безопасности» облака, то есть состояния конфигураций относительно best practices и стандартов. Ключевые компоненты: **обнаружение и инвентаризация активов** (полная видимость всех ресурсов во всех аккаунтах/облаках); **непрерывная оценка конфигураций** против набора правил (CIS, PCI, собственный базлайн); **обнаружение мисконфигураций и рисков** (открытые бакеты, широкие права, отсутствие шифрования); **приоритизация** находок по риску; **оповещение и отчётность** (в т.ч. о соответствии); и **авто-remediation** (автоматическое или по кнопке исправление). Продвинутые CSPM добавляют анализ путей атаки (как цепочка мисконфигураций ведёт к критичным данным).
+
+В AWS роль CSPM во многом закрывают нативные **Security Hub + Config** (плюс GuardDuty/Inspector/Macie как источники), а в мульти-облаке используют сторонние платформы (Wiz, Prisma Cloud, Defender for Cloud и др.), дающие единое окно по AWS+GCP+Azure. Использование для поддержания безопасности: включить на всю организацию, выбрать стандарты для оценки, настроить непрерывное сканирование и приоритизированные алерты, подключить авто-remediation для типовых проблем, отслеживать тренд оценки соответствия и закрывать находки по SLA. CSPM отвечает на главный операционный вопрос — «нет ли прямо сейчас в нашем облаке опасных настроек, и если есть, насколько они опасны и как быстро мы их чиним».
+
+#### Объясните концепцию SIEM и его роль в облачной безопасности.
+
+**SIEM (Security Information and Event Management)** — система, которая **собирает логи и события из множества источников, нормализует их к единому виду, коррелирует по правилам и выдаёт приоритизированные оповещения** о подозрительной активности. Это «командный центр» команды безопасности (SOC). Главная ценность SIEM — **корреляция**: отдельные события по разным системам по отдельности безобидны, но вместе складываются в картину атаки (неудачные входы + успешный вход из новой страны + массовое скачивание данных = вероятная компрометация). SIEM это связывает и поднимает один осмысленный алерт вместо тысяч разрозненных записей.
+
+В облачной безопасности роль SIEM — дать **сквозную видимость и обнаружение** поверх всех источников: CloudTrail, VPC Flow Logs, логи приложений, находки GuardDuty/Security Hub, логи WAF, события identity. Он хранит логи для расследований и форензики, обеспечивает корреляцию и поиск, поддерживает соответствие (централизованный неизменяемый аудит) и питает реагирование. В облаке SIEM реализуют по-разному: нативно (Amazon OpenSearch с готовыми решениями, или **Security Lake** как нормализованное озеро данных в формате OCSF, питающее аналитику), либо сторонними продуктами (Splunk, Microsoft Sentinel, Elastic), куда логи доставляют через Kinesis Firehose. SIEM часто дополняют SOAR-частью для автоматического реагирования. Важная мысль: SIEM полезен ровно настолько, насколько хорошо настроены источники логов и правила корреляции — иначе он тонет в шуме.
+
+> **Новый термин — OCSF / Security Lake.** **OCSF** (Open Cybersecurity Schema Framework) — открытый единый формат описания событий безопасности. **Amazon Security Lake** автоматически централизует логи безопасности из AWS и сторонних источников в OCSF, упрощая работу любого SIEM/аналитики поверх единых данных.
+
+---
+
+## Вопросы по AWS
+
+### Атака и защита
+
+#### Как защитить AWS EC2-инстанс?
+
+Защита EC2-инстанса (виртуальной машины) строится слоями. **Сеть:** держать инстанс в приватной подсети без публичного IP, если ему не нужен прямой доступ из интернета; security group открывать минимально (только нужные порты только нужным источникам); не оставлять SSH/RDP открытыми наружу. **Доступ:** не использовать SSH-ключи и bastion вовсе, а заходить через **SSM Session Manager** (доступ через браузер/CLI с полным логированием, без открытого 22-го порта). **Identity:** давать инстансу права через привязанную IAM-роль (instance profile) с наименьшими привилегиями, а не хранить ключи на диске.
+
+**Метаданные:** обязательно включить **IMDSv2** (защищённая версия сервиса метаданных) — это закрывает целый класс атак SSRF, через которые крадут креды роли. **Данные:** шифровать тома EBS через KMS. **Гигиена:** регулярно патчить (Systems Manager Patch Manager) или использовать immutable-подход (новый образ вместо патча на месте); сканировать на уязвимости (Inspector); ставить минимально необходимый софт. **Мониторинг:** GuardDuty (включая Runtime Monitoring для поведенческого контроля внутри ОС), CloudWatch, VPC Flow Logs. Итог — несколько независимых барьеров: даже пробитие одного слоя не даёт злоумышленнику ни доступа, ни прав, ни данных.
+
+> **Новый термин — SSM Session Manager.** Компонент AWS Systems Manager, дающий защищённый доступ к командной строке инстанса без открытых портов, SSH-ключей и bastion-серверов, с полным логированием каждой сессии.
+
+> **Новый термин — instance profile.** Контейнер для IAM-роли, привязываемый к EC2-инстансу; через него инстанс автоматически получает временные креды роли, без хранения ключей.
+
+#### Что такое AWS IAM и как он работает?
+
+**AWS IAM (Identity and Access Management)** — сервис, управляющий тем, кто (аутентификация) и что (авторизация) может делать в AWS-аккаунте. Его основные объекты: **пользователи** (users — постоянные идентичности, в основном для редких случаев, людей лучше заводить через федерацию), **группы** (groups — наборы пользователей с общими правами), **роли** (roles — временные идентичности, которые «надевают» пользователи, сервисы и приложения) и **политики** (policies — JSON-документы с правилами «разрешить/запретить действие над ресурсом»).
+
+Работает IAM так: при каждом запросе к AWS API проверяется, есть ли у принципала разрешение. Логика оценки: по умолчанию всё запрещено; **явный Allow** в применимых политиках разрешает действие; **явный Deny** перебивает любой Allow (deny всегда выигрывает). На итоговое решение влияет цепочка: identity-политики (на принципале), resource-политики (на ресурсе, например на бакете), permission boundaries (потолок прав), SCP (границы организации) и session policies. Ключевые практики правильного IAM: наименьшие привилегии, временные креды через **STS** вместо постоянных ключей, MFA для людей, федерация с корпоративным IdP, и регулярный аудит. IAM — фундамент всей облачной безопасности, потому что в облаке права и есть периметр.
+
+> **Новый термин — STS (Security Token Service).** Сервис, выдающий временные учётные данные (на минуты–часы) при «надевании» роли (assume role) или федерации. Основа временного доступа в AWS.
+
+#### Как защититься от DDoS-атак в AWS?
+
+Защита от DDoS (атаки на отказ в обслуживании через лавину трафика) в AWS многослойна. Базовый слой — **AWS Shield Standard**, включённый бесплатно для всех клиентов: он автоматически защищает от типовых сетевых и транспортных атак (уровни L3/L4 — SYN-флуды, отражённые атаки) на CloudFront, Route 53, ALB. Для большинства атак этого слоя достаточно без всякой настройки.
+
+Для критичных приложений добавляют **AWS Shield Advanced** — платный сервис с расширенной защитой (включая прикладной уровень L7), круглосуточной поддержкой команды реагирования AWS (**SRT — Shield Response Team**), детальными метриками атак и **защитой от роста счёта** (cost protection — AWS компенсирует масштабирование, вызванное атакой). Поверх этого ключевую роль играет архитектура: **CloudFront** (CDN) распределяет и поглощает трафик у периферии близко к атакующим; **AWS WAF** на прикладном уровне отсекает вредоносные запросы и ограничивает частоту (rate-based rules против флуда запросами); **Route 53** устойчив к DNS-атакам; **автомасштабирование** помогает выдержать всплеск. Принцип: распределить и поглотить трафик на периферии (CloudFront+Shield), отфильтровать вредоносное (WAF), и не выставлять origin напрямую.
+
+> **Новый термин — AWS Shield.** Сервис защиты от DDoS. **Standard** — бесплатный базовый (L3/L4). **Advanced** — платный, с защитой L7, поддержкой SRT и компенсацией расходов от атаки.
+
+#### Что такое AWS GuardDuty и как он помогает в безопасности?
+
+**AWS GuardDuty** — управляемый сервис обнаружения угроз. Он непрерывно анализирует несколько источников данных — журнал API-вызовов **CloudTrail**, **VPC Flow Logs** (сетевой трафик), **DNS-запросы**, а опционально и события S3, EKS, RDS, Lambda, выполнение на инстансах — и с помощью машинного обучения, аналитики аномалий и баз индикаторов угроз (threat intelligence) выдаёт **находки (findings)**: «инстанс общается с известным командным сервером», «вход с подозрительного IP/из нетипичной страны», «перебор SSH», «майнинг криптовалюты», «креды роли используются вне AWS».
+
+Его главная ценность — он **работает «из коробки», без написания правил и без развёртывания инфраструктуры**: включается одним действием, не влияет на производительность нагрузок (анализирует логи, а не трафик напрямую), и сразу знает типовые атаки. В организации его включают централизованно через делегированного администратора сразу на все аккаунты. Находки GuardDuty стекаются в Security Hub и через EventBridge запускают автоматическое реагирование (оповещение, изоляция инстанса, отзыв ключа). Это основной детективный слой в AWS — то, что замечает активную компрометацию.
+
+> **Новый термин — threat intelligence (разведданные об угрозах).** Постоянно обновляемые базы известных вредоносных IP, доменов, хэшей и паттернов поведения. GuardDuty сопоставляет с ними активность в вашем аккаунте.
+
+#### Объясните назначение AWS CloudTrail и CloudWatch в мониторинге безопасности.
+
+Это два разных, дополняющих друг друга сервиса. **CloudTrail** — это **журнал аудита API-действий**: он записывает, кто (какой принципал), когда, с какого IP и какой именно API-вызов совершил («пользователь X удалил бакет Y», «роль Z создала инстанс»). Это основа расследований, форензики и аудита соответствия — ответ на вопрос «что произошло в аккаунте и кто это сделал». CloudTrail бывает с management events (управляющие действия) и data events (доступ к данным, например чтение конкретного объекта S3).
+
+**CloudWatch** — это сервис **мониторинга метрик и логов**: он собирает числовые показатели (загрузка CPU, число ошибок, количество вызовов), хранит логи приложений (CloudWatch Logs) и позволяет настраивать **алармы** (срабатывание при выходе показателя за порог) и **дашборды**. С точки зрения безопасности CloudWatch используют для оперативных оповещений: metric filter по логам CloudTrail может поднять аларм на «вход root», «отключение CloudTrail», «N неудачных авторизаций подряд». Кратко: CloudTrail отвечает «что было сделано» (аудит/история), CloudWatch — «как система себя ведёт прямо сейчас и не пора ли бить тревогу» (мониторинг/алертинг). Часто их связывают: CloudTrail пишет логи, CloudWatch на них реагирует.
+
+#### Что такое AWS KMS и как он управляет ключами шифрования?
+
+**AWS KMS (Key Management Service)** — управляемый сервис для создания, хранения и использования криптографических ключей. Главная идея: **сам секретный материал ключа никогда не покидает KMS** (он хранится в защищённых аппаратных модулях, FIPS-сертифицированных), а сервисы и приложения лишь *обращаются* к KMS с просьбой зашифровать или расшифровать данные — при наличии прав. Так вы получаете централизованный контроль над ключами и полный аудит их использования (каждая операция логируется в CloudTrail), не храня ключи в коде или на дисках.
+
+Технически KMS использует **конвертное шифрование (envelope encryption)**: данные шифруются быстрым симметричным **data key**, а сам data key шифруется мастер-ключом (**KMS key**, бывший CMK), который и хранится в KMS. Это совмещает скорость (данные шифруются локально data key-ем) и контроль (расшифровать data key можно только через KMS с правами). Доступ к ключам управляется **key policies** и IAM по наименьшим привилегиям (кто может Encrypt/Decrypt/управлять). KMS интегрирован практически со всеми сервисами AWS (S3, EBS, RDS, и т.д.) — это стандартный способ шифрования в покое. Поддерживается автоматическая годовая ротация ключей, multi-Region keys для мультирегиональных сценариев, импорт своего ключа (BYOK) и внешнее хранилище (XKS) для строгих требований.
+
+> **Новый термин — envelope encryption (конвертное шифрование).** Данные шифруются data key-ем, а data key шифруется мастер-ключом из KMS. Сочетает скорость локального шифрования с централизованным контролем доступа к мастер-ключу.
+
+#### Опишите AWS Security Groups и Network ACL. Чем они отличаются?
+
+(Этот вопрос уже разбирался в базовом разделе — кратко повторим суть.) **Security Group (SG)** — фаервол **на уровне ресурса** (инстанса/базы), **stateful** (помнит соединения: разрешил входящее — ответное исходящее разрешается само), поддерживает только **allow**-правила. **Network ACL (NACL)** — фаервол **на уровне подсети**, **stateless** (входящий и исходящий контролируются независимо, нужны правила в обе стороны), поддерживает и **allow**, и **deny**, обрабатывает правила по порядку номеров.
+
+На практике их применяют слоями (defense in depth): SG — основной инструмент тонкого контроля (открыть конкретный порт от конкретного источника, причём источником лучше указывать другую SG, а не диапазон IP); NACL — грубый барьер на границе подсети (например, явно заблокировать диапазон вредоносных IP, что SG не умеет из-за отсутствия deny). Типичные ошибки: открытые `0.0.0.0/0` админ-порты в SG; использование NACL там, где достаточно SG, что усложняет поддержку.
+
+#### Как реализовать best practices безопасности для AWS Lambda?
+
+**Lambda** — serverless-функции (вы загружаете код, AWS запускает его по событию и масштабирует, серверов нет). Безопасность начинается с **наименьших привилегий execution role**: у каждой функции своя роль с правами ровно на то, что ей нужно (этот бакет, эта таблица), а не общая широкая роль. **Секреты** — не в переменных окружения открытым текстом и не в коде, а в Secrets Manager / Parameter Store, откуда функция берёт их по правам (а если в env — то хотя бы шифрованными KMS).
+
+Дальше: **сканирование зависимостей** (Inspector for Lambda находит уязвимости в библиотеках — частый вектор атаки на функции); **валидация входных данных** (функции часто триггерятся событиями/запросами — нужно защищаться от инъекций и, как в известном примере, от SSRF); **сетевая изоляция** (если функция ходит к приватным ресурсам — размещать в VPC, контролировать исходящий трафик); **лимиты конкуррентности** (защита от runaway-затрат и злоупотребления); **подпись кода** (Lambda code signing — допуск только доверенных артефактов); и **мониторинг** (CloudWatch Logs, X-Ray, GuardDuty Lambda Protection). Отдельно — осторожность с правами `iam:PassRole` и с тем, какие триггеры могут вызывать функцию (resource-based policy). Принцип тот же: минимальные права, никаких секретов в коде, проверка входных данных, наблюдаемость.
+
+#### Что такое AWS Well-Architected Framework и почему он важен для безопасности?
+
+**AWS Well-Architected Framework** — это свод best practices от AWS, организованный в **шесть столпов**: операционное превосходство, **безопасность**, надёжность, эффективность производительности, оптимизация затрат и устойчивость (sustainability). Это структурированный способ проектировать и оценивать архитектуры. Для каждого столпа есть набор принципов, вопросов для самопроверки и рекомендаций. **Well-Architected Tool** в консоли AWS позволяет провести структурированное ревью своей нагрузки по этим вопросам и получить список выявленных рисков.
+
+Для безопасности фреймворк важен тем, что даёт **проверочный список зрелости** и общий язык. Столп безопасности охватывает: фундамент идентичности (наименьшие привилегии, MFA, федерация), обнаружение (логирование, мониторинг), защиту инфраструктуры (сеть, сегментация), защиту данных (шифрование, классификация), реагирование на инциденты и безопасность приложений. Проходя ревью, команда систематически находит пробелы, которые иначе легко упустить, и приоритизирует улучшения. На собеседовании ссылка на Well-Architected показывает, что кандидат мыслит не точечными настройками, а архитектурно и системно. Это основа и для оценки соответствия, и для gap-анализа.
+
+#### Как безопасно управлять секретами и учётными данными в AWS?
+
+Главный принцип — **никаких секретов в коде, конфигах, образах или переменных окружения открытым текстом**, и максимальный отказ от долгоживущих учётных данных вообще. Для машинных доступов внутри AWS секреты часто вообще не нужны: приложение получает временные креды через привязанную **IAM-роль** (instance profile, task role/IRSA, Lambda execution role), а не хранит ключи. Это устраняет самый частый источник утечек.
+
+Там, где секрет всё же необходим (пароль к не-IAM базе, сторонний API-ключ), его хранят в **AWS Secrets Manager** — с шифрованием KMS, контролем доступа по наименьшим привилегиям, **автоматической ротацией** (встроенной для RDS, кастомной через Lambda для прочего) и аудитом каждого обращения в CloudTrail. Для конфигурационных параметров и менее критичных секретов подходит **SSM Parameter Store** (тип SecureString, тоже шифруется KMS, дешевле). Для машин вне AWS — **IAM Roles Anywhere** (доступ по сертификатам без статических ключей) или OIDC-федерация (для CI/CD). Дополнительно: мониторинг утёкших ключей (GuardDuty, сканирование репозиториев на секреты), короткая ротация там, где статические ключи неизбежны, и MFA на чувствительные операции. Итог — секреты централизованы, шифрованы, ротируются и аудируются, а в идеале заменены временными ролями.
+
+> **Новый термин — IAM Roles Anywhere.** Механизм, позволяющий нагрузкам вне AWS (он-прем, другой облако) получать временные AWS-креды по сертификату X.509 от доверенного УЦ, без хранения постоянных access keys.
+
+#### Как принудительно включить HTTPS (TLS 1.2 и 1.3) на всех внешних приложениях и почему это важно для безопасности?
+
+Принуждение HTTPS реализуют на нескольких уровнях. На точках входа (**CloudFront, ALB, API Gateway**) настраивают **редирект HTTP→HTTPS** и **security policy**, задающую минимальную версию протокола (TLS 1.2, в идеале только 1.2/1.3) и допустимый набор шифров, отсекая устаревшие. Сертификаты выпускают и автопродлевают через **ACM**. Включают **HSTS** (заголовок, заставляющий браузер всегда использовать HTTPS). Для хранилищ и API добавляют принуждение на уровне политики: например, bucket policy с условием `aws:SecureTransport: false → Deny` запрещает любые обращения к S3 по незашифрованному каналу. Соответствие версии TLS контролируют через Config-правила и сканеры.
+
+Почему это важно: без шифрования канала трафик можно **перехватить и прочитать** (пароли, токены, данные) или **подменить** (man-in-the-middle) на любом участке сети между клиентом и сервером. TLS обеспечивает конфиденциальность (никто не прочитает), целостность (никто не подменит) и аутентификацию сервера (вы говорите с тем, с кем думаете). Старые версии (SSL, TLS 1.0/1.1) имеют известные уязвимости, поэтому требуют минимум 1.2. Для многих стандартов (PCI DSS) шифрование передаваемых чувствительных данных — прямое обязательное требование. TLS 1.3 вдобавок быстрее (меньше задержка на рукопожатие), так что безопасность здесь не противоречит производительности.
+
+> **Новый термин — HSTS (HTTP Strict Transport Security).** Заголовок ответа, который указывает браузеру в дальнейшем обращаться к сайту только по HTTPS, защищая от попыток понизить соединение до HTTP.
+
+> **Новый термин — man-in-the-middle (MITM).** Атака, при которой злоумышленник встаёт между клиентом и сервером, перехватывая или подменяя трафик. TLS защищает от неё.
+
+#### Как защититься от утечки данных (data exfiltration) в облаке?
+
+Защита от exfiltration (несанкционированного вывода данных наружу) строится на контроле **исходящих путей** и обнаружении аномалий. Сетевой контроль: держать ресурсы с данными в **приватных подсетях**, ограничивать исходящий трафик (egress) — не давать инстансам свободно ходить в интернет; обращаться к сервисам AWS через **VPC Endpoints (PrivateLink)**, чтобы трафик не выходил в публичную сеть; для контролируемого egress использовать прокси/firewall (**AWS Network Firewall**, DNS Firewall) с разрешёнными списками доменов. Это закрывает каналы, по которым данные могли бы «утечь».
+
+Слой данных и доступа: **наименьшие привилегии** (приложение/роль имеет доступ только к нужным данным — даже при компрометации выкачать можно немного); **шифрование** и **VPC-условия в политиках** (доступ к бакету только из своей VPC); **обнаружение чувствительных данных** (Macie — где лежит PII и не открыто ли оно). Слой обнаружения: **GuardDuty** ловит характерные признаки exfiltration (необычно большой исходящий трафик, обращение к подозрительным адресам, использование кредов вне AWS), **VPC Flow Logs** и **CloudTrail data events** дают видимость аномального доступа к данным. И реагирование: автоматическая изоляция при срабатывании. Комбинация «закрыть каналы вывода + наименьшие привилегии + обнаружение аномалий» и составляет защиту от утечки.
+
+> **Новый термин — egress (исходящий трафик).** Трафик, идущий из вашей сети наружу. Контроль egress (ограничение, куда ресурсы могут обращаться) — ключ к защите от exfiltration, и часто упускается по сравнению с контролем входящего трафика.
+
+> **Новый термин — AWS Network Firewall.** Управляемый сетевой фаервол уровня VPC с поддержкой фильтрации по доменам, инспекции трафика и правил предотвращения вторжений — используется в т.ч. для контроля исходящего трафика.
+
+#### Что такое атака повышения привилегий (privilege escalation) и как её предотвратить в облаке?
+
+**Privilege escalation** — это получение злоумышленником (или скомпрометированной сущностью) прав выше тех, что были изначально. В облаке это обычно происходит через **IAM**: имея ограниченные права, атакующий использует их, чтобы выдать себе или другой сущности больше прав. Классические векторы: право `iam:CreateAccessKey` на привилегированного пользователя; `iam:AttachRolePolicy`/`PutUserPolicy` (приложить себе админскую политику); `iam:PassRole` + создание ресурса с привилегированной ролью (например, запустить Lambda/EC2 с админ-ролью и действовать через неё); `sts:AssumeRole` на более мощную роль; изменение trust policy роли. Серия таких прав превращает «маленький» доступ в полный контроль.
+
+Предотвращение: **наименьшие привилегии** (не выдавать опасные iam:*-действия без крайней нужды); **permission boundaries** (потолок, не дающий выйти за рамки даже при манипуляциях с политиками); **ограничение `iam:PassRole`** условиями (можно передавать только конкретные неприпривилегированные роли); **SCP** на уровне организации, запрещающие опасные действия; регулярный **аудит прав** (Access Analyzer находит пути эскалации и неиспользуемые опасные права); **мониторинг** (GuardDuty и CloudTrail-алармы на подозрительные IAM-изменения, assume role, создание ключей). Также — разделение обязанностей (тот, кто управляет IAM, и тот, кто использует, — разные роли). Суть: убрать «строительные кирпичики» для эскалации и замечать попытки их использовать.
+
+#### Объясните важность web application firewall (WAF) в облачной безопасности.
+
+**WAF (Web Application Firewall)** — фаервол **уровня приложения (L7)**, который инспектирует HTTP/HTTPS-запросы и блокирует вредоносные по набору правил. В отличие от сетевого фаервола (который смотрит на IP и порты), WAF понимает содержимое веб-запроса и ловит атаки на саму логику приложения: SQL-инъекции, межсайтовый скриптинг (XSS), обход путей, вредоносные payload-ы. В AWS это **AWS WAF**, который ставится перед CloudFront, ALB или API Gateway.
+
+Важность WAF в том, что он защищает приложения от самых распространённых веб-атак (OWASP Top 10) на «передовой», до того как запрос дойдёт до приложения, и закрывает уязвимости, которые иначе пришлось бы немедленно править в коде. Ключевые возможности AWS WAF: **managed rule groups** (готовые наборы правил от AWS и партнёров против известных атак и плохих IP), **rate-based rules** (ограничение частоты запросов — против перебора, скрейпинга, L7-DDoS), **Bot Control** (отсев ботов), **geo-блокировка**, и кастомные правила под бизнес. Отдельная важная функция — **виртуальный патчинг**: при обнаружении уязвимости в приложении можно быстро добавить правило WAF, блокирующее её эксплуатацию, пока готовится настоящий фикс. Для многих стандартов (PCI DSS) WAF перед платёжными приложениями — обязательное требование.
+
+> **Новый термин — OWASP Top 10.** Регулярно обновляемый список самых критичных уязвимостей веб-приложений (инъекции, сломанный контроль доступа, XSS и др.). Managed-правила WAF во многом закрывают именно их.
+
+#### Как обнаруживать и реагировать на инсайдерские угрозы в облаке?
+
+**Инсайдерская угроза** — риск, исходящий от тех, у кого уже есть легитимный доступ: сотрудников, подрядчиков. Она коварна тем, что у инсайдера есть права, поэтому его действия выглядят «нормально», а классический периметр против него бесполезен. Бывает злонамеренной (кража данных, саботаж) и непреднамеренной (ошибка, небрежность). Обнаружение строится на **анализе поведения и аномалий**: GuardDuty выявляет нетипичную активность для конкретного принципала (доступ в необычное время, из необычного места, к необычным ресурсам, аномально большой объём операций); CloudTrail и его анализ дают полную картину действий; UEBA-подходы (анализ поведения пользователей) выявляют отклонения от привычного профиля.
+
+Предотвращение и реагирование: **наименьшие привилегии** и **разделение обязанностей** (инсайдер не должен иметь доступ ко всему; критичные действия требуют двух людей — dual control); **just-in-time доступ** (повышенные права выдаются временно под конкретную задачу, а не постоянно); **полный неизменяемый аудит** (инсайдер не может стереть свои следы — логи в отдельном защищённом аккаунте); **обнаружение чувствительных данных и контроль их вывода** (Macie + контроль egress против кражи данных); **мониторинг привилегированных действий** с алертами. При срабатывании — стандартное реагирование: приостановить доступ, расследовать по логам, сохранить улики. Важна и организационная сторона: процессы оффбординга (мгновенный отзыв доступа при увольнении), фоновые проверки, культура. Суть — ограничить, что инсайдер вообще может, и замечать отклонения от нормального поведения.
+
+> **Новый термин — UEBA (User and Entity Behavior Analytics).** Анализ поведения пользователей и сущностей: система строит профиль «нормального» поведения и сигналит при отклонениях. Помогает ловить инсайдеров и скомпрометированные учётки, чьи действия формально разрешены.
+
+> **Новый термин — just-in-time (JIT) доступ.** Выдача повышенных прав только на время выполнения конкретной задачи с автоматическим отзывом после, вместо постоянно действующих привилегий.
+
+#### Опишите сценарий, где неправильно настроенная IAM-политика в AWS создала риск. Как выявить и исправить?
+
+(Концептуально перекликается с аналогичным вопросом из общего раздела — здесь конкретнее по AWS.) Сценарий: роль для CI/CD-пайплайна получила политику с `"Action": "iam:*"` и `"Resource": "*"` — чтобы «деплой мог создавать любые роли». Это означает, что любой, кто скомпрометирует пайплайн (или сам недобросовестный разработчик с доступом к нему), может создать админскую роль и захватить весь аккаунт — классический путь эскалации привилегий. Риск критический: одна широкая политика обесценивает всю остальную защиту.
+
+**Выявление:** IAM Access Analyzer (policy validation подсветит чрезмерно широкие права и опасные паттерны; unused access покажет, что реально из этих прав используется); поиск по политикам на `"*"` в Action/Resource, особенно с `iam:*`, `sts:AssumeRole`, `*:*`; анализ CloudTrail (что роль реально делала). **Исправление:** сузить до конкретных нужных действий и ресурсов (Access Analyzer сгенерирует политику по фактической активности); ограничить `iam:PassRole` конкретными ролями через условие; навесить **permission boundary**, чтобы пайплайн не мог создавать роли мощнее дозволенного; добавить условия (из какой VPC/аккаунта); встроить проверку политик в сам пайплайн (policy-as-code), чтобы впредь широкие права не доходили до прода; включить мониторинг на подозрительные IAM-изменения. Принцип — заменить «дать всё на всякий случай» на «дать ровно необходимое, ограничить потолком, проверять автоматически».
+
+#### Что такое DDoS-атака и как облачные провайдеры помогают её смягчить?
+
+(Определение DDoS уже давалось — здесь акцент на роли провайдера.) **DDoS (Distributed Denial of Service)** — атака, в которой множество распределённых источников (часто ботнет из заражённых устройств) одновременно заваливают цель трафиком или запросами, чтобы исчерпать её ресурсы и сделать недоступной для легитимных пользователей. Атаки бывают объёмными (забить канал, L3/L4) и прикладными (исчерпать ресурсы приложения «дорогими» запросами, L7).
+
+Облачные провайдеры помогают за счёт **огромного масштаба и встроенной защиты**, которые недоступны отдельной компании. Их глобальная сеть способна **поглотить** объёмные атаки, распределив трафик по множеству точек присутствия (через CDN — CloudFront у AWS, Cloud CDN у GCP). Встроенные сервисы защиты (**AWS Shield**, **Azure DDoS Protection**, **Google Cloud Armor**) автоматически детектируют и фильтруют атакующий трафик у периферии, далеко от вашего origin. На прикладном уровне **WAF** отсекает вредоносные запросы и ограничивает их частоту. Anycast-маршрутизация DNS (Route 53) рассеивает атаки на DNS. Автомасштабирование помогает выдержать всплеск легитимной части нагрузки. Премиальные уровни (Shield Advanced) добавляют экспертную поддержку и компенсацию расходов. Итог: провайдер берёт на себя поглощение и фильтрацию атаки на своей инфраструктуре, чего клиент в одиночку обеспечить не смог бы.
+
+> **Новый термин — Anycast.** Способ маршрутизации, при котором один IP-адрес обслуживается из многих географических точек, и трафик идёт в ближайшую. Естественным образом распределяет (рассеивает) DDoS-нагрузку по множеству точек.
+
+#### Как обеспечить безопасность данных, передаваемых между он-прем инфраструктурой и облаком?
+
+Данные между собственным дата-центром (он-прем) и облаком должны идти **по защищённому и, желательно, приватному каналу**, а не по открытому интернету. Два основных способа подключения: **Site-to-Site VPN** (зашифрованный IPsec-туннель поверх интернета — быстро поднять, но зависит от интернета и его задержек) и **AWS Direct Connect** (выделенный физический канал от вашего дата-центра в AWS — стабильная задержка, приватность, но дольше и дороже организовать). Для максимальной защиты Direct Connect комбинируют с VPN поверх него (шифрование + приватность).
+
+Поверх канала — несколько слоёв: **шифрование в движении** (TLS/mTLS на уровне приложений, даже внутри VPN — defense in depth); **шифрование в покое** на обоих концах; **строгий контроль доступа** на стыке (что и кому разрешено пересекать границу); **сегментация** (гибридное подключение терминируется в выделенной сети, а не даёт прямой доступ ко всему); **логирование трафика на стыке** (VPC/Transit Gateway Flow Logs — слепых зон на границе быть не должно). Для обмена файлами/данными используют защищённые управляемые сервисы (Transfer Family с SFTP, DataSync с шифрованием). Доступ к облачным сервисам из он-према — через **PrivateLink**, чтобы не выходить в публичный интернет. Принцип: приватный или зашифрованный канал + сквозное шифрование приложений + контроль и аудит на границе.
+
+> **Новые термины — VPN и Direct Connect.** **Site-to-Site VPN** — зашифрованный туннель между он-премом и облаком поверх интернета. **Direct Connect** — выделенная физическая линия в AWS со стабильной задержкой и приватностью, в обход публичного интернета.
+
+#### Lambda-функция уязвима к SSRF на `http://127.0.0.1:9001/2018-06-01/runtime/invocation/next`. В чём риски и как митигировать?
+
+Этот адрес — внутренний **Runtime API** Lambda, через который среда исполнения получает входящие события (invocation) и возвращает результаты. **SSRF (Server-Side Request Forgery)** — уязвимость, при которой приложение можно заставить отправить HTTP-запрос на адрес, заданный атакующим. Если функция уязвима к SSRF и атакующий может направить запрос на этот внутренний Runtime API, риски серьёзные: можно **перехватывать или подменять события и ответы** функции (нарушив её логику и целостность обработки), вмешиваться в поток выполнения, а в сочетании с другими слабостями — пытаться добраться до чувствительной информации среды исполнения. SSRF в serverless вообще опасен тем, что через него традиционно атакуют внутренние сервисы метаданных и внутренние эндпоинты, к которым у функции есть сетевой доступ «изнутри».
+
+**Митигация** — на уровне кода и архитектуры. Главное: **строгая валидация и санитизация всех входных данных**, на основе которых формируются исходящие запросы — никогда не позволять пользовательскому вводу определять URL/хост запроса; использовать **allowlist** разрешённых адресов назначения вместо blocklist; запрещать запросы на loopback (`127.0.0.1`/localhost) и внутренние адреса. Дополнительно: **наименьшие привилегии** у execution role (даже при эксплуатации ущерб ограничен); ограничение исходящего трафика функции; обновление уязвимых зависимостей (Inspector); тестирование на SSRF в CI/CD. Архитектурно — изолировать функцию и не давать ей лишнего сетевого доступа. Суть SSRF-защиты: не доверять вводу при формировании запросов и жёстко ограничивать, куда функция вообще может обращаться.
+
+> **Новый термин — SSRF (Server-Side Request Forgery).** Уязвимость, позволяющая злоумышленнику заставить серверное приложение сделать запрос на адрес по его выбору — часто к внутренним сервисам, недоступным снаружи напрямую (метаданные, внутренние API).
+
+> **Новый термин — allowlist / blocklist.** **Allowlist** («белый список») — разрешено только перечисленное, остальное запрещено (безопаснее). **Blocklist** («чёрный список») — запрещено перечисленное, остальное разрешено (легче обойти). Для защиты от SSRF предпочтителен allowlist назначений.
+
+#### Работали ли вы с AWS WAF / Cloud Armor? Как тестировать и внедрять core rule set в проде? Опишите стратегию.
+
+Ключевая идея безопасного внедрения правил WAF — **никогда не включать новые правила сразу в режим блокировки на проде**, иначе можно отсечь легитимных пользователей (ложные срабатывания). Правильная стратегия — поэтапная. Сначала развернуть **managed core rule set** (базовый набор от AWS/партнёра против OWASP-атак) в режиме **Count** (только подсчёт): правило не блокирует, а лишь помечает запросы, которые *были бы* заблокированы. В этом режиме собирают данные (через WAF-логи в S3/CloudWatch, анализ в Athena) и смотрят, какие легитимные запросы попадают под правила.
+
+Дальше — **анализ и тюнинг**: для ложных срабатываний создают исключения (scope-down, label-based exceptions, отключение конкретных правил для конкретных путей), не ослабляя защиту в целом. Когда уверены, что легитимный трафик не пострадает, переводят правила в режим **Block** — желательно постепенно (по одной группе правил, на части трафика). Обязательно тестируют: позитивно (легитимные сценарии проходят) и негативно (тестовые атаки блокируются). После внедрения — **непрерывный мониторинг** метрик (заблокированные/разрешённые, всплески), регулярный пересмотр исключений и обновление правил. Те же принципы для **Google Cloud Armor** (preview-режим = аналог Count) и Azure WAF (detection-режим перед prevention). Резюме стратегии: Count → анализ логов → тюнинг исключений → постепенный Block → тесты → мониторинг.
+
+> **Новые термины — Count / Block (режимы WAF).** **Count** — правило только считает совпадения, не блокируя (для безопасного тестирования). **Block** — правило реально блокирует запросы. Аналоги: preview/active в Cloud Armor, detection/prevention в Azure WAF.
+
+#### Объясните ransomware-атаки на S3-бакеты и какие best practices вы порекомендуете.
+
+**Ransomware на S3** — сценарий, где злоумышленник, получив доступ к аккаунту, делает данные в бакетах недоступными для владельца и требует выкуп. Делается это обычно двумя путями: **удаление/перезапись объектов** (если нет версионирования — данные теряются безвозвратно), либо **перешифровывание объектов ключом атакующего** через KMS (см. отдельный вопрос ниже) — данные физически на месте, но владелец не может их расшифровать. Корень почти всегда — компрометация учётных данных с правами на запись/удаление в S3 и на KMS.
+
+**Best practices защиты** многослойны. **Версионирование** — хранить все версии объектов, чтобы откатиться к доброкачественной (защита от перезаписи/удаления). **S3 Object Lock (Compliance-режим, WORM)** — объекты нельзя удалить или изменить до конца срока retention *никому*, включая root — ключевая мера. **MFA Delete** — удаление версий требует MFA. **Изолированные бэкапы** в отдельном аккаунте/регионе с минимальным доступом (атакующий из основного аккаунта до них не дотянется), плюс **AWS Backup Vault Lock** (неизменяемые бэкапы). **Наименьшие привилегии** на S3 и KMS (мало кто может удалять/менять ключи). **Обнаружение** — GuardDuty (аномальная активность S3, нетипичное использование KMS), CloudTrail data events, алерты на массовые удаления/перешифрование. **Контроль политик ключей KMS**, чтобы нельзя было подменить ключ шифрования. Сочетание неизменяемости (Object Lock/Vault Lock) + изолированных бэкапов + наименьших привилегий + обнаружения и есть основа анти-ransomware для S3.
+
+> **Новый термин — S3 Object Lock (WORM).** Write Once Read Many: режим, фиксирующий объект на заданный срок. В **Compliance**-режиме его не может удалить/изменить никто, даже root, до истечения срока. Главный механизм неизменяемости и защиты от ransomware в S3.
+
+> **Новый термин — MFA Delete.** Настройка S3, требующая второй фактор (MFA) для удаления версий объектов или изменения версионирования — дополнительный барьер против злонамеренного удаления.
+
+#### Опишите шаги обнаружения и реагирования на ransomware-атаку на S3-бакет в реальном времени.
+
+**Обнаружение в реальном времени** опирается на признаки аномальной активности. Источники: **GuardDuty** (находки об аномальном поведении в S3 — необычно массовый доступ, нетипичные операции, подозрительное использование KMS); **CloudTrail data events** на критичных бакетах (видны вызовы `DeleteObject`, `PutObject`, `CopyObject`, операции с шифрованием); **CloudWatch metric filters / EventBridge** на всплески удалений или перешифрования; аномальное использование ключей KMS. Настраивают алармы на «массовое удаление за короткое время», «массовая перезапись с новым ключом шифрования», «доступ к S3 с нового принципала/IP».
+
+**Реагирование** автоматизируют по знакомой схеме `обнаружение → EventBridge → реакция`. Немедленные действия: **локализация источника** — деактивировать скомпрометированные креды/роль (отозвать ключ, приложить Deny, отозвать сессии), чтобы остановить дальнейшее уничтожение; **защита данных** — убедиться, что версионирование и Object Lock работают (доброкачественные версии под защитой и не могут быть стёрты); снять snapshot/сделать копию текущего состояния для расследования. **Анализ** — по CloudTrail определить, какой принципал, откуда, что успел затронуть и как получил доступ (корень компрометации). **Восстановление** — вернуть объекты из защищённых версий / изолированных бэкапов (Object Lock и Backup Vault Lock гарантируют, что атакующий до них не добрался), убедиться, что причина устранена. **Выводы** — закрыть вектор входа, усилить мониторинг. Скорость здесь критична: чем быстрее отозван доступ, тем меньше данных пострадает, поэтому автоматизация реакции (а не ручная) — ключ к «реальному времени».
+
+#### Как облачный ransomware использует KMS для шифрования объектов в S3 скомпрометированного аккаунта?
+
+Это специфичный и коварный вектор. Логика атаки: получив доступ с достаточными правами (на S3 и KMS), злоумышленник использует **легитимный механизм шифрования AWS против владельца**. Он создаёт собственный KMS-ключ (или использует ключ, которым управляет), затем перезаписывает объекты в бакете, шифруя их этим ключом (через копирование объекта на себя с указанием SSE-KMS и своего ключа). После этого данные физически остаются в бакете, но **расшифровать их можно только его ключом**, к которому у владельца нет доступа. Если атакующий затем удалит/заблокирует свой ключ или ограничит к нему доступ, данные становятся нечитаемыми — фактически «зашифрованы вымогателем», хотя использовался штатный KMS.
+
+Почему это опасно и трудно: операция выглядит как обычное шифрование S3 (не «подозрительное вредоносное ПО»), и без должного мониторинга может пройти незаметно. **Защита/смягчение:** **наименьшие привилегии на KMS и S3** (мало у кого есть права менять шифрование объектов и создавать/использовать произвольные ключи); **bucket policy/SCP**, ограничивающие, какими ключами вообще можно шифровать объекты в бакете (запретить чужие/неодобренные KMS-ключи); **версионирование + Object Lock** (исходные незашифрованные-их-ключом версии сохраняются и защищены); **изолированные неизменяемые бэкапы**; **обнаружение** — мониторинг CloudTrail на массовые `CopyObject` с новым KMS-ключом и аномальное использование KMS, алерты GuardDuty. Ограничение набора разрешённых ключей шифрования для бакета — особенно действенная превентивная мера против именно этого вектора.
+
+#### Как реализовать версионирование и lifecycle-политики для предотвращения потери данных при ransomware на S3?
+
+**Версионирование** — первая линия защиты от потери данных. Когда оно включено, S3 при каждой перезаписи или «удалении» объекта **не уничтожает прежнее содержимое, а создаёт новую версию** (а удаление лишь ставит delete marker). Это значит, что если ransomware перезаписал или «удалил» объекты, **прежние доброкачественные версии остаются** и их можно восстановить. Без версионирования перезапись/удаление необратимы — поэтому на важных бакетах его включают обязательно. Дополнительно включают **MFA Delete**, чтобы окончательное удаление версий требовало второго фактора.
+
+Однако само по себе версионирование можно обойти, если у атакующего есть права удалять версии. Поэтому его сочетают с **Object Lock (WORM)**, который запрещает удаление версий до конца срока даже привилегированным, и с продуманными **lifecycle-политиками**. Lifecycle здесь играет двоякую роль: с одной стороны, переводит старые версии в дешёвые классы хранения (Glacier) ради экономии, с другой — нужно аккуратно настроить срок хранения старых версий, чтобы он покрывал реалистичное окно обнаружения атаки (нельзя, чтобы lifecycle сам удалил доброкачественные версии раньше, чем вы заметите и восстановитесь). На практике: версионирование + Object Lock на нужный срок + lifecycle, переводящий (а не сразу удаляющий) старые версии в архив + изолированные бэкапы. Так даже при успешной порче данных есть к чему откатиться, и атакующий не может уничтожить точки восстановления.
+
+> **Новый термин — delete marker.** При включённом версионировании «удаление» объекта не стирает его, а добавляет специальный маркер, делающий объект «скрытым»; прежние версии остаются и восстановимы удалением маркера.
+
+#### Как обеспечить единообразную мульти-облачную безопасность для AWS, GCP и Azure? Какие стратегии и инструменты?
+
+Главный вызов мульти-облака — **разные модели, сервисы и термины** у каждого провайдера, из-за чего легко получить неравномерную защиту (в AWS настроено хорошо, в Azure забыли). Стратегия — **унификация через абстракции и централизацию**, а не управление каждым облаком отдельно. Ключевые направления: **единая идентичность** (один провайдер идентичности федерируется во все три облака, чтобы доступ и MFA управлялись централизованно и единообразно); **единые политики и базлайны** (общий стандарт безопасности, выраженный для каждого облака); **IaC и policy-as-code** (Terraform как общий инструмент описания инфраструктуры во всех облаках, с едиными проверками безопасности шаблонов).
+
+Инструменты: **мульти-облачный CSPM** (Wiz, Prisma Cloud, Microsoft Defender for Cloud, и т.п.) — единое окно для оценки конфигураций и рисков по AWS+GCP+Azure сразу, что критично для единообразия; **централизованный SIEM** (Splunk, Sentinel, Elastic или Security Lake с OCSF), куда стекаются логи всех облаков для сквозного обнаружения и корреляции; **единое управление секретами и ключами** (или хотя бы единые стандарты); **единый процесс управления уязвимостями и SBOM** (см. соответствующие вопросы). Организационно — общий набор требований и метрик, применяемый ко всем облакам. Суть: не пытаться вручную держать паритет между разными консолями, а поднять управление на слой выше (единая идентичность, единый CSPM/SIEM, единый IaC), который нормализует различия провайдеров.
+
+#### Опишите сценарий, где неправильно настроенная security group в AWS привела к взлому. Как предотвращать такое впредь?
+
+Сценарий: для отладки кто-то временно открыл в security group порт `3306` (MySQL) или `22` (SSH) для `0.0.0.0/0` (весь интернет) и забыл закрыть. Боты, постоянно сканирующие облачные диапазоны, обнаружили открытый порт за минуты и начали перебор паролей. Слабый пароль базы (или известная уязвимость сервиса на SSH) — и злоумышленник внутри: чтение/кража данных из базы, или захват инстанса как плацдарма для дальнейшей атаки. Корень — чрезмерно открытое сетевое правило, оставленное «на время».
+
+**Предотвращение** строится на автоматике, а не на дисциплине людей. **Детектив:** AWS Config-правила (`restricted-ssh`, «нет неограниченного доступа к портам баз/админ-портам») непрерывно сканируют все группы и сигналят о нарушении; Security Hub/CSPM агрегируют. **Авто-remediation:** EventBridge ловит создание опасного правила → Lambda немедленно откатывает его и оповещает. **Превентив:** SCP/guardrails, запрещающие создавать слишком открытые правила; описание сетей через IaC с проверкой policy-as-code до деплоя (опасное правило не пройдёт ревью). **Архитектура:** держать базы и инстансы в приватных подсетях; в SG ссылаться на другие SG, а не на диапазоны IP; для отладочного доступа использовать SSM Session Manager вместо открытия портов. Так «временно открыл и забыл» либо невозможно, либо обнаруживается и откатывается за секунды.
+
+---
+
+#### Что такое сегментация в AWS и почему она важна для безопасности?
+
+**Сегментация** — это разделение облачной среды на изолированные части с контролируемыми границами между ними, чтобы компрометация одной части не открывала доступ ко всему. В AWS сегментация работает на нескольких уровнях: **уровень аккаунтов** (отдельные AWS-аккаунты под прод/dev/данные/логи — самая сильная граница изоляции, со своим биллингом и периметром безопасности); **уровень сети** (несколько VPC, подсети, разделение на публичные/приватные); **уровень доступа** (security groups, NACL, микросегментация между сервисами).
+
+Важность сегментации в том, что она **ограничивает радиус поражения (blast radius)**. Если всё в одном аккаунте и одной плоской сети, то одна уязвимость или одна утёкшая учётка дают доступ ко всему. Сегментированная среда локализует ущерб: атакующий, пробивший dev-сегмент, не достаёт до прод-данных; скомпрометированный публичный веб-сервер не имеет прямого пути к базе в приватной подсети. Сегментация также упрощает соответствие (например, сужает PCI-scope, изолируя среду с данными карт) и управление доступом (права привязаны к сегментам). Реализуют её через мультиаккаунт-структуру (Organizations), дизайн VPC/подсетей, security groups, и контролируемые связи между сегментами (VPC peering, Transit Gateway, PrivateLink) — причём связи открывают минимально необходимые.
+
+#### Объясните концепцию VPC peering в AWS. Как использовать его для сетевой сегментации?
+
+**VPC peering** — это прямое сетевое соединение между двумя VPC, позволяющее ресурсам в них общаться по приватным адресам, как будто они в одной сети. Соединение **не транзитивно**: если VPC-A соединён с VPC-B, а VPC-B с VPC-C, то A и C напрямую не общаются (нужен отдельный peering). Это свойство как раз полезно для сегментации — связи устанавливаются только между теми, кому действительно нужно общаться, точечно.
+
+Для сегментации peering используют так: VPC делят по назначению (например, отдельный VPC под общие сервисы, под прод-приложения, под dev), и соединяют их **только там, где есть легитимная необходимость**, открывая в маршрутах и security groups лишь нужные пути и порты. Например, прод-приложение соединяют с VPC общих сервисов, но dev-VPC с прод-VPC не соединяют вовсе — так dev физически не имеет сетевого пути к проду. Важно: сам peering лишь даёт *возможность* связи, а реальный доступ всё равно контролируется маршрутами, security groups и NACL — их настраивают по наименьшим привилегиям. Минус peering — при росте числа VPC «паутина» соединений становится неуправляемой (N×N), поэтому для многих VPC переходят на **Transit Gateway** (хаб-модель, см. ниже). Peering хорош для небольшого числа точечных связей.
+
+> **Новый термин — транзитивность соединения.** Свойство, при котором связь A-B и B-C автоматически даёт связь A-C. VPC peering **не** транзитивен (это плюс для сегментации), а Transit Gateway транзитивность обеспечивает.
+
+#### Как настроить security groups и network ACL для сетевой сегментации внутри VPC?
+
+Внутри VPC сегментацию реализуют комбинацией подсетей, security groups и NACL, работающих слоями. **Подсети** задают грубые зоны: публичная (только балансировщики/шлюзы), приватная для приложений, изолированная для баз данных. **NACL** ставят на границах подсетей как грубый барьер: например, NACL подсети баз данных разрешает входящий трафик только с диапазонов подсети приложений и только на порт базы, всё прочее — deny. Поскольку NACL stateless, не забывают про правила для ответного трафика.
+
+**Security groups** обеспечивают тонкую сегментацию на уровне ресурсов, и это основной инструмент. Лучшая практика — **ссылаться в правилах на другие security groups, а не на диапазоны IP**: например, SG базы разрешает входящий трафик на порт 5432 только от SG приложения. Тогда «кто может обращаться к базе» определяется принадлежностью к группе приложения, а не хрупкими списками адресов, и это автоматически масштабируется. Получается многоуровневая модель: веб-уровень → может ходить только на уровень приложения → который может ходить только на уровень базы, и никак иначе. Каждый уровень в своей SG, связи между уровнями — минимально необходимые. NACL добавляет резервный барьер на уровне подсети. Принцип сквозной — наименьшие привилегии в каждом правиле и явная, узкая разрешённая связность между сегментами.
+
+#### Опишите преимущества и сценарии использования AWS Transit Gateway для сегментации.
+
+**AWS Transit Gateway (TGW)** — это сетевой «хаб», к которому подключаются все ваши VPC и гибридные каналы (VPN, Direct Connect), вместо запутанной паутины попарных peering-соединений. Все подключённые сети общаются через центральный шлюз. Главное преимущество для крупной среды — **управляемость в масштабе**: вместо N×N соединений (которые быстро становятся неуправляемыми) — один хаб, через который маршрутизация настраивается централизованно.
+
+Для **сегментации** ключевая возможность TGW — **раздельные таблицы маршрутизации (route tables)**. Хотя по умолчанию TGW обеспечивает транзитивную связность всех подключённых сетей, с помощью отдельных таблиц маршрутизации можно создавать **изолированные домены маршрутизации**: например, прод-VPC видят друг друга и общие сервисы, но не видят dev-VPC, а dev-сети изолированы в своём домене. Так на одном шлюзе реализуется и связность, и сегментация — кто с кем может общаться, определяется тем, какая таблица маршрутизации привязана к подключению. Сценарии использования: связь множества VPC в большой организации; централизованное гибридное подключение (один TGW связывает облако с он-премом для всех VPC); межрегиональная связность (peering TGW между регионами); централизованная инспекция трафика (весь межсегментный трафик можно направить через инспектирующий VPC с firewall). TGW предпочтителен, когда VPC много и нужна одновременно и связность, и контролируемая изоляция.
+
+#### Ключевые соображения при настройке кросс-аккаунт доступа в сегментированной среде?
+
+Кросс-аккаунт доступ (когда ресурс/принципал в одном аккаунте обращается к ресурсу в другом) — необходимость в мультиаккаунт-среде, но и потенциальная брешь в сегментации, поэтому к нему относятся осторожно. Ключевые соображения. Во-первых, **использовать роли, а не общие креды**: доступ выдаётся через **cross-account роль**, которую целевой аккаунт создаёт и которой доверяет аккаунту-источнику; обращающийся «надевает» её через STS и получает временные права. Во-вторых, **наименьшие привилегии**: роль даёт ровно нужные действия над нужными ресурсами, а не широкий доступ.
+
+В-третьих — защита от **confused deputy** через `ExternalId` (особенно для доступа третьих сторон): общий секрет в trust policy гарантирует, что роль вызывается именно в легитимном контексте, а не злоумышленником, обманом использующим вашего «заместителя». В-четвёртых, **границы организации**: SCP должны разрешать только нужные кросс-аккаунт связи (можно ограничить доверие только аккаунтами своей организации через `aws:PrincipalOrgID`). В-пятых, **аудит** — все assume role между аккаунтами логируются в CloudTrail, и за ними следят. В-шестых, для совместного использования инфраструктурных ресурсов (подсети, TGW) — использовать **AWS RAM** вместо широких прав. Главное — кросс-аккаунт доступ должен быть явным, узким, временным, защищённым от подмены и аудируемым, чтобы не разрушить ту изоляцию, ради которой среду сегментировали.
+
+> **Новый термин — confused deputy («запутанный заместитель»).** Класс атак, где сервис с легитимными правами обманом используется злоумышленником для действий от его имени. В кросс-аккаунт доступе защита — `ExternalId` и условия в trust policy.
+
+#### Какова цель права IAM PassRole и как оно используется в AWS?
+
+**`iam:PassRole`** — это право «передать роль» сервису AWS. Многие сервисы при создании ресурса работают **от имени некоторой IAM-роли**, которую вы им указываете: например, при запуске EC2 вы указываете instance profile (роль), при создании Lambda — execution role, при настройке pipeline — service role. Чтобы пользователь/принципал мог *назначить* эту роль создаваемому ресурсу, ему нужно право `iam:PassRole` на эту роль. Без него сервис не позволит «передать» роль, даже если есть право создавать сам ресурс.
+
+Цель этого механизма — разделить два действия: «иметь право создать ресурс» и «иметь право определить, с какими правами этот ресурс будет работать». Например, разработчик может иметь право создавать Lambda-функции, но передавать им только определённые, заранее одобренные роли. `PassRole` почти всегда используется в паре с действием создания/настройки ресурса (`ec2:RunInstances`, `lambda:CreateFunction`, `iam:CreateServiceLinkedRole` и т.п.) и с условием `iam:PassedToService` (какому сервису можно передать роль). Это важный, но потенциально опасный механизм — поэтому его строго ограничивают (см. следующие вопросы).
+
+#### Какие риски связаны с предоставлением права PassRole для IAM-ролей?
+
+Главный риск — **повышение привилегий (privilege escalation)**. Если у принципала есть `iam:PassRole` без ограничений (на `Resource: "*"`) вместе с правом создавать ресурсы, он может **передать создаваемому ресурсу гораздо более привилегированную роль, чем имеет сам, и действовать через неё**. Например: у пользователя ограниченные права, но есть `iam:PassRole` на любую роль и право запускать EC2/создавать Lambda. Он создаёт инстанс или функцию, передав ей роль администратора, а затем выполняет команды через этот ресурс — фактически получив админский доступ в обход своих ограничений. Это один из самых распространённых путей эскалации в AWS.
+
+Конкретные опасные сценарии: передать админскую роль EC2 и через SSM/метаданные использовать её креды; передать привилегированную роль Lambda и вызвать функцию; передать роль другому сервису, который выполнит действия от её имени. Риск тем выше, чем шире `PassRole` (на все роли) и чем больше привилегированных ролей существует в аккаунте. Поэтому неограниченный `PassRole` считается критичной мисконфигурацией, которую ищут при security review. Защита — строгое ограничение (следующий вопрос).
+
+#### Как ограничить использование PassRole конкретными ролями и ресурсами, сохранив безопасность?
+
+Ограничивают `iam:PassRole` через **точное указание ресурса и условий** в политике, вместо `Resource: "*"`. Во-первых, в `Resource` перечисляют **только конкретные ARN ролей**, которые данному принципалу разрешено передавать — и это должны быть роли с *ограниченными* правами, а не админские. Например, разработчику разрешают передавать только заранее подготовленную узкую роль для его приложений. Во-вторых, добавляют условие **`iam:PassedToService`**, ограничивающее, *какому сервису* можно передать роль (например, только `lambda.amazonaws.com`), — чтобы роль нельзя было передать неожиданному сервису.
+
+Дополнительные меры: использовать **permission boundaries** на ролях, которые разрешено передавать, чтобы даже переданная роль не могла выйти за определённый потолок прав; применять **naming conventions и path** для ролей (разрешать передавать только роли из определённого пути, например `/application-roles/`); навесить **SCP** на уровне организации, ограничивающие опасные комбинации; **аудировать** использование PassRole через CloudTrail и Access Analyzer. Принцип: `PassRole` должен быть всегда узким — конкретные неприпривилегированные роли, конкретный сервис-получатель, по возможности с потолком прав, — чтобы исключить путь эскалации, но сохранить нужную функциональность.
+
+> **Новый термин — ARN (Amazon Resource Name).** Уникальный идентификатор ресурса AWS (например, `arn:aws:iam::123456789012:role/MyRole`). В политиках точное указание ARN в `Resource` — основа наименьших привилегий.
+
+#### Опишите сценарий использования PassRole и как обеспечить его безопасность.
+
+Типичный легитимный сценарий: команда разработки деплоит **Lambda-функции**, каждой из которых нужна execution role с правами на конкретные ресурсы (свой бакет, свою таблицу). Разработчикам нужно право создавать функции и **назначать им роли** — значит, нужен `iam:PassRole`. Без него они не смогут задеплоить рабочую функцию; с неограниченным — смогут передать админскую роль и захватить аккаунт. Нужно найти баланс.
+
+Безопасная реализация: создать заранее **набор узких, одобренных execution-ролей** (например, в пути `/lambda-app-roles/`), каждая с минимальными правами под свой класс функций. Разработчикам дать политику с `iam:PassRole`, где `Resource` ограничен **только этими ролями** (по ARN или пути), плюс условие `iam:PassedToService: lambda.amazonaws.com` (передавать можно только Lambda). На сами эти роли навесить **permission boundary**, чтобы они в принципе не могли получить больше определённого. Создание ролей с правами оставить отдельной привилегированной команде/процессу (разделение обязанностей: кто создаёт роли ≠ кто их использует). Добавить аудит PassRole-вызовов и проверку политик в CI/CD. В итоге разработчики свободно деплоят функции с нужными им (но ограниченными) ролями, а путь эскалации через передачу админской роли закрыт.
+
+#### Какие best practices при управлении IAM-ролями с правом PassRole в AWS?
+
+Свод лучших практик, объединяющий предыдущие ответы. **Минимизировать сам PassRole:** выдавать его только тем, кому действительно нужно создавать ресурсы с ролями, и никогда не на `Resource: "*"`. **Узко ограничивать ресурс:** перечислять конкретные ARN передаваемых ролей или ограничивать их по пути (`/approved-roles/`); передаваемые роли должны быть неприпривилегированными. **Ограничивать сервис-получатель:** условие `iam:PassedToService`. **Применять permission boundaries** на передаваемые роли как потолок. **Разделять обязанности:** создание/изменение ролей и их использование — разные принципалы; разработчики не должны мочь создавать произвольные роли (иначе ограничение PassRole обходится созданием новой широкой роли).
+
+Дополнительно: **guardrails через SCP** на уровне организации против опасных IAM-комбинаций; **policy-as-code в CI/CD**, отклоняющий политики с неограниченным PassRole; **регулярный аудит** (Access Analyzer для путей эскалации, CloudTrail для фактического использования PassRole, поиск широких политик); **именование и теги** ролей для управляемости; **мониторинг и алерты** на подозрительные комбинации (создание ресурса + передача привилегированной роли). Общий принцип — рассматривать PassRole как привилегированную операцию и окружать её ограничениями со всех сторон (узкий ресурс, узкий сервис, потолок прав, разделение обязанностей, аудит), потому что именно она часто превращает ограниченный доступ в полный.
+
+#### Что такое AWS CIS Benchmark и почему он важен для защиты ресурсов AWS?
+
+**AWS CIS Benchmark** (Center for Internet Security AWS Foundations Benchmark) — это разработанный экспертным сообществом, признанный в индустрии **набор конкретных проверяемых рекомендаций по безопасной настройке AWS-аккаунта**. Он покрывает фундаментальные области: управление идентификацией (MFA на root и пользователях, отсутствие неиспользуемых кредов, политика паролей), логирование (CloudTrail включён во всех регионах, защищён, шифрован; Config включён), мониторинг (метрики-алармы на критичные события вроде root-логина), сеть (нет открытых наружу админ-портов). Каждая рекомендация конкретна и проверяема, с указанием как проверить и как исправить.
+
+Важность в том, что он даёт **готовый, авторитетный базлайн безопасности** вместо изобретения собственного с нуля. Опираясь на CIS Benchmark, организация получает проверенный экспертами минимум, который к тому же признаётся аудиторами и часто требуется для соответствия. AWS **Security Hub** имеет встроенный стандарт CIS, который автоматически и непрерывно проверяет аккаунты против этих рекомендаций и показывает оценку соответствия в процентах — то есть внедрение benchmark не требует ручной работы. CIS Benchmark часто берут за стартовую точку собственного стандарта безопасности (см. вопрос о разработке стандарта) и за основу непрерывного мониторинга соответствия.
+
+#### Опишите ключевые проверки безопасности CIS Benchmark для IAM.
+
+В части IAM CIS Benchmark фокусируется на гигиене учётных данных и доступа. Ключевые проверки: **MFA включён для root-аккаунта** (критично — root всемогущ) и для всех IAM-пользователей с паролем; **root-аккаунт не используется** для повседневных задач и **не имеет access keys**; **отсутствуют неиспользуемые учётные данные** (пароли и ключи, не применявшиеся N дней, должны деактивироваться); **access keys ротируются** регулярно (не старше определённого срока); **строгая парольная политика** (длина, сложность, запрет повтора).
+
+Дальше — проверки в сторону наименьших привилегий и контроля: **права назначаются через группы**, а не напрямую пользователям (управляемость); **отсутствуют политики с полными правами `*:*`** (никаких «администраторов везде» без нужды); проверка, что **нет встроенных (inline) широких политик**; наличие механизма анализа доступа (**IAM Access Analyzer включён**); проверка ролей на корректные trust policy. Также benchmark проверяет, что **сертификаты и истёкшие креды убраны**. Смысл этих проверок — закрыть самые частые и опасные IAM-ошибки, которые ведут к компрометации: незащищённый root, забытые активные ключи, чрезмерно широкие права. Security Hub CIS-стандарт проверяет всё это автоматически и непрерывно по всем аккаунтам.
+
+#### Как использовать AWS Config для проверки соответствия CIS Benchmark и что делать при несоответствии?
+
+**AWS Config** — это движок, который непрерывно отслеживает конфигурации ресурсов и проверяет их против **правил**. Для CIS Benchmark в Config есть готовый **conformance pack** (набор правил, реализующих проверки benchmark) — его разворачивают на аккаунт/организацию, и Config автоматически и постоянно проверяет все релевантные ресурсы (включён ли CloudTrail, зашифрованы ли тома, нет ли открытых портов, ротируются ли ключи и т.д.), помечая каждый ресурс как COMPLIANT или NON_COMPLIANT и сохраняя историю состояний. По сути Config превращает абстрактные требования benchmark в непрерывную автоматическую проверку.
+
+При **обнаружении несоответствия** действия выстраивают в конвейер. Config генерирует событие о нарушении → **EventBridge** маршрутизирует его → дальше либо **авто-remediation** (Config поддерживает привязку **SSM Automation**-документов к правилам — например, правило «тома должны быть зашифрованы» нарушено → автоматический документ включает шифрование или помечает/изолирует ресурс; «бакет публичный» → Lambda восстанавливает Block Public Access), либо **оповещение** через SNS и заведение тикета для ручного разбора, если действие рискованное. Для видимости всё агрегируется в Security Hub (дашборд соответствия). Важно настроить разумную приоритизацию (критичные нарушения — немедленно, остальное — в обычный поток) и логировать каждое авто-действие для аудита. Так соответствие CIS поддерживается непрерывно и в значительной степени самоисправляется.
+
+#### Объясните важность включения CloudTrail и Config для соответствия CIS Benchmark.
+
+**CloudTrail** и **AWS Config** — это **фундамент видимости**, без которого ни безопасность, ни соответствие benchmark невозможны, поэтому их включение само является одной из первых и важнейших рекомендаций CIS. Они отвечают на два разных, но одинаково необходимых вопроса. **CloudTrail** отвечает «**что произошло**»: кто, когда и какой API-вызов сделал — это журнал действий для аудита, расследований и обнаружения подозрительной активности. Без CloudTrail вы слепы к тому, что делается в аккаунте, и не сможете ни расследовать инцидент, ни доказать аудитору, что контролируете среду.
+
+**AWS Config** отвечает «**как настроены ресурсы и соответствуют ли они правилам**»: он непрерывно фиксирует состояние ресурсов и проверяет их против требований (в т.ч. самого CIS Benchmark), сохраняя историю изменений конфигурации. Без Config вы не знаете, нет ли прямо сейчас опасных настроек и когда они появились. Вместе они дают полную картину: Config — состояние и соответствие, CloudTrail — действия, которые к этому состоянию привели (например, Config показал, что бакет стал публичным, а CloudTrail — кто и когда это сделал). CIS Benchmark требует, чтобы оба были включены во всех регионах, защищены от изменения и желательно шифрованы, потому что на их данных строится всё остальное — мониторинг, алерты, расследования и доказательство соответствия. Их часто называют «глаза и память» аккаунта.
+
+#### Как устранять уязвимости, выявленные AWS Inspector и связанные с CIS Benchmark?
+
+Сначала важно различить: **Amazon Inspector** сканирует на **уязвимости ПО** (CVE в пакетах ОС, библиотеках, образах) и на отклонения от **CIS-бенчмарков уровня операционной системы** (есть отдельные CIS Benchmark не только для AWS-аккаунта, но и для конфигурации ОС Linux/Windows внутри инстанса — Inspector умеет их проверять). То есть здесь речь о host-уровне: насколько безопасно настроена и пропатчена сама ОС на инстансе.
+
+Устранение строится как процесс управления уязвимостями. **Приоритизация:** Inspector даёт контекстный риск-скор (учитывает доступность из интернета, эксплуатируемость), по нему определяют очерёдность — критичные и эксплуатируемые в первую очередь. **Устранение уязвимостей ПО:** применить патчи через **Systems Manager Patch Manager** (автоматически, по расписанию/событию) либо — для immutable-подхода — пересобрать «золотой» образ с обновлениями и заменить инстансы. **Устранение CIS-отклонений ОС:** применить безопасную конфигурацию через SSM-документы / конфигурационный менеджмент (например, отключить небезопасные сервисы, ужесточить настройки), в идеале — встроить hardening в базовый образ, чтобы инстансы стартовали уже соответствующими. **Автоматизация:** связать находки Inspector через EventBridge с автоматическим патчингом/тикетами. **Проверка:** повторное сканирование подтверждает устранение. **Непрерывность:** Inspector сканирует постоянно, новые инстансы и CVE подхватываются автоматически. Идея — не разовая чистка, а непрерывный цикл «нашли → приоритизировали → пропатчили/перенастроили → проверили», максимально автоматизированный.
+
+#### CloudTrail vs CloudWatch — объясните глубоко с точки зрения безопасности.
+
+Это частый вопрос «на понимание», потому что новички их путают, а служат они разному. **CloudTrail** — это **аудиторский журнал управляющих действий (governance/audit)**. Он отвечает на вопрос «**кто что сделал**»: каждый вызов AWS API записывается с указанием принципала, времени, IP-адреса, параметров и результата. С точки зрения безопасности CloudTrail — это основа **форензики и расследований** (после инцидента восстановить цепочку действий), **обнаружения** (аномальные/опасные действия — root-логин, отключение security-сервисов, массовые удаления), **аудита соответствия** (доказать, кто имел доступ и что делал) и **обнаружения эскалации привилегий** (подозрительные IAM-изменения, assume role). Данные CloudTrail — это «что уже произошло».
+
+**CloudWatch** — это **платформа мониторинга и наблюдаемости (operational monitoring)**. Она отвечает на вопрос «**как система себя ведёт сейчас**»: собирает метрики (числовые показатели), логи приложений (CloudWatch Logs), позволяет строить **алармы** и дашборды. С точки зрения безопасности CloudWatch — это в первую очередь **оперативное оповещение и реакция**: на логах CloudTrail можно настроить metric filter и аларм (поднять тревогу при root-логине или N неудачных авторизациях); алармы на аномальные метрики (всплеск трафика, ошибок); хранение и анализ логов. То есть это «реакция в реальном времени и тренды».
+
+Как они связаны и дополняют друг друга: **CloudTrail генерирует данные о действиях, а CloudWatch на них реагирует**. Типичная связка: CloudTrail → доставка логов в CloudWatch Logs → metric filter → CloudWatch alarm → SNS/EventBridge → оповещение или авто-реакция. CloudTrail — память и аудит (что было), CloudWatch — нервная система и сигнализация (что происходит и когда бить тревогу). Зрелая безопасность использует оба: CloudTrail для полноты записи и расследований, CloudWatch для немедленного обнаружения и алертинга поверх этих записей.
+
+#### Почему IMDSv1 уязвим к SSRF? Объясните.
+
+Чтобы понять, нужно знать про **IMDS (Instance Metadata Service)** — сервис на «магическом» адресе `169.254.169.254`, доступный изнутри каждого EC2-инстанса, который отдаёт метаданные о нём, **включая временные креды привязанной IAM-роли**. Это удобно: приложение на инстансе получает креды роли, обратившись к этому адресу, без хранения ключей. Проблема в том, *как* запрашиваются эти данные в **IMDSv1**: простым **GET-запросом без какой-либо аутентификации** — кто угодно изнутри инстанса, кто может сделать HTTP-запрос на этот адрес, получит ответ, в том числе креды роли.
+
+Здесь и возникает связка с **SSRF**. Если на инстансе работает приложение, уязвимое к SSRF (его можно заставить сделать HTTP-запрос на произвольный адрес), злоумышленник направляет этот запрос на `169.254.169.254/.../iam/security-credentials/` и **получает временные креды IAM-роли инстанса** через ответ приложения. Дальше он использует эти креды откуда угодно, получая все права роли — а если роль широкая, это ведёт к серьёзной компрометации (именно так произошла известная утечка Capital One в 2019). Корень уязвимости IMDSv1 — **отсутствие защиты от того, чтобы запрос к метаданным был инициирован «обманом», без явного намерения**: простой неаутентифицированный GET легко спровоцировать через SSRF. Решение — IMDSv2 (следующий вопрос).
+
+> **Новый термин — IMDS (Instance Metadata Service), адрес 169.254.169.254.** Внутренний сервис EC2, отдающий метаданные инстанса и временные креды его IAM-роли. Доступен только изнутри инстанса, но именно поэтому становится целью SSRF-атак.
+
+#### Реализовали ли вы IMDSv2 и как он устраняет SSRF?
+
+**IMDSv2** — это усиленная версия сервиса метаданных, которая закрывает SSRF-вектор за счёт перехода на **сессионную модель с обязательным токеном**. Чтобы получить метаданные в IMDSv2, нужно сначала **PUT-запросом получить сессионный токен**, а затем передавать его в заголовке каждого GET-запроса за данными. Это кажется мелочью, но именно это ломает типичный SSRF: большинство SSRF-уязвимостей позволяют спровоцировать простой GET, но **не позволяют выполнить предварительный PUT и прокинуть кастомный заголовок** с токеном — значит, атакующий не может получить креды.
+
+Дополнительно IMDSv2 ставит барьеры против известных техник обхода: токен запрашивается PUT-ом (который SSRF обычно не умеет), требует специального заголовка (что отсекает простую подмену), и по умолчанию ограничивает **TTL/hop limit** ответа (значение `X-Forwarded-For`/число сетевых «прыжков» = 1), чтобы ответ с кредами нельзя было «вытащить» через цепочку прокси или из контейнера на хосте. **Реализация/принуждение:** на инстансах выставляют метаданные в режим `HttpTokens: required` (только IMDSv2, IMDSv1 отключён) — это можно задать в Launch Template, в образе, и **принудить на уровне организации через SCP** (запретить запуск инстансов с разрешённым IMDSv1), а также проверять через Config. Просто «включить IMDSv2» недостаточно — нужно **отключить IMDSv1** (`required`), иначе старый незащищённый путь остаётся доступным. После принуждения SSRF-кража кредов роли через метаданные становится практически невозможной.
+
+> **Новый термин — hop limit (TTL) метаданных.** Ограничение числа сетевых «прыжков», которое может пройти ответ IMDS. Установка в 1 не даёт ответу с кредами уйти за пределы инстанса (например, через прокси или из контейнера), усиливая защиту.
+
+#### Что такое IMDS (169.254.169.254) и почему это угроза для EC2? Как атакующие злоупотребляют им?
+
+(Объединяет предыдущие два вопроса с акцентом на механику злоупотребления.) **IMDS** — сервис метаданных на адресе `169.254.169.254`, доступный изнутри EC2-инстанса. Он отдаёт полезную информацию об инстансе (регион, тип, сеть, пользовательские данные) и — что критично для безопасности — **временные учётные данные IAM-роли**, привязанной к инстансу. Сам по себе механизм нужен и удобен (приложения получают креды без хранения ключей), но он становится **угрозой**, когда доступ к нему можно получить непреднамеренно.
+
+**Как атакующие злоупотребляют:** основной путь — через **SSRF** в приложении на инстансе (заставить приложение запросить `169.254.169.254/latest/meta-data/iam/security-credentials/<role>` и вернуть креды роли); также через **скомпрометированный процесс/контейнер** на инстансе (любой код на хосте с сетевым доступом к адресу может запросить креды); через уязвимости, дающие выполнение запросов. Получив креды роли, атакующий использует их за пределами инстанса со всеми правами роли — и если роль избыточна, это ведёт к доступу к данным, эскалации и латеральному перемещению (реальный пример — утечка Capital One). **Защита/смягчение:** **принудить IMDSv2** (`HttpTokens: required`, отключив IMDSv1) — закрывает SSRF-вектор; **наименьшие привилегии у роли инстанса** (даже при краже кредов ущерб ограничен); **hop limit = 1** (особенно важно для инстансов с контейнерами); **отключить IMDS вовсе**, если инстансу не нужны креды роли; **мониторинг** использования кредов роли вне инстанса (GuardDuty находка `InstanceCredentialExfiltration`). Сочетание IMDSv2 + наименьшие привилегии + мониторинг сводит угрозу к минимуму.
+
+> **Новый термин — латеральное перемещение (lateral movement).** Перемещение злоумышленника от первоначально скомпрометированного ресурса к другим внутри среды. Украденные через IMDS креды роли часто используются именно для этого.
+
+#### Каковы последствия хранения IAM-кредов в IMDS для EC2 и как защититься?
+
+Хранение (точнее — предоставление) временных кредов IAM-роли через IMDS — это штатный и в целом правильный механизм (лучше, чем хранить статические ключи на диске), но он несёт **последствия, которые надо понимать и контролировать**. Главное последствие: креды роли становятся **доступной целью** для любого, кто получит возможность обратиться к адресу метаданных изнутри инстанса — через SSRF, скомпрометированный процесс, уязвимость или вредоносный контейнер. Поскольку через IMDS отдаются креды **со всеми правами роли**, кража их означает получение этих прав атакующим. Если роль избыточно широкая, последствия катастрофичны (полный доступ, эскалация, перемещение по среде).
+
+**Защита от несанкционированного доступа к кредам через IMDS** — многослойная. Первое — **принудить IMDSv2** и отключить IMDSv1 (закрывает основной SSRF-вектор) и выставить **hop limit = 1** (креды не уходят за инстанс, важно при контейнерах). Второе и не менее важное — **наименьшие привилегии у роли инстанса**: исходить из того, что креды *могут* быть украдены, и проектировать роль так, чтобы кража давала минимум (узкие права, только нужные ресурсы) — это ограничивает blast radius. Третье — **отключить IMDS совсем**, если инстансу креды роли не нужны. Четвёртое — **мониторинг**: GuardDuty детектит использование кредов роли инстанса вне этого инстанса (`UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration`), что прямо ловит эксплуатацию. Пятое — **общая гигиена инстанса** (патчинг, защита приложений от SSRF, изоляция). Ключевая мысль best practice: не только закрыть путь к кредам (IMDSv2), но и предположить компрометацию и минимизировать её цену (наименьшие привилегии + мониторинг).
+
+---
+
+#### Когда использовать Transit Gateway и есть ли улучшение безопасности от его применения?
+
+**Transit Gateway (TGW)** стоит использовать, когда у вас **много VPC и/или гибридных подключений**, которые нужно связать, и попарные peering-соединения становятся неуправляемыми (число связей растёт квадратично, N×N). TGW заменяет паутину на хаб-модель: все сети подключаются к одному шлюзу, маршрутизация настраивается централизованно. Конкретные показания к применению: десятки VPC в организации; необходимость связать множество VPC с общим он-прем подключением (один TGW — для всех); межрегиональная связность; потребность в централизованной инспекции трафика.
+
+**Улучшения безопасности** от TGW есть, и существенные. Во-первых, **сегментация через раздельные таблицы маршрутизации**: можно создать изолированные домены (прод не видит dev, и т.п.) централизованно и наглядно, вместо разрозненных правил в множестве peering — это снижает риск ошибок и упрощает аудит связности. Во-вторых, **централизованная инспекция трафика**: весь межсегментный (east-west) и исходящий (egress) трафик можно направить через выделенный inspection-VPC с **AWS Network Firewall**/IDS-IPS, реализуя единую точку контроля и обнаружения — с peering это было бы крайне сложно. В-третьих, **централизованный контроль и видимость**: единые Flow Logs на TGW дают полную картину межсетевого трафика; политики связности управляются из одного места. В-четвёртых, упрощение гибридного доступа с единым контролем на стыке. Таким образом TGW — это не только удобство маршрутизации, но и инструмент усиления сегментации, централизованной инспекции и наблюдаемости.
+
+> **Новые термины — east-west и north-south трафик.** **East-west** — трафик *внутри* среды между сервисами/VPC (горизонтальный). **North-south** — трафик между средой и внешним миром (вертикальный, вход/выход). TGW позволяет инспектировать в т.ч. east-west трафик, который часто остаётся без контроля.
+
+#### Почему security group "default" с портами 22, 25, 53, 80, 443, 8080, 6443, 3679, 3306, 9001 — это проблема?
+
+Здесь сразу несколько проблем. Первая — это **default security group**, которую трогать как рабочую вообще не следует: лучшая практика — оставить дефолтную группу пустой (или максимально закрытой) и создавать отдельные узкие группы под каждую роль ресурса. Использование дефолтной группы с кучей правил — признак неаккуратной настройки и риска, что новые ресурсы случайно унаследуют широкий доступ. Вторая, главная проблема — **слишком много открытых портов в одной группе нарушает наименьшие привилегии**: каждый открытый порт — это поверхность атаки, и держать их все вместе означает, что любой ресурс с этой группой выставляет наружу множество сервисов, большинство из которых ему не нужны.
+
+Разберём опасность конкретных портов (особенно если они открыты на `0.0.0.0/0`): **22 (SSH)** и **3389 (RDP)** — административный доступ, открытый наружу = немедленный объект брутфорса; **3306 (MySQL)** — база данных в интернете, критическая ошибка (базы не выставляют наружу); **25 (SMTP)** — почта, риск использования для спама/релея; **6443** — Kubernetes API-сервер, открытый наружу = прямая угроза захвата кластера; **8080, 9001, 3679** — приложенческие/management-порты, часто это незащищённые админ-интерфейсы или внутренние сервисы, которым не место в интернете; **53 (DNS)** — может использоваться для DNS-туннелирования/exfiltration; **80/443** — единственные, что обычно легитимны для публичных веб-сервисов, и то их лучше выносить за балансировщик/WAF. Совокупно такая группа означает: открытый наружу набор административных интерфейсов, баз и Kubernetes API — почти гарантированная компрометация. **Как должно быть:** каждый порт открывается только тому ресурсу, которому нужен, только нужному источнику (лучше — ссылкой на другую SG, а не на интернет), админ-доступ — через SSM без открытых портов, базы и K8s API — только из приватной сети. Эта группа — учебный пример того, как делать нельзя.
+
+#### Объясните, как и когда использовать Access Key ID и Principal ID на примере.
+
+Сначала разведём понятия, потому что их путают. **Access Key ID** — это часть **долгоживущих учётных данных** IAM-пользователя (пара: Access Key ID + Secret Access Key), которыми программно аутентифицируются в AWS API. Access Key ID — публичная часть (выглядит как `AKIA...`), Secret — приватная. **Principal ID** — это **уникальный внутренний идентификатор принципала** (пользователя, роли) в IAM; в случае ролей и временных сессий встречается **unique principal ID** (например, для роли — `AROA...`, для пользователя — `AIDA...`), который не меняется даже при переименовании.
+
+**Когда что использовать.** Access Key ID (со Secret) — для программной аутентификации, но это **наименее предпочтительный способ**: долгоживущие ключи легко утекают (в код, в Git, в логи), поэтому современная практика — **избегать их**, заменяя ролями с временными кредами (для приложений — instance profile/IRSA/Lambda role; для людей — федерация). Если ключи всё же неизбежны (например, внешний инструмент, не поддерживающий роли), их хранят в Secrets Manager, ротируют и мониторят. **Principal ID** используют в **политиках и условиях**, когда нужно сослаться на конкретный принципал устойчивым образом — например, в условии политики `aws:userId` для точного ограничения, кому разрешено действие, причём по unique ID (который не подменить переименованием), а не по имени. Пример: в bucket policy разрешить доступ только конкретной роли по её principal ID, чтобы даже пересоздание роли с тем же именем не получило доступ. Кратко: Access Key ID — про (нежелательную) долгоживущую аутентификацию, предпочитайте роли; Principal ID — про надёжную идентификацию принципала в политиках.
+
+> **Новый термин — unique principal ID (AROA/AIDA/AKIA-префиксы).** Неизменяемый внутренний идентификатор сущности IAM. Префиксы: `AKIA` — access key, `AIDA` — пользователь, `AROA` — роль, `ASIA` — временные креды сессии. Использование в политиках по ID надёжнее, чем по имени.
+
+#### Объясните данную IAM-политику и её назначение.
+
+(В оригинале вопрос предполагает разбор конкретной политики, показанной интервьюером. Поскольку конкретный JSON не приложен, объясним **методику чтения любой IAM-политики** — это и есть то, что проверяют.) IAM-политика — это JSON-документ из одного или нескольких **statement (утверждений)**, каждое из которых содержит ключевые элементы: **`Effect`** (`Allow` или `Deny` — разрешает или запрещает); **`Action`** (какие операции API, например `s3:GetObject`, или с wildcard `s3:*`); **`Resource`** (над какими ресурсами, по ARN, или `*` — все); **`Principal`** (кто — присутствует в resource-based политиках вроде bucket policy); **`Condition`** (при каких условиях — например, только из определённой VPC, только с MFA, только определённый principal).
+
+Чтобы **объяснить назначение** политики, читают по элементам: кому (Principal, если есть) что разрешено или запрещено (Effect+Action) над чем (Resource) и при каких условиях (Condition). Например, statement с `Effect: Allow`, `Action: ["s3:GetObject"]`, `Resource: "arn:aws:s3:::my-bucket/*"` означает «разрешить читать любые объекты в бакете my-bucket». Помнят про логику оценки: явный `Deny` всегда перебивает `Allow`; отсутствие явного Allow = неявный запрет. На собеседовании, объясняя политику, важно отметить: насколько она соответствует наименьшим привилегиям, нет ли опасных wildcard (`Action: "*"`, `Resource: "*"`), есть ли ограничивающие условия, нет ли путей эскалации (опасные iam-действия, PassRole). То есть не только «что делает», но и «безопасна ли».
+
+#### Объясните данную политику и найдите проблемы в ней.
+
+(Этот вопрос — про критический анализ политики. Без конкретного JSON опишем, **какие типичные проблемы ищут**, что и проверяется на собеседовании.) При аудите IAM-политики красные флаги такие. **Чрезмерно широкие права:** `"Action": "*"` (все действия) и/или `"Resource": "*"` (все ресурсы), особенно вместе — это фактически админ; `"s3:*"`, `"iam:*"` и подобные wildcard вместо конкретных действий. **Опасные действия без ограничений:** `iam:PassRole` на `*` (путь эскалации), `iam:CreateAccessKey`/`AttachRolePolicy`/`PutUserPolicy` (изменение прав), `sts:AssumeRole` на широкий набор ролей, `kms:*`, действия, позволяющие отключить логирование (`cloudtrail:StopLogging`, `config:Delete*`).
+
+Дальше: **отсутствие условий** там, где они уместны (нет ограничения по MFA для чувствительных действий, нет ограничения по source VPC/IP, нет `aws:PrincipalOrgID` для кросс-аккаунт); **слишком открытый Principal** в resource-политике (`"Principal": "*"` без условий = публичный доступ, частая причина утечек S3); **неправильное использование `NotAction`/`NotResource`** (легко случайно разрешить лишнее); **противоречивые statement** (Allow, который ничего не значит из-за более широкого Deny, или наоборот). **Подводя итог анализа**, формулируют конкретные проблемы и исправления: сузить Action до нужных, заменить `Resource: "*"` на конкретные ARN, ограничить PassRole, добавить условия (MFA, VPC, OrgID), убрать публичный Principal, навесить permission boundary. Суть навыка — увидеть в политике нарушения наименьших привилегий и потенциальные пути атаки, а не просто прочитать синтаксис.
+
+> **Новые термины — NotAction / NotResource.** Элементы политики, задающие «всё, кроме перечисленного». Мощные, но опасные: легко непреднамеренно разрешить больше, чем задумано. Требуют особой осторожности при аудите.
+
+#### Что приходит на ум, когда сервису нужен кросс-аккаунт доступ?
+
+При запросе на кросс-аккаунт доступ опытный инженер сразу думает о **безопасном паттерне на ролях, а не об общих кредах**, и о наборе защитных мер. Первое, что приходит на ум: **использовать cross-account IAM-роль** — целевой аккаунт создаёт роль с нужными (узкими) правами и **trust policy**, доверяющей аккаунту-источнику; источник «надевает» роль через `sts:AssumeRole` и получает временные креды. Никаких долгоживущих ключей, передаваемых между аккаунтами. Второе — **наименьшие привилегии**: роль даёт ровно нужный доступ к конкретным ресурсам.
+
+Дальше думают о защитных деталях: **`ExternalId`** для защиты от **confused deputy** (особенно если доступ предоставляется третьей стороне/вендору) — общий секрет в trust policy не даёт злоумышленнику обманом воспользоваться доверием; **ограничение доверия** через условия (`aws:PrincipalOrgID`, чтобы доверять только аккаунтам своей организации; конкретный ARN принципала-источника, а не весь аккаунт, если возможно); **MFA-условие** для чувствительных ролей; **аудит** (assume role между аккаунтами логируется в CloudTrail). Для совместного использования инфраструктурных ресурсов (а не действий) вспоминают **AWS RAM**. Также думают о **границах организации (SCP)**, которые должны разрешать нужные связи и запрещать нежелательные. Итого, ассоциативный ряд правильного ответа: роль + trust policy + наименьшие привилегии + ExternalId/условия + аудит. Это показывает, что кандидат знает безопасный паттерн, а не просто «дать доступ».
+
+> **Новый термин — trust policy (политика доверия).** Особая политика роли, определяющая, *кто* может её «надеть» (assume). В кросс-аккаунт сценарии trust policy роли указывает доверенный аккаунт/принципал-источник и условия (ExternalId, MFA, OrgID).
+
+#### Какие меры безопасности нужны при кросс-аккаунт доступе и что такое confused deputy в IAM?
+
+(Объединяет и углубляет предыдущую тему.) **Меры безопасности при кросс-аккаунт доступе:** использовать **роли с trust policy**, а не общие ключи; **наименьшие привилегии** в правах роли; **ограничивать доверие** максимально узко (конкретный принципал-источник вместо всего аккаунта; `aws:PrincipalOrgID` для своей организации); применять **`ExternalId`** для доступа третьих сторон; требовать **MFA** для чувствительных ролей через условие; **аудировать** все assume role (CloudTrail); ограничивать на уровне организации через **SCP**; для шеринга ресурсов использовать **RAM**; регулярно ревизовать, кому и зачем выдан кросс-аккаунт доступ (Access Analyzer покажет внешний доступ).
+
+**Confused deputy («запутанный заместитель»)** — это класс уязвимости, где **сервис или сущность с легитимными правами обманом используется злоумышленником для выполнения действий, на которые сам злоумышленник права не имеет**. Классический облачный сценарий: вы дали стороннему вендору (например, мониторинговому сервису) роль для доступа к вашим ресурсам, доверяя его аккаунту. Но если вендор обслуживает многих клиентов и его trust-механизм не различает контекст, злоумышленник — другой клиент того же вендора — может обманом заставить вендора («заместителя») обратиться к *вашим* ресурсам, ведь у вендора есть права. Вендор — «запутанный заместитель»: он действует со своими правами, но в интересах атакующего. **Защита — `ExternalId`**: вы задаёте уникальный секрет, который вендор обязан передавать при assume вашей роли, и trust policy требует именно его. Поскольку этот ExternalId известен только вам и легитимному вендору в контексте *вашего* доступа, злоумышленник его не знает и не может спровоцировать вендора использовать вашу роль. Современные интеграции AWS используют для этого ExternalId или конкретные source-account/source-arn условия.
+
+#### Согласны ли вы, что шифрование данных в покое нужно включать по умолчанию?
+
+Да, **шифрование в покое по умолчанию — однозначно правильная практика**, и современный консенсус (и настройки AWS) это поддерживают: сегодня S3 шифрует объекты по умолчанию, для EBS можно включить шифрование по умолчанию на уровне региона, управляемые базы поддерживают шифрование. Аргументы «за»: это **дёшево и почти бесплатно по производительности** (аппаратное ускорение делает накладные расходы незаметными); это **защита от целого класса угроз** (компрометация физического носителя, неправильно утилизированный диск, доступ к снапшоту/бэкапу, который случайно стал доступен); это **требование многих стандартов** (PCI DSS, HIPAA) и часто условие прохождения аудита; это **«безопасно по умолчанию»** — не нужно полагаться на то, что кто-то не забудет включить шифрование для каждого нового ресурса.
+
+При этом важно понимать **что шифрование в покое даёт, а что нет** (см. следующий вопрос). Оно защищает данные на уровне хранилища, но **не защищает от компрометации с легитимным доступом**: если злоумышленник получил права роли, которая имеет доступ к данным *и* к ключу, он читает данные расшифрованными — шифрование в покое тут прозрачно и не помеха. Поэтому правильная позиция: «да, включать по умолчанию обязательно — это базовый необходимый слой, но недостаточный сам по себе». Его дополняют контролем доступа (наименьшие привилегии к данным и к ключам KMS — это ключевой момент), шифрованием в движении, и для самого чувствительного — клиентским шифрованием/токенизацией. Шифрование по умолчанию — это фундамент defense in depth, а не вся защита.
+
+#### Какие проверки в IAM вы делаете, чтобы Lambda-функция, запускаемая по событию, работала корректно?
+
+Вопрос про то, чтобы событийная Lambda и **функционировала**, и была **безопасной** с точки зрения прав. Проверки делятся на две стороны. **Сторона исполнения (execution role)** — что функция *может делать*: у функции есть execution role с правами на (а) запись логов в CloudWatch (`logs:CreateLogGroup/CreateLogStream/PutLogEvents` — без них функция работает, но логов нет, частая проблема); (б) доступ к ресурсам, которые она использует (нужный бакет/таблица/очередь — по наименьшим привилегиям, конкретные действия и ARN); (в) при необходимости — доступ к KMS-ключу (если ресурсы шифрованы — без права на ключ операции молча падают), к Secrets Manager (если нужны секреты), к сетевым ресурсам (если функция в VPC). Проверяют, что прав достаточно для работы, но не больше необходимого.
+
+**Сторона триггера (resource-based policy / permissions)** — кто *может вызывать* функцию: для событийного запуска источник события должен иметь разрешение вызывать Lambda. Это либо **resource-based policy** на самой функции (например, разрешение для S3/EventBridge/API Gateway вызывать её — с условием на конкретный источник, чтобы её не мог вызвать кто угодно), либо права на стороне источника (для потоковых источников вроде SQS/Kinesis/DynamoDB Streams — execution role функции должна иметь права *читать* из источника, т.к. Lambda сама опрашивает поток). Проверяют, что (а) триггер вообще имеет право запускать функцию, (б) это право узкое (конкретный бакет/правило, а не «любой»), чтобы исключить нежелательные вызовы. Дополнительно смотрят: не слишком ли широка execution role (нет ли лишних прав, путей эскалации, опасного PassRole), корректны ли условия. Итог проверки — функция имеет ровно нужные права для работы (исполнение), вызывается только легитимным источником (триггер), и нигде нет избыточности. Для отладки проблем «не работает» смотрят `AccessDenied` в CloudTrail и логи функции.
+
+> **Новый термин — resource-based policy (ресурсная политика).** Политика, прикреплённая к самому ресурсу (функции Lambda, бакету, очереди), определяющая, какие внешние принципалы/сервисы могут с ним взаимодействовать. Дополняет identity-based политики (на принципале).
+
+---
+
+### Обнаружение и мониторинг
+
+#### Какие шаги предпринять для создания real-time оповещений и обнаружения для критичных ресурсов (EC2, IAM, S3, VPC, Security Groups)?
+
+Стратегия строится на конвейере «источники → детектирование → маршрутизация → оповещение/реакция». Сначала обеспечивают **источники данных** по каждому критичному ресурсу: для всех — **CloudTrail** (API-действия); для сети — **VPC Flow Logs**; для S3 — data events и event notifications; плюс непрерывная оценка конфигураций через **AWS Config**. Без полных источников детектировать нечего. Дальше включают **слой детектирования**: **GuardDuty** (готовые находки об угрозах для EC2, IAM, S3, сети), **Config-правила** (нарушения конфигураций — открытая SG, публичный бакет, незашифрованный том), **CloudWatch metric filters** на логах CloudTrail (опасные действия).
+
+Конкретные real-time детекторы по ресурсам: **IAM** — алерты на root-логин, создание access key, изменение политик, отключение MFA, подозрительный assume role; **S3** — изменение bucket policy/ACL на публичный, отключение Block Public Access, массовые удаления; **Security Groups** — создание правила с `0.0.0.0/0` на чувствительных портах; **EC2** — находки GuardDuty (C2-коммуникация, майнинг, exfiltration кредов), запуск инстанса с IMDSv1; **VPC** — аномалии в Flow Logs, изменения маршрутизации/шлюзов. **Маршрутизация и оповещение:** все находки/события идут через **EventBridge** → **SNS** (немедленное оповещение дежурных: email/Slack/PagerDuty) для критичного и/или → **Lambda** для авто-реакции; всё агрегируется в **Security Hub**. Real-time достигается событийностью (EventBridge реагирует на событие сразу, без периодического опроса). Дополняют приоритизацией (критичное будит человека, прочее — в тикеты), чтобы не было усталости от алертов, и тестированием конвейера.
+
+#### Как включить полное логирование активности EC2, IAM, S3, VPC и Security Group для улучшения обнаружения?
+
+Полнота логирования — это покрытие всех слоёв, и для каждого свой механизм. **IAM и управляющие действия (включая Security Groups как часть EC2 API):** **CloudTrail** записывает все API-вызовы — создание/изменение пользователей, ролей, политик, security groups, запуск инстансов. В мультиаккаунте делают **organization trail** (один трейл на всю организацию, автоматически охватывает все аккаунты, включая будущие) с доставкой в централизованный защищённый бакет. **S3:** помимо management events, включают **data events** на критичных бакетах (видны чтения/записи конкретных объектов) и/или **S3 event notifications**; полезен и **server access logging**.
+
+**VPC (сеть):** **VPC Flow Logs** на всех VPC/подсетях (метаданные соединений — кто с кем, порт, accept/reject), при необходимости — **Transit Gateway Flow Logs** и **Route 53 Resolver query logs** (DNS-запросы, часто выдают malware). **EC2 (внутри инстанса):** для логов ОС и приложений нужен **CloudWatch agent** (или для контейнеров — драйверы логирования), плюс **GuardDuty Runtime Monitoring** для поведения на уровне ОС. **Security Groups:** изменения видны в CloudTrail; эффект правил — в Flow Logs (accept/reject). **Куда и как:** всё централизуют в выделенный **Log Archive аккаунт** (S3), защищают **неизменяемостью** (Object Lock) и шифрованием (KMS), чтобы злоумышленник не стёр следы, и ограничивают доступ. Поверх логов ставят анализ (Athena/OpenSearch/Security Lake) и детектирование (GuardDuty, metric filters). Ключевые принципы: покрыть все слои, включать на уровне организации (чтобы новые аккаунты охватывались автоматически), и защитить сами логи от изменения. Полноту контролируют (Config-правила «CloudTrail включён», «Flow Logs включены»), чтобы не было слепых зон.
+
+#### Как настроить CloudTrail и S3 Event Notifications для мониторинга изменений прав бакетов и предотвращения несанкционированного доступа?
+
+Цель — мгновенно узнавать, когда кто-то меняет права бакета (делает его публичным, меняет policy/ACL), и автоматически реагировать. **CloudTrail** здесь — основной источник: он фиксирует управляющие вызовы к S3 — `PutBucketPolicy`, `PutBucketAcl`, `PutBucketPublicAccessBlock`, `DeleteBucketPolicy` и т.п., с указанием кто и когда. Настраивают так: CloudTrail включён и доставляет события (в идеале — в CloudWatch Logs для real-time обработки и в S3 для хранения). На основе этих событий строят детектирование через **EventBridge** (правило на конкретные API изменения прав бакета) или **CloudWatch metric filter + alarm**.
+
+**S3 Event Notifications** — это механизм, который сам бакет генерирует на события (в основном объектные — создание/удаление объекта — и может слать в SNS/SQS/Lambda); он полезен для мониторинга операций с данными (например, массовых удалений как признак ransomware), но для **изменений именно прав бакета** главный источник — CloudTrail, а не object-уведомления. Поэтому правильная архитектура: **CloudTrail (управляющие события) → EventBridge → реакция**, и **S3 Event Notifications → Lambda/SQS** для событий уровня объектов. **Реакция на несанкционированное изменение прав:** EventBridge ловит, например, `PutBucketPublicAccessBlock`, делающий бакет публичным → запускает **Lambda**, которая немедленно восстанавливает безопасную конфигурацию (re-enable Block Public Access) и оповещает команду через SNS (с деталями из события — какой бакет, кто изменил). Дополнительно используют **Config-правило** `s3-bucket-public-read-prohibited` как непрерывную проверку и **Macie** для контроля чувствительных данных. Итог — изменение прав бакета обнаруживается за секунды и автоматически откатывается, минимизируя окно экспозиции.
+
+#### Вы обнаружили подозрительную активность в AWS. Проведите меня через шаги расследования и реагирования.
+
+Действуют по стадиям реагирования, методично. **1. Триаж/подтверждение:** оценить находку (например, из GuardDuty) — что именно, какой ресурс/принципал, серьёзность, не ложное ли срабатывание. **2. Анализ/scoping:** определить масштаб — кто (какой принципал/роль/ключ), что делал, откуда (IP/регион), какие ресурсы затронуты. Инструменты: **CloudTrail** (история действий принципала), **VPC Flow Logs** (сетевая активность ресурса), **Amazon Detective** (граф связей — быстро показывает масштаб и связанные сущности), **Athena** (точечные SQL-запросы по логам). Цель — понять тип инцидента и какие данные/ресурсы под угрозой.
+
+**3. Локализация (containment)** — остановить распространение, сохранив улики: для скомпрометированного инстанса — карантинная security group (без egress), вывод из балансировщика, снапшот диска/памяти в forensics-аккаунт; для скомпрометированных кредов — деактивировать ключ, приложить Deny, отозвать активные сессии; для открытого ресурса — закрыть доступ. **4. Устранение (eradication)** — убрать первопричину: закрыть вектор входа (уязвимость, утёкший ключ), убрать вредонос/бэкдор, ротировать секреты. Скомпрометированные вычисления обычно пересоздают из чистого образа. **5. Восстановление** — поднять чистые ресурсы из IaC, восстановить данные из бэкапа, убедиться, что аномалия исчезла, прежде чем вернуть в прод. **6. Выводы** — blameless-постмортем, обновление автоматизации/guardrails/детектирования. Сквозные принципы: действовать по заранее готовому **playbook**, **сохранять улики** (не стирать сразу всё), **автоматизировать быстрые действия** (EventBridge → Lambda для отзыва кредов/изоляции), вести **хронологию** (для постмортема и, при необходимости, для регуляторов/юристов), и соблюдать процедуры уведомления, если затронуты персональные данные.
+
+#### Как использовать AWS Config для автоматического обнаружения и устранения облачных мисконфигураций?
+
+**AWS Config** обнаруживает мисконфигурации через **правила (Config Rules)**, которые непрерывно проверяют ресурсы на соответствие желаемому состоянию. Есть готовые управляемые правила (например, `s3-bucket-public-read-prohibited`, `encrypted-volumes`, `restricted-ssh`, `iam-password-policy`) и кастомные (на Lambda или Guard-синтаксисе) под свои требования. Когда ресурс создаётся или меняется, Config оценивает его против применимых правил и помечает COMPLIANT/NON_COMPLIANT, сохраняя историю. Для удобства правила группируют в **conformance packs** под стандарты (CIS, PCI, собственный базлайн) и разворачивают на всю организацию, чтобы покрытие было полным и автоматическим для новых аккаунтов.
+
+**Автоматическое устранение (remediation)** реализуют двумя путями. Встроенный механизм Config — **привязка SSM Automation-документа к правилу**: при нарушении Config сам запускает документ исправления (например, правило «тома не зашифрованы» → действие, помечающее/исправляющее; «бакет публичный» → действие, включающее Block Public Access; «открытая SG» → удаление правила). Второй путь, более гибкий, — через **EventBridge**: нарушение генерирует событие → EventBridge → **Lambda/Step Functions** с произвольной логикой исправления и оповещением. Для безопасности: безопасные и однозначные исправления автоматизируют полностью, рискованные — с подтверждением человека или только оповещением; каждое авто-действие логируется. Итог — связка «Config обнаруживает → remediation исправляет → история и Security Hub дают видимость» обеспечивает непрерывный самоисправляющийся контроль конфигураций.
+
+#### Как автоматизировать обнаружение и устранение неправильно настроенных security groups?
+
+Это конкретный и очень частый случай авто-remediation. **Обнаружение:** используют **AWS Config-правила** для security groups — например, `restricted-ssh` (нет открытого наружу 22), `restricted-common-ports` (нет открытых наружу чувствительных портов), `vpc-sg-open-only-to-authorized-ports` — они непрерывно сканируют все группы и помечают нарушителей. Альтернативно/дополнительно — **EventBridge-правило** на сам факт изменения security group (`AuthorizeSecurityGroupIngress` в CloudTrail), что даёт реакцию в реальном времени, в момент создания опасного правила, ещё до того как Config переоценит.
+
+**Устранение:** нарушение → **EventBridge** → **Lambda**, которая анализирует правило и **удаляет/откатывает опасное** (например, ingress-правило с `0.0.0.0/0` на порту 22/3306/6443) или возвращает группу к утверждённому состоянию, после чего оповещает команду через SNS (что было, кто создал — из CloudTrail). Для Config-пути можно привязать SSM Automation-документ, удаляющий нарушающее правило. Тонкости безопасной автоматизации: чётко определить, что считается «опасным» (какие порты/источники недопустимы), чтобы не сломать легитимный доступ; для пограничных случаев — оповещать, а не удалять автоматически; логировать каждое действие. Превентивно дополняют **SCP/guardrails** (запрет создавать слишком открытые группы) и **policy-as-code в IaC** (опасное правило не проходит ревью). Итог — опасное правило либо не создаётся вовсе, либо удаляется автоматически за секунды с оповещением.
+
+#### Как интегрировать GuardDuty со Slack для real-time обнаружения?
+
+Интеграция следует стандартному событийному паттерну AWS. Когда **GuardDuty** генерирует находку, она автоматически публикуется в **EventBridge** как событие (source `aws.guardduty`). Создают **EventBridge-правило**, которое ловит находки (можно фильтровать по серьёзности — например, только severity ≥ 7, чтобы в Slack шли только важные, без шума) и направляет их в **цель**. Дальше два распространённых способа доставки в Slack.
+
+**Способ 1 — через Lambda:** EventBridge → **Lambda**, которая берёт детали находки (тип, ресурс, серьёзность, аккаунт, описание), форматирует читаемое сообщение и отправляет его через **Slack Incoming Webhook** (или Slack API) в нужный канал. Это даёт полный контроль над форматом и логикой (разные каналы по серьёзности, обогащение данными). **Способ 2 — через SNS + AWS Chatbot:** EventBridge → **SNS** → **AWS Chatbot** (нативный сервис интеграции с Slack/Teams), который сам публикует уведомления в канал с минимальной настройкой кода. В мультиаккаунте находки сначала агрегируют в **Security Hub** делегированного администратора, и интеграцию со Slack делают оттуда (единая точка). Практические детали: фильтровать по серьёзности, чтобы не спамить; включать в сообщение ссылку на находку в консоли для быстрого перехода; для критичных — параллельно слать в систему дежурств (PagerDuty), а не только в чат; защитить webhook (это секрет — в Secrets Manager). Так команда получает важные находки GuardDuty в Slack в реальном времени.
+
+> **Новый термин — AWS Chatbot.** Управляемый сервис AWS для отправки уведомлений (из SNS/EventBridge) в Slack или Microsoft Teams и выполнения некоторых команд оттуда, без написания собственной интеграции.
+
+#### Работали ли вы с GuardDuty? Есть ли предложения по снижению ложных срабатываний?
+
+GuardDuty в целом известен **относительно низким уровнем шума** (он выдаёт обоснованные находки, а не сырые алерты), но и у него бывают срабатывания, которые в вашем контексте не являются угрозой (например, легитимный сканер уязвимостей выглядит как разведка; корпоративный VPN/прокси даёт «нетипичную геолокацию»; ваш собственный пентест). Снижают такой шум несколькими механизмами. Главный — **suppression rules (правила подавления)** в GuardDuty/Security Hub: фильтры, автоматически архивирующие находки, заведомо не релевантные в вашей среде (по типу находки + конкретному ресурсу/принципалу/признаку). Например, подавить находки определённого типа от IP вашего санкционированного сканера.
+
+Другие меры: **trusted IP lists** (доверенные адреса, активность с которых GuardDuty не считает подозрительной) и **threat IP lists** (наоборот, ваши списки плохих адресов); корректная настройка, чтобы легитимные инструменты (сканеры, автоматизация) были учтены; **приоритизация по серьёзности** (реагировать на high/critical, low — копить/анализировать пакетно); обогащение находок контекстом перед эскалацией (через Lambda проверять, не известная ли это легитимная активность, прежде чем будить человека). Важно подходить осторожно: подавлять только то, что точно не угроза, документировать каждое правило подавления (чтобы не «ослепить» себя) и периодически их пересматривать. Также учитывают, что часть «ложных» — это на самом деле реальные, но не критичные находки (например, инстанс действительно сканируется ботами — это норма для интернета). Цель — не убрать находки ради тишины, а отфильтровать заведомо нерелевантное, сохранив сигнал. Хорошая практика — связать GuardDuty с авто-реакцией только для надёжных типов находок, а спорные направлять на ручной триаж.
+
+> **Новый термин — suppression rule (правило подавления).** Фильтр, автоматически архивирующий находки, подходящие под заданные критерии, чтобы они не создавали шум. Применяется к заведомо нерелевантной в данной среде активности, с осторожностью и документированием.
+
+#### Как создать Lambda для Config Rules и отправки email через SES, с данными мультиаккаунт-агрегатора?
+
+Разберём по компонентам. **Мультиаккаунт-агрегатор Config** — это механизм, собирающий данные о соответствии (compliance) из многих аккаунтов и регионов в один центральный аккаунт (обычно Security/Audit). Он даёт единое представление: какие ресурсы во всей организации нарушают какие правила. **Кастомное Config-правило на Lambda** — когда нужна проверка, которой нет среди управляемых правил: Lambda получает от Config конфигурацию ресурса, применяет вашу логику и возвращает вердикт COMPLIANT/NON_COMPLIANT. **Amazon SES (Simple Email Service)** — сервис отправки email, через который шлют уведомления.
+
+**Архитектура решения:** для отчётов о несоответствии по всей организации — Lambda, которая запрашивает данные из **агрегатора** (API Config, например `SelectAggregateResourceConfig`/`GetAggregateComplianceDetailsByConfigRule`), собирает список нарушающих ресурсов по всем аккаунтам, формирует отчёт и отправляет его через **SES** ответственным. Запускать такую Lambda можно по расписанию (EventBridge scheduled rule — ежедневный сводный отчёт) или событийно (по факту нового нарушения). Для real-time оповещений о конкретном нарушении — отдельный путь: Config/Security Hub → EventBridge → Lambda → SES. **Что учесть с точки зрения безопасности и корректности:** у Lambda должна быть **execution role** с правами на чтение из агрегатора Config, на `ses:SendEmail`, и на запись логов (частая ошибка — забыть права на логи); SES-домен/адрес должен быть верифицирован (и вне sandbox для отправки внешним адресатам); наименьшие привилегии; обработка ошибок и пагинации (в большой организации нарушений много — нужна разбивка). Итог — централизованная Lambda превращает разрозненные данные о соответствии из всех аккаунтов в понятный email-отчёт/алерт.
+
+> **Новые термины — Config aggregator, Amazon SES.** **Config aggregator** — централизованный сбор данных о соответствии из многих аккаунтов/регионов в один. **SES (Simple Email Service)** — сервис AWS для программной отправки электронной почты (уведомления, отчёты).
+
+#### Как обеспечить целостность логов CloudTrail?
+
+Целостность логов критична: если злоумышленник может незаметно изменить или удалить логи, аудит и расследования бесполезны. AWS даёт несколько механизмов. Первый — **CloudTrail log file validation (валидация целостности)**: при включении CloudTrail создаёт для каждого доставленного файла логов криптографическую подпись (хэши файлов и подписанный digest-файл). Позже с помощью AWS CLI можно **проверить**, что файлы логов не были изменены или удалены с момента доставки — любая модификация будет обнаружена. Это прямой ответ на вопрос «как доказать, что логи подлинные».
+
+Дополнительные слои защиты целостности: **изоляция в выделенном Log Archive аккаунте** с жёстко ограниченным доступом (даже администраторы прод-аккаунтов не могут трогать логи); **S3 Object Lock (WORM)** на бакете логов — файлы физически нельзя удалить или перезаписать до конца срока retention, даже root (защита от удаления злоумышленником и от ransomware); **bucket policy**, разрешающая только запись от CloudTrail и запрещающая удаление; **шифрование KMS** (с контролируемым доступом к ключу); **MFA Delete**; **мониторинг** самого CloudTrail (алерт на `StopLogging`/`DeleteTrail`/изменение конфигурации трейла — попытка отключить логирование должна немедленно поднимать тревогу). В мультиаккаунте — **organization trail**, который пользователи member-аккаунтов не могут отключить. Совокупно: валидация доказывает подлинность, Object Lock и изоляция делают изменение/удаление невозможным, а мониторинг ловит попытки вмешательства. Это и есть обеспечение целостности логов на уровне, который удовлетворяет аудиторов.
+
+> **Новый термин — log file validation (валидация файлов логов).** Функция CloudTrail, создающая криптографические подписи доставленных логов, чтобы впоследствии можно было доказать их неизменность. Основа доверия к логам при расследованиях и аудите.
+
+#### Как легко получить незашифрованные тома EBS, используя фильтры Config?
+
+**EBS (Elastic Block Store)** — это сетевые диски для EC2-инстансов; незашифрованный том — нарушение требований по шифрованию в покое. **AWS Config** позволяет найти все такие тома без ручного перебора. Самый прямой способ — управляемое Config-правило **`encrypted-volumes`**: оно автоматически проверяет все EBS-тома и помечает незашифрованные как NON_COMPLIANT. После включения правила в консоли/через API Config показывает список всех нарушающих ресурсов — это и есть готовый перечень незашифрованных томов по аккаунту (а с агрегатором — по всей организации).
+
+Второй мощный способ — **Config Advanced Queries** (SQL-подобные запросы к инвентарю Config): можно выполнить запрос вида «выбрать все ресурсы типа `AWS::EC2::Volume`, где `encrypted = false`» — и получить список мгновенно, в том числе агрегированно по многим аккаунтам через aggregator. Это удобно для разовой инвентаризации и отчётов. Найденное устраняют: для существующих томов шифрование «на месте» не включается, поэтому делают зашифрованный снапшот → создают из него зашифрованный том → заменяют (или пересоздают ресурс из IaC уже с шифрованием); процесс можно автоматизировать. Превентивно включают **EBS encryption by default** на уровне региона (новые тома всегда шифруются) и **Config-правило** как непрерывный контроль + **SCP**, запрещающий создание незашифрованных томов. Итог: `encrypted-volumes` правило или advanced query дают список незашифрованных томов «в один клик», а encryption-by-default + guardrails не дают появляться новым.
+
+> **Новый термин — Config Advanced Queries.** Возможность выполнять SQL-подобные запросы к инвентарю конфигураций AWS Config (в т.ч. агрегированно по многим аккаунтам) — удобно для инвентаризации и поиска ресурсов по признакам (например, всех незашифрованных или публичных).
+
+#### Как использовать CloudWatch metric filters?
+
+**CloudWatch metric filter (фильтр метрик)** — это механизм, который **сканирует логи в CloudWatch Logs на заданный паттерн и превращает совпадения в числовую метрику**, на которую затем можно повесить аларм. Это основной способ построить оповещения на основе содержимого логов. Типичный сценарий безопасности: логи CloudTrail доставляются в CloudWatch Logs → создаётся metric filter, ищущий определённое событие (например, использование root-аккаунта, неудачные попытки входа, отключение CloudTrail, изменение security group) → каждое совпадение инкрементирует метрику → **CloudWatch alarm** срабатывает при достижении порога → уведомляет через SNS.
+
+Как использовать на практике: определяют **паттерн фильтра** (синтаксис позволяет искать по тексту и по полям JSON — например, `{ $.eventName = "ConsoleLogin" && $.userIdentity.type = "Root" }` для root-логина), создают на его основе метрику, и **аларм** с нужным порогом и периодом (например, ≥1 root-логин за 5 минут → тревога). CIS Benchmark прямо рекомендует набор таких metric filters + alarms на критичные события (root-использование, неавторизованные API-вызовы, изменения IAM-политик, изменения сетевых шлюзов/маршрутов/security groups, отключение CloudTrail/Config, изменения KMS-ключей). Важные нюансы: фильтр работает только если соответствующие логи доставляются в CloudWatch Logs (нужно настроить доставку CloudTrail → CloudWatch Logs); пороги и периоды настраивают, чтобы ловить реальное, но не шуметь; критичные алармы заводят на немедленное оповещение. Metric filters — простой и мощный способ получить real-time security-алерты прямо из логов без отдельной системы.
+
+#### Как управлять патчингом уязвимостей EC2 автоматизированно?
+
+Автоматический патчинг EC2 строят на **AWS Systems Manager Patch Manager**. Он позволяет: задать **patch baseline** (какие патчи одобрены, какой критичности, через сколько дней после выхода авто-одобряются); сгруппировать инстансы в **patch groups** по тегам (например, отдельные политики для прод и dev); определить **maintenance windows** (окна обслуживания, когда разрешено патчить, чтобы не задеть пиковую нагрузку); и запускать сканирование (только проверить, чего не хватает) и установку патчей по расписанию. Состояние соответствия патчей видно централизованно, отчётность — для аудита.
+
+Чтобы патчинг был **безопасным и не ломал прод**, применяют практики: тестировать патчи сначала на dev/staging, затем волнами на прод; для критичных нагрузок предпочитать **immutable-подход** — не патчить работающие инстансы, а собирать новый «золотой» AMI с патчами в пайплайне (с предварительным сканированием Inspector) и заменять инстансы через rolling-обновление в Auto Scaling Group (с health-проверками и возможностью отката); для контейнеров — аналогично пересобирать образ. Интегрируют с **управлением уязвимостями**: **Amazon Inspector** непрерывно находит уязвимости (CVE) → по критичным запускается патчинг (event-driven, через EventBridge → SSM) → Inspector подтверждает устранение повторным сканированием. Также — патчинг по выходу критичного CVE, не дожидаясь планового окна. Всё логируется. Итог — цикл «обнаружили уязвимость (Inspector) → автоматически пропатчили/пересобрали (SSM/pipeline) → проверили», максимально без ручного труда, с приоритизацией по критичности и защитой прода через поэтапность и immutable-подход.
+
+#### Какие проверки выполняет AWS Inspector для выявления уязвимостей инстансов?
+
+**Amazon Inspector** — сервис автоматического и непрерывного сканирования на уязвимости, работающий **без агента** (для EC2 использует SSM agent, который обычно уже есть) и **event-driven** (сканирует при запуске инстанса, при установке ПО, при выходе нового CVE — без расписаний). Для **EC2-инстансов** он выполняет в первую очередь **сканирование уязвимостей ПО (software vulnerabilities)**: инвентаризирует установленные пакеты операционной системы и приложений и сопоставляет их с базами известных уязвимостей (**CVE**), выявляя, какие установленные версии содержат известные дыры. Поддерживаются распространённые ОС (различные Linux, Windows) и языковые пакеты приложений.
+
+Кроме поиска CVE в пакетах, Inspector оценивает **сетевую доступность (network reachability)** — анализирует, достижим ли инстанс из интернета по каким портам (что повышает риск уязвимости: дыра на публично доступном порту опаснее). Для каждой находки Inspector рассчитывает **контекстный риск-скор** (Inspector score), учитывающий не только базовый CVSS, но и факторы вроде сетевой доступности и наличия эксплойта — это помогает приоритизировать (см. вопросы об управлении уязвимостями). Inspector также сканирует **образы контейнеров в ECR** и **Lambda-функции** (уязвимости в зависимостях и коде), то есть покрывает три типа вычислений. Находки интегрируются с **Security Hub** и через EventBridge — с автоматическим реагированием (тикеты, патчинг). Отдельно отметим: исторически Inspector умел и проверки конфигурации ОС против CIS-бенчмарков уровня хоста; основной же фокус современного Inspector — непрерывный поиск уязвимостей ПО (CVE) в EC2, контейнерах и Lambda с умной приоритизацией.
+
+#### Когда шифрования по умолчанию недостаточно?
+
+Шифрование в покое по умолчанию — необходимый базовый слой, но есть ряд ситуаций, где **его недостаточно**, и важно это понимать. Главное ограничение: **шифрование в покое не защищает от компрометации с легитимным доступом**. Если злоумышленник получил креды роли/пользователя, у которой есть доступ и к данным, и к ключу (а обычно у тех, кто работает с данными, есть и то и другое), он читает данные **расшифрованными** — серверное шифрование тут полностью прозрачно и не является препятствием. То есть против украденных кредов, инсайдера или скомпрометированного приложения шифрование at rest бесполезно. Здесь нужны другие слои: наименьшие привилегии, контроль доступа к ключам отдельно от данных, мониторинг аномального доступа.
+
+Другие случаи недостаточности: **данные в использовании (in use)** — пока приложение обрабатывает данные в памяти, они расшифрованы; для защиты нужны confidential computing/enclaves (например, AWS Nitro Enclaves). **Передача данных** — шифрование at rest не покрывает in transit, нужен TLS. **Контроль над ключами** — если регуляторика требует, чтобы ключами управляли только вы (а не провайдер), стандартного KMS-ключа AWS может быть недостаточно — нужны customer-managed keys, BYOK, CloudHSM или XKS. **Сильная изоляция/доказуемость** — для самых чувствительных данных (где даже теоретический доступ провайдера неприемлем) применяют **клиентское шифрование** (данные шифруются до отправки в облако, провайдер видит только шифротекст) или **токенизацию** (реальные значения вообще не попадают в систему). **Целостность и неизменяемость** — шифрование не защищает от удаления/подмены, для этого нужны версионирование, Object Lock, подписи. Вывод: шифрование по умолчанию обязательно, но это один слой defense in depth; против легитимно-выглядящего доступа, для данных в использовании, для строгого контроля ключей и для неизменяемости нужны дополнительные меры.
+
+> **Новые термины — данные «в использовании» (in use), confidential computing, Nitro Enclaves.** Данные **in use** — обрабатываемые в памяти (третье состояние после at rest и in transit). **Confidential computing** — технологии, защищающие данные даже во время обработки, изолируя их в защищённой аппаратной среде. **AWS Nitro Enclaves** — изолированные вычислительные среды для обработки особо чувствительных данных, недоступные даже для основной ОС инстанса.
+
+#### Рекомендуете ли вы ротацию ключей и какой должна быть периодичность?
+
+Да, **ротация ключей рекомендуется** — это устоявшаяся best practice и требование многих стандартов. Смысл ротации: периодическая замена ключа ограничивает **«окно ущерба» при компрометации** (если ключ незаметно утёк, регулярная ротация ограничивает время, в течение которого он полезен атакующему) и снижает риск от долгого накопления данных, зашифрованных одним ключом (криптографическая гигиена). Однако периодичность и механизм сильно зависят от типа ключа.
+
+Для **управляемых ключей KMS** AWS предлагает **автоматическую ротацию раз в год** (а теперь и настраиваемый период) — это разумный дефолт для большинства случаев, и его рекомендуется включать. Важная деталь: при ротации KMS-ключа меняется криптографический материал, но **сам ключ (его ID/ARN) и доступ к старым данным сохраняются** — KMS помнит прежний материал для расшифровки старых данных, так что ротация прозрачна и ничего не ломает. Поэтому для KMS «включить авторотацию» — почти всегда правильный ответ. Для **импортированных ключей (BYOK)** автоматической ротации нет — её организуют процедурно (импорт нового материала по расписанию). Для **долгоживущих учётных данных (access keys)** ротация важнее и чаще — рекомендуется не реже чем раз в 90 дней (а лучше — вообще отказаться от них в пользу временных кредов через роли, тогда вопрос ротации снимается). Для **секретов в Secrets Manager** — включить автоматическую ротацию (для RDS встроенная, для прочего через Lambda), период по чувствительности (часто 30–90 дней). Для **сертификатов** — ACM ротирует/продлевает автоматически. **Общий ответ:** да, ротировать; для KMS — автоматическая годовая (или чаще по требованиям); для access keys — ≤90 дней или отказ в пользу ролей; для секретов — автоматическая по политике; конкретный период диктуется чувствительностью данных и требованиями соответствия (некоторые стандарты задают явные сроки). При этом ротация — дополнение к, а не замена, надёжному контролю доступа к ключам.
+
+---
+
+## Вопросы по GCP
+
+> **Краткий перенос понятий AWS → GCP.** Многие концепции совпадают, меняются названия. Аккаунт AWS ≈ **проект (project)** в GCP. CloudTrail ≈ **Cloud Audit Logs**. GuardDuty/Security Hub/Inspector/Macie ≈ **Security Command Center**. WAF/Shield ≈ **Cloud Armor**. Verified Access ≈ **Identity-Aware Proxy**. IRSA ≈ **Workload Identity**.
+
+#### Что такое Google Cloud IAM?
+
+**Google Cloud IAM** управляет доступом в GCP, отвечая на вопрос «кто что может делать с какими ресурсами», но модель организована иначе, чем в AWS. Доступ выражается через **привязки (bindings)**: «**member** (кто) + **role** (набор прав)» на определённом уровне иерархии. Member — это идентичность: пользователь Google, **service account** (для приложений/ВМ — аналог роли для нагрузок), группа или домен. Role — набор разрешений: **basic** (грубые Owner/Editor/Viewer — избегать в проде), **predefined** (предопределённые под сервисы, рекомендуются) и **custom** (свои, для наименьших привилегий).
+
+Ключевая особенность GCP — **иерархия ресурсов с наследованием**: Организация → Папки → Проекты → Ресурсы, и IAM-политика, заданная сверху, наследуется вниз. Это удобно для централизованного управления (роль на уровне папки применяется ко всем проектам внутри), но требует осторожности (широкая роль наверху распространяется на всё ниже). Best practices те же: наименьшие привилегии (predefined/custom вместо basic), для приложений — service accounts с минимальными правами и **без скачанных файловых ключей** (предпочитать Workload Identity в GKE и attached service accounts для ВМ — файловые ключи легко утекают), MFA для людей, аудит через Cloud Audit Logs, регулярный пересмотр через IAM Recommender. Понимание иерархии и наследования — главное отличие от плоской аккаунт-модели AWS.
+
+> **Новые термины — service account, иерархия ресурсов GCP.** **Service account** — идентичность для приложений/ВМ (не человек), от имени которой они действуют (аналог IAM-роли для нагрузок). **Иерархия** (Организация→Папки→Проекты→Ресурсы) с наследованием политик сверху вниз — структурная основа доступа в GCP.
+
+#### Объясните роль Security Command Center в GCP.
+
+**Security Command Center (SCC)** — центральная платформа безопасности GCP, объединяющая то, что в AWS распределено между Security Hub, GuardDuty, Config, Inspector и Macie. Это единое окно для видимости активов, обнаружения мисконфигураций и угроз, поиска уязвимостей и оценки соответствия во всех проектах организации.
+
+Ключевые возможности: **Security Health Analytics** (CSPM — поиск мисконфигураций: открытые ресурсы, слабый IAM, отсутствие шифрования); **Event/Container Threat Detection** (обнаружение активных угроз по логам и в контейнерах — аналог GuardDuty); **сканирование уязвимостей** (ВМ и веб-приложений); **обнаружение чувствительных данных** (интеграция с Sensitive Data Protection/DLP — аналог Macie); **оценка соответствия** (CIS, PCI); **анализ путей атаки**. Бывает уровней Standard и Premium/Enterprise. Использование: включить на уровне организации для полного покрытия, настроить непрерывное обнаружение, приоритизировать и устранять находки, интегрировать с реагированием (экспорт через Pub/Sub → Cloud Functions). По сути SCC — «командный центр» безопасности GCP.
+
+> **Новый термин — DLP / Sensitive Data Protection.** Технология обнаружения и защиты чувствительных данных (PII, номера карт): сканирует хранилища, находит и может маскировать/токенизировать такие данные. В GCP — Sensitive Data Protection (ранее Cloud DLP), аналог Macie.
+
+#### Как защитить кластеры Google Kubernetes Engine (GKE)?
+
+(Общие принципы Kubernetes — в разделе ниже; здесь GCP-специфика.) **Доступ к API-серверу:** **приватные кластеры** (узлы/control plane без публичных IP), ограничение доступа через **authorized networks** (только разрешённые диапазоны). **Идентичность нагрузок:** **Workload Identity** — рекомендованный способ дать подам доступ к сервисам GCP без скачанных ключей (привязка Kubernetes service account к GCP service account; аналог IRSA в EKS).
+
+**Узлы:** **Shielded GKE Nodes** (secure boot, проверка целостности против руткитов), **node auto-upgrade/auto-repair** (актуальные патчи), Container-Optimized OS. **Образы и допуск:** сканирование образов (Artifact Registry), **Binary Authorization** (допуск только подписанных/одобренных образов). **Сеть:** **NetworkPolicy** для микросегментации, контроль egress. **RBAC и поды:** наименьшие привилегии RBAC, **Pod Security Standards**/Policy Controller (запрет привилегированных подов, host-доступа, не root). **Секреты:** Secret Manager или шифрование секретов etcd через Cloud KMS. **Обнаружение:** Container Threat Detection и GKE audit logs. Совокупно: приватный кластер + authorized networks + Workload Identity + Shielded/auto-upgrade узлы + Binary Authorization + NetworkPolicy + RBAC + обнаружение. GKE даёт многое как управляемые опции, которые нужно сознательно включить.
+
+> **Новые термины — Workload Identity, Binary Authorization, Shielded Nodes.** **Workload Identity** — привязка K8s service account к GCP service account для доступа подов к ресурсам без файловых ключей. **Binary Authorization** — допуск только подписанных/одобренных образов. **Shielded Nodes** — узлы с secure boot и проверкой целостности.
+
+#### Опишите, как Google Cloud Armor защищает приложения в GCP.
+
+**Google Cloud Armor** объединяет функции **WAF и защиты от DDoS** (аналог AWS WAF + Shield), работая на глобальном внешнем балансировщике Google — фильтрует трафик у периферии, используя сеть Google для поглощения атак. Защищает веб-приложения и API от объёмных DDoS и атак уровня приложения.
+
+Возможности: **защита от DDoS** (L3/L4 автоматически на масштабе сети; **Adaptive Protection** — ML для обнаружения и митигации L7-атак); **WAF-правила** (преднастроенные против OWASP Top 10; кастомные на гибком языке выражений); **rate limiting** (против перебора и L7-флуда); **geo-блокировка**; **списки IP** (allow/deny); **bot management** (reCAPTCHA). Как и в AWS WAF, правила сначала разворачивают в **preview-режиме** (аналог Count — только логирование), анализируют влияние, тюнингуют исключения, затем включают enforce — безопасный способ внедрения без риска отсечь легитимных пользователей. Логи — в Cloud Logging. Использование: повесить политику на внешний балансировщик перед приложением, настроить правила (managed + кастомные + rate limiting), внедрять через preview→enforce, мониторить.
+
+> **Новый термин — Adaptive Protection.** Функция Cloud Armor, использующая ML для автоматического обнаружения L7-DDoS по аномалиям трафика конкретного приложения и предложения правил митигации.
+
+#### Что такое Google Cloud KMS и Cloud HSM?
+
+(Концепции шифрования разобраны в AWS-части — здесь эквиваленты.) **Cloud KMS** — управляемый сервис ключей GCP, аналог AWS KMS: централизованное хранение и использование ключей, материал не покидает сервис, доступ через IAM, аудит, ротация. Используется для шифрования данных в сервисах GCP через **CMEK** (когда вы хотите управлять ключом сами, а не полагаться на дефолтное Google-managed шифрование).
+
+**Cloud HSM** — вариант Cloud KMS, где ключи хранятся и операции выполняются в **аппаратных модулях (HSM)**, сертифицированных по **FIPS 140-2 Level 3**. Нужен, когда регуляторика требует, чтобы ключи никогда не покидали аппаратный модуль и имели высокий уровень сертификации (аналог AWS CloudHSM). Различие KMS vs Cloud HSM то же, что в AWS: обычный KMS проще, дешевле, достаточен для большинства; HSM — для строгих требований. GCP также предлагает **Cloud External Key Manager (EKM)** — ключи, хранящиеся вне Google (аналог AWS XKS), когда материал ключа не должен находиться у провайдера вообще. Выбор определяется требованиями к контролю над ключами.
+
+> **Новый термин — CMEK (Customer-Managed Encryption Keys).** Режим, при котором данные в сервисах GCP шифруются вашим ключом из Cloud KMS (а не дефолтным Google-managed). Даёт контроль над ротацией, доступом и отзывом. Аналог customer-managed KMS keys.
+
+#### Как Google Cloud Logging и Monitoring помогают в безопасности?
+
+**Cloud Logging** централизованно собирает логи: **Cloud Audit Logs** (журнал административных действий — аналог CloudTrail: Admin Activity, Data Access, System Event), логи приложений и сервисов (VPC Flow Logs, GKE audit, балансировщиков, Cloud Armor). Это основа аудита, расследований и обнаружения: Audit Logs отвечают «кто что сделал» и защищены (Admin Activity включены всегда и неизменяемы).
+
+**Cloud Monitoring** собирает метрики и позволяет настраивать **alerting policies** и дашборды (аналог CloudWatch alarms). Для безопасности: создают **log-based metrics** (аналог metric filters — превратить паттерн в логах в метрику, например «owner-действие», «отказ в доступе», «изменение IAM») и вешают alerting policies для real-time оповещений. Логи экспортируют через **log sinks** в Cloud Storage (хранение/неизменяемость для соответствия), BigQuery (SQL-анализ и корреляция — аналог Athena) или Pub/Sub (потоковая обработка, интеграция с SIEM). Находки агрегируются в Security Command Center. Принципы те же, что в AWS: полное покрытие источников, защита и неизменяемость логов, real-time алерты, централизация.
+
+> **Новый термин — log sink.** Механизм маршрутизации/экспорта логов из Cloud Logging в назначение: Cloud Storage (хранение), BigQuery (анализ), Pub/Sub (интеграция). Аналог доставки логов в S3/CloudWatch/Kinesis.
+
+#### Как включить VPC Service Controls в GCP и почему это важно?
+
+**VPC Service Controls (VPC SC)** — специфичная для GCP и очень важная защита от **утечки данных (exfiltration)**. Проблема: даже при правильном IAM, если у кого-то есть легитимный доступ к данным (бакет, датасет BigQuery), он или украденные креды могут **скопировать данные наружу** — в личный проект, на другой аккаунт. VPC SC создаёт **сервисный периметр (service perimeter)** вокруг ресурсов GCP-сервисов и **запрещает перемещение данных через границу**, даже для принципалов с валидными правами — виртуальная стена вокруг данных, не зависящая от IAM.
+
+Как работает: определяете периметр с нужными проектами и сервисами (Cloud Storage, BigQuery); внутри доступ работает как обычно, но **обращение извне периметра или копирование за его пределы блокируется**. Защищает от: exfiltration украденными кредами, инсайдерской утечки, ошибочного копирования в незащищённый проект, доступа из неавторизованных сетей. **Включение:** через Access Context Manager создают access policy и service perimeter, указывают защищаемые проекты и сервисы, настраивают **access levels** (откуда разрешён доступ — сети, геолокация, атрибуты устройства — добавляет zero-trust контекст) и ingress/egress правила для легитимных исключений. Важность в том, что это слой защиты данных, **ортогональный IAM**: IAM решает «кто имеет доступ», VPC SC — «откуда и куда данные вообще могут перемещаться», закрывая класс атак на вынос данных, который IAM сам не покрывает.
+
+> **Новые термины — service perimeter, Access Context Manager, access level.** **Service perimeter** — виртуальная граница вокруг ресурсов GCP-сервисов, через которую запрещено перемещение данных. **Access Context Manager** — где определяются периметры и **access levels** (условия доступа: сети, регионы, устройство). Вместе дают защиту от exfiltration и контекстный доступ.
+
+#### Объясните концепцию Identity-Aware Proxy (IAP) в GCP.
+
+**Identity-Aware Proxy (IAP)** — реализация **zero-trust доступа к приложениям** в GCP. Вместо доступа через VPN ко всей сети, IAP ставится **перед приложением** (веб-приложением или перед SSH/RDP к ВМ) и проверяет **личность и контекст каждого запроса**, прежде чем пропустить. Доступ даётся на основе идентичности и IAM-прав, а не нахождения в сети — приложение можно не выставлять в интернет и не полагаться на сетевой периметр.
+
+Как работает: пользователь обращается к приложению → IAP перехватывает запрос, аутентифицирует (Google identity/корпоративный IdP), проверяет IAM-право доступа к этому приложению, при необходимости учитывает контекст через Access Context Manager (откуда, состояние устройства) → только тогда пропускает. Преимущества: **не нужен VPN** (доступ к внутренним приложениям откуда угодно после проверки личности); **централизованный контроль** через IAM (легко выдать/отозвать); **zero-trust** (каждый запрос проверяется); **защита от прямого доступа** (приложение/ВМ не открыты). Частые сценарии — безопасный SSH/RDP к ВМ без публичных IP и bastion (IAP TCP forwarding) и доступ к внутренним веб-приложениям для удалённых сотрудников. IAP — GCP-аналог идеи AWS Verified Access.
+
+#### Какова цель Google Cloud Security Scanner?
+
+**Web Security Scanner** (в составе Security Command Center) — сервис автоматического **сканирования веб-приложений на уязвимости** методом **DAST (Dynamic Application Security Testing)**: тестирует *работающее* приложение снаружи, имитируя атакующего — краулит страницы, переходит по ссылкам, заполняет формы, пробует типовые атаки и наблюдает за реакцией. Дополняет статический анализ кода (SAST) проверкой реального поведения развёрнутого приложения.
+
+Что находит: распространённые веб-уязвимости — **XSS**, устаревшие/уязвимые библиотеки, смешанный контент (HTTP в HTTPS), передачу паролей открытым текстом и др. Использование: настраивают цель (URL, расписание, креды для авторизованных областей), запускают периодически, результаты появляются в Security Command Center. Важный нюанс: сканер реально взаимодействует с приложением (заполняет формы, кликает), поэтому его запускают осторожно (лучше на staging), чтобы не навредить проду и не создать тестовые данные в боевой системе. По сути это инструмент непрерывного DAST-тестирования веб-приложений в GCP.
+
+> **Новые термины — DAST / SAST.** **DAST** — тестирование работающего приложения снаружи имитацией атак (уязвимости в runtime). **SAST** — анализ исходного кода без запуска (уязвимые паттерны в коде). Дополняют друг друга.
+
+#### Как защитить данные в Google Cloud Storage?
+
+(Принципы те же, что для S3.) **Контроль публичного доступа** — самое важное: **Public Access Prevention** (жёсткий запрет публичного доступа — аналог S3 Block Public Access); **uniform bucket-level access** (управление доступом через IAM вместо разрозненных per-object ACL, которые легко напутать). Доступ — по наименьшим привилегиям через IAM конкретным принципалам.
+
+**Шифрование:** по умолчанию (Google-managed); для контроля — **CMEK** (свой ключ в Cloud KMS) или CSEK для самого чувствительного; в движении — TLS. **Защита от утечки:** **VPC Service Controls** вокруг Cloud Storage (запрет вынести данные за периметр), Private Google Access (доступ по приватным путям). **Сохранность:** **versioning** (защита от перезаписи/удаления, в т.ч. ransomware); **bucket lock** + retention policies (WORM-неизменяемость на срок — аналог Object Lock); lifecycle для управления хранением и затратами. **Обнаружение и аудит:** **Sensitive Data Protection (DLP)** для поиска чувствительных данных; **Cloud Audit Logs** (Data Access) для аудита; находки в SCC. Совокупно: запрет публичного доступа + uniform access + наименьшие привилегии + CMEK + VPC SC + versioning + bucket lock + DLP + аудит — концептуально идентично защите S3 с GCP-инструментами.
+
+> **Новые термины — uniform bucket-level access, bucket lock, Public Access Prevention.** **Uniform access** — доступ только через IAM (без per-object ACL), меньше ошибок. **Bucket lock** — WORM-неизменяемость на срок retention (аналог Object Lock). **Public Access Prevention** — жёсткий запрет публичного доступа (аналог Block Public Access).
+
+#### Вы отвечаете за защиту GCP Kubernetes-кластера. Какие меры вы примете?
+
+Сводный вопрос, объединяющий защиту GKE с общими принципами Kubernetes (детально — ниже). По слоям: **Control plane:** приватный кластер, **authorized networks** для API-сервера, надёжная аутентификация и **RBAC по наименьшим привилегиям** (никакого cluster-admin без нужды). **Идентичность нагрузок:** **Workload Identity** (доступ подов к сервисам GCP без файловых ключей).
+
+**Узлы:** **Shielded Nodes**, **auto-upgrade/auto-repair**, минимальные образы (COS). **Образы:** сканирование на уязвимости + **Binary Authorization** (только подписанные/одобренные). **Поды:** не root, read-only ФС, drop capabilities, запрет привилегированных и host-namespace через **Pod Security Standards**/Policy Controller. **Сеть:** **NetworkPolicy** (по умолчанию запретить, разрешать только нужное), контроль egress, при необходимости mTLS через service mesh. **Секреты:** Secret Manager / шифрование etcd через Cloud KMS, не в открытых манифестах. **Обнаружение:** GKE audit logs, Container Threat Detection и Security Health Analytics в SCC, алерты. **Процессы:** регулярные обновления, сканирование, проверка по CIS GKE Benchmark. Итог — defense in depth: защитить control plane, нагрузки (Workload Identity), узлы (Shielded + auto-upgrade), допуск образов (Binary Authorization), runtime (Pod Security + NetworkPolicy + threat detection), данные/секреты, плюс аудит и мониторинг.
+
+---
+
+## Вопросы по Azure
+
+> **Краткий перенос понятий AWS → Azure.** IAM ≈ **Microsoft Entra ID** (бывший Azure AD, идентичность) + **Azure RBAC** (права на ресурсы). Аккаунт ≈ **subscription**, с группировкой в **management groups** и **resource groups**. EC2 ≈ **Azure VM**. S3 ≈ **Blob Storage**. KMS+Secrets Manager ≈ **Key Vault**. GuardDuty/Security Hub/Inspector ≈ **Microsoft Defender for Cloud**; SIEM ≈ **Microsoft Sentinel**. Security Group ≈ **NSG**.
+
+#### Что такое Azure Active Directory (Azure AD) и как он связан с облачной безопасностью?
+
+**Azure Active Directory**, ныне **Microsoft Entra ID**, — облачный сервис **управления идентичностью и доступом** Microsoft, основа аутентификации во всей экосистеме Azure и Microsoft 365. Важно не путать с классическим (on-prem) Active Directory: Entra ID — identity-провайдер для облака и веб-приложений (работает по OAuth 2.0/OIDC/SAML), тогда как классический AD — про доменную аутентификацию в локальной сети (Kerberos/LDAP). Entra ID управляет пользователями, группами, приложениями (**service principals** — аналог сервисных аккаунтов) и тем, как они аутентифицируются.
+
+Связь с безопасностью фундаментальная: Entra ID — **плоскость идентичности**, через которую проходит доступ ко всему в Azure, поэтому это главный периметр (как IAM в AWS). Ключевые функции: **MFA**; **Conditional Access** (мощнейший инструмент — давать доступ только при условиях: с доверенного устройства, из разрешённой геолокации, при низком риске входа — реализация zero-trust); **Identity Protection** (обнаружение рискованных входов и скомпрометированных учёток через ML); **Privileged Identity Management (PIM)** (JIT-выдача привилегированных ролей на время с одобрением — против постоянной админки); **федерация и SSO**. Entra ID отвечает за *аутентификацию* и группы, а **Azure RBAC** на основе этой идентичности — за *авторизацию* на ресурсы. Понимание, что Entra ID — облачный IdP (а не локальный AD) и центр всей безопасности доступа, — ключевое.
+
+> **Новые термины — Conditional Access, PIM, service principal.** **Conditional Access** — политики доступа по условиям (устройство, геолокация, риск) — основа zero-trust в Azure. **PIM** — JIT-активация привилегированных ролей на время с одобрением. **Service principal** — идентичность приложения/сервиса в Entra ID (аналог service account).
+
+#### Как защитить Azure Virtual Machines (VMs)?
+
+(Принципы те же, что для EC2.) **Доступ к управлению:** не открывать SSH/RDP в интернет; использовать **Azure Bastion** (доступ к VM через браузер без публичных IP и открытых портов — аналог SSM Session Manager) и/или **just-in-time VM access** в Defender for Cloud (порты управления закрыты, открываются временно по запросу с одобрением). **Сеть:** **NSG** для фильтрации по наименьшим привилегиям, приватные подсети, **Azure Firewall** для egress.
+
+**Идентичность:** **Managed Identity** для доступа VM к сервисам Azure (Key Vault, Storage) без секретов/ключей (аналог instance profile). **Данные:** шифрование дисков через Azure Disk Encryption / SSE с ключами в **Key Vault**. **Уязвимости/патчи:** **Defender for Cloud** (оценка уязвимостей), **Azure Update Manager** (автопатчинг), immutable через образы. **Угрозы:** **Defender for Servers** (обнаружение угроз на VM, EDR). **Мониторинг:** Azure Monitor/Log Analytics, алерты, **Microsoft Sentinel** (SIEM) для корреляции. **Гигиена:** наименьшие привилегии RBAC, минимум софта, secure baseline. Совокупно: закрыть управляющий доступ (Bastion/JIT), сегментировать (NSG), убрать секреты (Managed Identity), шифровать диски (Key Vault), патчить (Update Manager), обнаруживать угрозы (Defender for Servers), мониторить — идентично защите EC2 с поправкой на названия.
+
+> **Новые термины — Managed Identity, Azure Bastion, JIT VM access.** **Managed Identity** — автоматически управляемая идентичность ресурса Azure для доступа к другим сервисам без хранения учётных данных. **Azure Bastion** — доступ к VM через браузер без публичных IP/открытых портов. **JIT VM access** — временное открытие портов управления по запросу с одобрением.
+
+#### Объясните Azure Security Center и его ключевые возможности.
+
+**Azure Security Center**, теперь часть **Microsoft Defender for Cloud**, — платформа управления постурой безопасности и защиты от угроз в Azure (и мульти-облаке), объединяющая то, что в AWS распределено между Security Hub (CSPM), GuardDuty (угрозы) и Inspector (уязвимости). Делится на **CSPM** (бесплатный базовый — оценка конфигураций и рекомендации) и **CWPP** (платные Defender-планы — защита нагрузок от угроз).
+
+Ключевое: **Secure Score** — единый числовой показатель защищённости с приоритизированными рекомендациями. **CSPM** — непрерывная оценка против стандартов (Microsoft Cloud Security Benchmark, CIS, PCI), регуляторное соответствие, инвентаризация, анализ путей атаки. **CWPP** через Defender-планы: **Defender for Servers** (угрозы на VM, уязвимости, EDR), **Defender for Storage** (угрозы и malware в Blob), **Defender for Containers** (AKS), **Defender for SQL/Databases**, **Defender for Key Vault** и др. **Обнаружение угроз и алерты** (выводятся в Sentinel). **Мульти-облако** — умеет подключать и оценивать также AWS и GCP (единое окно постуры). Использование: включить на подписках/management groups, поднимать Secure Score по рекомендациям, включить нужные Defender-планы для критичных нагрузок, интегрировать алерты с реагированием.
+
+> **Новые термины — Secure Score, CSPM vs CWPP.** **Secure Score** — числовая оценка защищённости с рекомендациями. **CSPM** — управление постурой (мисконфигурации). **CWPP (Cloud Workload Protection Platform)** — защита нагрузок (VM, контейнеров, баз) от угроз в runtime. Defender for Cloud объединяет оба.
+
+#### Как Azure DDoS Protection смягчает DDoS-атаки?
+
+(Принципы DDoS — в AWS-части.) **Azure DDoS Protection** защищает ресурсы Azure, используя масштаб сети Microsoft для поглощения и фильтрации атакующего трафика. Два уровня: **базовая** защита L3/L4 включена для всех ресурсов автоматически и бесплатно (аналог Shield Standard); **DDoS Network/IP Protection** — платный расширенный (аналог Shield Advanced).
+
+Как смягчает: непрерывно **мониторит трафик** к защищённым публичным IP, сравнивает с базовыми профилями; при атаке **автоматически активирует митигацию** — отбрасывает вредоносный трафик на периферии сети (scrubbing), пропуская легитимный, без простоя. Расширенный уровень добавляет: **adaptive tuning** (пороги адаптируются под профиль приложения), **attack analytics** в реальном времени, **rapid response** (команда экспертов во время атаки), **cost protection** (защита от роста счёта из-за масштабирования под атакой). Для **L7** дополняют **Azure WAF** (на Application Gateway/Front Door), фильтрующим вредоносные HTTP-запросы. Использование: включить DDoS Protection на виртуальных сетях с публичными ресурсами, поставить WAF перед веб-приложениями, мониторить метрики. Принцип идентичен AWS: поглотить объёмную атаку на масштабе сети (DDoS Protection), отфильтровать прикладную (WAF), у периферии.
+
+#### Что такое Azure Key Vault и как он управляет криптографическими ключами?
+
+**Azure Key Vault** — управляемый сервис для безопасного хранения **секретов, ключей и сертификатов** (объединяет функции AWS KMS и Secrets Manager в одном). Задача та же: убрать чувствительные данные (ключи, пароли БД, API-ключи, TLS-сертификаты) из кода в централизованное защищённое хранилище с контролем доступа и аудитом. Приложения обращаются к Key Vault за секретом/операцией с правами, вместо хранения секретов у себя.
+
+Что хранит: **Keys** (криптографические ключи — операции внутри Key Vault, материал не выдаётся; для шифрования данных в сервисах Azure через CMK); **Secrets** (пароли, строки подключения, токены); **Certificates** (TLS-сертификаты с автообновлением). Возможности: **контроль доступа** через Azure RBAC/access policies по наименьшим привилегиям; **доступ нагрузок через Managed Identity** (приложение получает секрет без собственных учётных данных — устраняет «секрет для доступа к секретам»); **автоматическая ротация** секретов и сертификатов; **полный аудит** (Azure Monitor); **сетевая изоляция** (private endpoints); **soft-delete и purge protection** (защита от удаления). Для высоких требований — **Key Vault Managed HSM** (выделенный пул HSM, FIPS 140-2 Level 3 — аналог CloudHSM). Использование: хранить все секреты/ключи здесь, доступ через Managed Identity и RBAC, включить ротацию, soft-delete и purge protection, сетевую изоляцию, мониторинг обращений.
+
+> **Новый термин — Managed HSM.** Вариант Key Vault с выделенными аппаратными модулями (FIPS 140-2 Level 3) под единоличным контролем, для строгих требований к защите и сертификации ключей. Аналог AWS CloudHSM.
+
+#### Как защитить Azure Storage Accounts?
+
+(Принципы те же, что для S3/Blob.) **Storage Account** содержит Blob, файлы, очереди, таблицы. **Контроль публичного доступа:** запретить публичный доступ на уровне аккаунта (disable public blob access), не использовать публичные контейнеры; предпочитать доступ по **Entra ID (RBAC)**, а не по account keys. **Сеть:** ограничить доступ через **private endpoints** (доступ по приватной сети, не из интернета) и firewall/virtual network rules (только разрешённые сети).
+
+**Аутентификация:** избегать **account keys** (это «мастер-ключи» с полным доступом — легко утекают; если используются, хранить в Key Vault и ротировать); предпочитать **Entra ID-авторизацию** с наименьшими привилегиями или **SAS-токены** с ограниченной областью и сроком (вместо раздачи account key). **Шифрование:** по умолчанию (Microsoft-managed); для контроля — **customer-managed keys в Key Vault**; в движении — требовать HTTPS (secure transfer required), минимум TLS 1.2. **Сохранность:** **soft delete** и **versioning** (защита от удаления/перезаписи, в т.ч. ransomware); **immutable storage** (WORM-политики — неизменяемость на срок для соответствия и анти-ransomware). **Обнаружение и аудит:** **Defender for Storage** (обнаружение угроз и malware-сканирование), Storage Analytics/diagnostic logs для аудита обращений. Совокупно: запрет публичного доступа + Entra ID вместо ключей + private endpoints + CMK-шифрование + HTTPS-only + soft delete/versioning + immutable storage + Defender for Storage — концептуально идентично защите S3 с Azure-инструментами.
+
+> **Новые термины — account keys, SAS-токен, private endpoint.** **Account keys** — мастер-ключи Storage Account с полным доступом (опасны, избегать/ротировать). **SAS (Shared Access Signature)** — токен с ограниченным доступом (область + срок + права) вместо раздачи мастер-ключа. **Private endpoint** — приватная точка доступа к сервису внутри вашей сети без выхода в интернет (аналог PrivateLink).
+
+#### Объясните роль Azure Policy в управлении и соответствии.
+
+**Azure Policy** — сервис **governance**, обеспечивающий, чтобы ресурсы соответствовали правилам организации, — функциональный аналог связки SCP + AWS Config. Вы определяете **политики** (правила вида «ресурсы должны быть в разрешённых регионах», «диски должны быть зашифрованы», «у ресурсов обязательны теги», «публичный доступ к storage запрещён»), и Azure Policy непрерывно **оценивает ресурсы на соответствие** и, что важно, может **предотвращать создание нарушающих ресурсов**.
+
+Ключевая особенность — разные **эффекты** политики: **Deny** (превентивно запретить создание/изменение нарушающего ресурса — как SCP), **Audit** (только пометить несоответствие, не блокируя — для видимости), **DeployIfNotExists/Modify** (автоматически доразвернуть недостающую конфигурацию или исправить — авто-remediation, например включить нужный диагностический лог), **Append** (добавить настройку). Политики группируют в **initiatives** (наборы под стандарт — например, под CIS или регуляторное требование) и назначают на **management groups / подписки / resource groups**, откуда они **наследуются вниз** по иерархии (как guardrails на весь скоуп). Использование для governance и соответствия: задать обязательные правила (шифрование, теги, разрешённые регионы, запрет публичного доступа), назначить на уровне management group для всей организации, видеть дашборд соответствия, автоматически блокировать нарушения (Deny) и исправлять дрейф (remediation), сопоставлять с регуляторными стандартами через встроенные initiatives. Azure Policy — основа того, чтобы среда была «безопасной по умолчанию» и доказуемо соответствующей в масштабе.
+
+> **Новые термины — policy effect, initiative, management group.** **Effect** — действие политики (Deny/Audit/DeployIfNotExists/Modify/Append). **Initiative** — набор политик под стандарт. **Management group** — контейнер над подписками для применения политик и RBAC ко всей организации с наследованием вниз (аналог OU в AWS).
+
+#### Как использовать Azure Sentinel для обнаружения и реагирования на угрозы?
+
+**Microsoft Sentinel** — облачный **SIEM и SOAR** Azure: собирает логи и события из множества источников, нормализует и коррелирует их, обнаруживает угрозы и оркеструет реагирование. Это «командный центр» SOC в Azure (аналог OpenSearch/Security Lake + сторонних SIEM в AWS), построенный поверх Log Analytics и работающий как управляемый облачный сервис (без своей инфраструктуры).
+
+Как использовать по этапам. **Сбор данных:** подключают **data connectors** — из Azure (Entra ID logs, Activity logs, Defender for Cloud alerts, NSG flow logs), Microsoft 365, а также из AWS, GCP и сторонних источников (через коннекторы/агенты/Syslog) — Sentinel задуман как мульти-источниковый и мульти-облачный. **Обнаружение:** **analytics rules** (правила корреляции — встроенные и кастомные на языке запросов **KQL**, превращающие события в **incidents**; включая ML-правила для аномалий и поведенческой аналитики UEBA). **Расследование:** инциденты с графом сущностей, hunting-запросы (проактивный поиск угроз по KQL), интеграция с threat intelligence. **Реагирование (SOAR):** **playbooks** на базе Azure Logic Apps — автоматические или полуавтоматические сценарии реакции (изолировать VM, отключить учётку, оповестить, завести тикет), запускаемые по инциденту. Использование для обнаружения и реагирования: подключить источники → настроить analytics rules под свои угрозы → инциденты приоритизируются и расследуются → playbooks автоматизируют реакцию → hunting для проактивного поиска. Sentinel даёт сквозную видимость, корреляцию и автоматизированное реагирование, в том числе для мульти-облачных сред.
+
+> **Новые термины — KQL, analytics rule, playbook, hunting.** **KQL (Kusto Query Language)** — язык запросов Sentinel/Log Analytics для поиска и корреляции. **Analytics rule** — правило, превращающее события в инциденты. **Playbook** — автоматический сценарий реагирования (на Logic Apps). **Hunting** — проактивный поиск угроз по запросам, до срабатывания алертов.
+
+---
+
+## Управляемый Kubernetes в облаке
+
+> **Что такое Kubernetes (K8s) в двух словах.** Kubernetes — система оркестрации контейнеров: она автоматически разворачивает, масштабирует и управляет контейнерами на кластере машин. **Контейнер** — лёгкая упаковка приложения со всем окружением. **Под (pod)** — минимальная единица в K8s (один или несколько контейнеров). **Узел (node)** — машина (ВМ), на которой запускаются поды. **Control plane** — «мозг» кластера (API-сервер, планировщик, хранилище состояния etcd), управляющий всем. **Управляемый K8s** (EKS в AWS, GKE в GCP, AKS в Azure) — это когда провайдер берёт на себя control plane, а вы отвечаете за нагрузки, узлы (частично) и конфигурацию безопасности.
+
+#### Что такое управляемый сервис Kubernetes и какие провайдеры его предлагают?
+
+**Управляемый Kubernetes** — это предложение облачного провайдера, где он берёт на себя эксплуатацию **control plane** (API-сервер, etcd, планировщик, контроллеры): их установку, масштабирование, обновление, доступность и базовую защиту. Вам не нужно поднимать и поддерживать «мозг» кластера вручную — вы получаете готовый кластер и сосредотачиваетесь на развёртывании нагрузок. Это резко снижает операционную сложность по сравнению с self-managed Kubernetes.
+
+Основные провайдеры: **Amazon EKS (Elastic Kubernetes Service)** в AWS, **Google GKE (Google Kubernetes Engine)** в GCP, **Azure AKS (Azure Kubernetes Service)** в Azure. Все три управляют control plane, интегрируются с IAM/идентичностью своего облака, с сетями, хранилищами, мониторингом и инструментами безопасности провайдера. Различается **модель разделённой ответственности**: провайдер отвечает за безопасность control plane, **но вы по-прежнему отвечаете за** безопасность нагрузок (образы, поды), конфигурацию RBAC, сетевые политики, управление узлами (worker nodes — в зависимости от режима; например, AWS Fargate/GKE Autopilot снимают и управление узлами тоже), секреты, и общую конфигурацию безопасности кластера. То есть «управляемый» не означает «безопасный из коробки» — большая часть security-настроек остаётся на вас. GKE исторически считается наиболее «безопасным по умолчанию», но осознанная настройка нужна везде.
+
+> **Новый термин — control plane vs worker nodes.** **Control plane** — управляющие компоненты кластера (API-сервер, etcd, планировщик); в управляемом K8s за них отвечает провайдер. **Worker nodes** — машины, где выполняются ваши поды; за их безопасность (патчи ОС, конфигурацию) обычно отвечаете вы, если не используете полностью бессерверный режим (Fargate/Autopilot).
+
+#### Как защитить control plane в управляемом Kubernetes?
+
+В управляемом K8s провайдер защищает control plane на уровне инфраструктуры (изоляция, патчи компонентов, шифрование etcd), но **значительная часть защиты доступа к control plane — на вас**. Главное — **ограничить и защитить доступ к API-серверу**, который является точкой входа управления кластером. Меры: сделать **API-сервер приватным** (private endpoint — без публичного доступа из интернета) или, если публичный доступ нужен, ограничить его **разрешёнными диапазонами IP** (authorized networks в GKE, public access CIDRs в EKS); никогда не оставлять API-сервер открытым всему интернету.
+
+Дальше — **аутентификация и авторизация** к control plane: интегрировать с IAM/идентичностью облака (EKS — с AWS IAM, AKS — с Entra ID, GKE — с Google IAM) для надёжной аутентификации вместо статических креденшелов; **RBAC по наименьшим привилегиям** (кто из пользователей/сервисов какие операции в кластере может — никаких лишних cluster-admin); **аудит** обращений к API-серверу (Kubernetes audit logs → в логирование облака для обнаружения подозрительной активности). **Шифрование секретов:** включить шифрование Kubernetes secrets в etcd через KMS облака (application-layer secrets encryption), чтобы секреты не лежали в etcd в открытом/легко-декодируемом виде. **Обновления:** своевременно обновлять версию control plane (провайдер упрощает, но запуск часто на вас). **Защита учётных данных кластера:** беречь kubeconfig и токены, использовать короткоживущие креды. Итог — провайдер обеспечивает инфраструктурную защиту control plane, а вы закрываете доступ к API-серверу (приватность/authorized networks), настраиваете строгую аутентификацию и RBAC, шифруете секреты, включаете аудит и обновления.
+
+> **Новый термин — API-сервер Kubernetes.** Центральная точка управления кластером: все команды (kubectl, контроллеры) идут через него. Его защита (ограничение доступа, аутентификация, RBAC, аудит) — приоритет №1 в безопасности control plane.
+
+#### Объясните RBAC в Kubernetes и его важность.
+
+**RBAC (Role-Based Access Control)** в Kubernetes — это встроенный механизм авторизации, определяющий, **кто** (пользователь, группа, **service account**) **что** (какие действия — get, list, create, delete) над **какими ресурсами** (поды, секреты, deployments) и **где** (в каком namespace или во всём кластере) может делать. Он строится из четырёх объектов: **Role** (набор прав в пределах namespace) и **ClusterRole** (права на уровне всего кластера), а также **RoleBinding** и **ClusterRoleBinding** (привязка роли к субъекту — кому она выдана).
+
+Важность RBAC фундаментальна, потому что это **основной контроль доступа внутри кластера**, и его неправильная настройка — частый путь к компрометации. Принципы: **наименьшие привилегии** (выдавать узкие Role в конкретных namespace, а не широкие ClusterRole; избегать встроенной `cluster-admin`, кроме крайней необходимости); **отдельные service accounts для приложений** с минимальными правами (не использовать default service account с лишними правами); **разделение по namespace** (изоляция команд/приложений); **осторожность с опасными правами** (доступ к секретам, право создавать поды/exec в поды, эскалация через создание ролей, доступ к ресурсам, позволяющим выйти на узел). Опасный сценарий: под со слишком широким service account компрометируется → атакующий через его права читает секреты всего кластера или создаёт привилегированные поды → захват кластера. Поэтому RBAC настраивают по наименьшим привилегиям, регулярно аудируют (кто имеет cluster-admin, какие service accounts избыточны), и дополняют его другими слоями (Pod Security, NetworkPolicy). RBAC — это «IAM внутри кластера», и относиться к нему надо так же серьёзно.
+
+> **Новый термин — namespace.** Логический раздел внутри кластера Kubernetes для группировки и изоляции ресурсов (например, отдельные namespace под команды или среды). RBAC и сетевые политики часто работают в границах namespace, обеспечивая изоляцию.
+
+#### Как реализовать сетевые политики (network policies) в Kubernetes?
+
+По умолчанию в Kubernetes **вся сетевая связность разрешена** — любой под может общаться с любым другим подом в кластере. Это нарушает наименьшие привилегии и опасно: компрометация одного пода даёт сетевой доступ ко всем остальным (латеральное перемещение). **NetworkPolicy** — это механизм микросегментации, позволяющий задать правила, **какие поды с какими могут общаться** (и по каким портам, в каком направлении — ingress/egress). По сути это фаервол на уровне подов внутри кластера.
+
+Реализация и best practices. **Предусловие:** NetworkPolicy применяется только если в кластере установлен поддерживающий её **CNI-плагин** (Calico, Cilium и др.) — без него политики игнорируются (важный нюанс; в управляемых сервисах это включаемая опция). **Подход «default deny»:** начать с политики, запрещающей весь трафик (ingress и egress) в namespace, а затем **явно разрешать только необходимые** соединения (например, frontend-под может ходить на backend-под на порту 8080, backend — на базу) — это реализация наименьших привилегий в сети. Политики обычно основаны на **метках (labels)** подов (разрешить трафик от подов с label `app=frontend` к подам с `app=backend`) и на namespace. **Контроль egress** не менее важен, чем ingress — ограничить, куда поды могут исходяще обращаться (защита от exfiltration и связи с C2). Для сложных требований (L7-правила, mTLS) используют **service mesh** (Istio, Linkerd) поверх. Итог реализации: установить совместимый CNI → применить default-deny в namespace → добавить узкие allow-политики на основе labels для нужных межсервисных соединений → контролировать egress. Это резко ограничивает латеральное перемещение и поверхность атаки внутри кластера.
+
+> **Новые термины — CNI, default deny.** **CNI (Container Network Interface)** — плагин, реализующий сеть в кластере; для работы NetworkPolicy нужен поддерживающий её CNI (Calico, Cilium). **Default deny** — политика «запретить всё по умолчанию, разрешать только нужное» — основа микросегментации.
+
+#### Какова важность сканирования образов (image scanning) в безопасности контейнеров?
+
+**Сканирование образов** — это автоматическая проверка образов контейнеров на **известные уязвимости (CVE)** в их содержимом и на другие проблемы (встроенные секреты, небезопасные конфигурации, вредоносные компоненты, проблемы лицензий). Важность его в том, что образ контейнера включает не только ваш код, но и **весь базовый образ** — операционную систему, системные библиотеки, рантаймы — а это огромный источник уязвимостей, который иначе невидим. Без сканирования вы разворачиваете в прод «чёрный ящик», который может содержать сотни известных дыр в зависимостях и базовом образе.
+
+Сканирование встраивают на нескольких этапах (shift-left): **при сборке в CI/CD** (просканировать образ сразу после сборки, до публикации — быстрая обратная связь разработчику); **в реестре** (registry scanning — ECR/Artifact Registry/ACR сканируют запушенные образы и продолжают сканировать существующие при выходе новых CVE); **на этапе допуска в кластер** (admission control — не пускать образы с критичными уязвимостями или без подписи). Инструменты: Trivy, Grype, провайдерские сканеры (Amazon Inspector, GCP/Azure registry scanning), коммерческие платформы. Best practices, усиливающие ценность сканирования: использовать **минимальные базовые образы** (distroless, alpine — меньше компонентов, меньше уязвимостей); **не запускать от root**; генерировать **SBOM** (чтобы по новому CVE найти все затронутые образы); политика «не деплоить образы с критичными CVE»; регулярная пересборка для подтягивания патчей (контейнеры неизменяемы — их не патчат, а пересобирают). Сканирование образов — это управление уязвимостями для контейнерного мира, и без него безопасность контейнеров неполна.
+
+> **Новый термин — distroless / минимальный базовый образ.** Образ, содержащий только приложение и его рантайм-зависимости, без полноценной ОС, shell и лишних пакетов. Меньше компонентов = меньше уязвимостей и меньше возможностей для атакующего внутри контейнера.
+
+#### Как защитить рабочие нагрузки (workloads) в управляемом Kubernetes?
+
+Защита нагрузок (подов/контейнеров) — это слой поверх защиты кластера, охватывающий весь жизненный цикл. **На этапе образа:** сканирование на уязвимости, минимальные базовые образы, подпись образов и допуск только доверенных (**Binary Authorization**/admission control), генерация SBOM. **На этапе развёртывания (конфигурация подов):** запуск **не от root**, **read-only файловая система**, **drop всех лишних Linux capabilities**, запрет **привилегированных контейнеров** и доступа к host-namespace (PID/network/IPC хоста), запрет host-path монтирований — всё это принуждается через **Pod Security Standards** (встроенные уровни baseline/restricted) или admission-контроллеры (OPA Gatekeeper, Kyverno). Это не даёт скомпрометированному контейнеру вырваться на узел (container escape).
+
+**Идентичность и доступ нагрузки:** каждому приложению — свой **service account** с минимальными правами K8s RBAC и, для доступа к облачным сервисам, своя облачная идентичность через **Workload Identity/IRSA** (без файловых ключей) — узкие права на нужный бакет/базу. **Сеть:** **NetworkPolicy** (default-deny + узкие allow), контроль egress, при необходимости mTLS через service mesh. **Секреты:** не в открытых манифестах/переменных окружения, а из защищённого хранилища (Secret Manager/Key Vault, External Secrets Operator) или шифрованных K8s secrets (etcd encryption через KMS). **Ресурсные лимиты** (requests/limits) — против DoS и runaway-подов. **Runtime-защита и обнаружение:** инструменты runtime security (Falco, GuardDuty Runtime/Defender/Container Threat Detection) для обнаружения подозрительного поведения внутри контейнеров (неожиданные процессы, обращения к файлам, сетевые соединения). **Аудит** через Kubernetes audit logs. Итог — defense in depth для нагрузок: доверенные просканированные образы → жёсткая конфигурация подов (не root, без привилегий) → узкие идентичности (RBAC + Workload Identity) → сетевая микросегментация → защищённые секреты → runtime-обнаружение → аудит. «Управляемый» снимает заботу о control plane, но защита нагрузок целиком на вас.
+
+> **Новые термины — Pod Security Standards, capabilities, container escape.** **Pod Security Standards** — встроенные уровни ограничений для подов (privileged/baseline/restricted), заменившие устаревшие PodSecurityPolicy. **Capabilities** — гранулярные привилегии Linux; лишние нужно сбрасывать (drop). **Container escape** — выход атакующего из контейнера на узел-хост; жёсткая конфигурация подов это предотвращает.
+
+#### Как мониторить и логировать активность в управляемом Kubernetes для безопасности?
+
+Наблюдаемость в Kubernetes охватывает несколько слоёв, и для безопасности важны все. **Audit logs Kubernetes (control plane):** журнал всех обращений к API-серверу — кто какие объекты создавал/менял/читал (аналог CloudTrail для кластера). Это основа обнаружения подозрительной активности (попытки доступа к секретам, создание привилегированных подов, изменения RBAC) и расследований. В управляемых сервисах их **включают и направляют в логирование облака** (EKS → CloudWatch, GKE → Cloud Logging, AKS → Azure Monitor) — по умолчанию могут быть выключены, что является пробелом.
+
+Другие слои: **логи приложений/контейнеров** (stdout/stderr подов → собираются агентами/драйверами логирования в централизованное хранилище — Fluent Bit/Fluentd → CloudWatch/Cloud Logging/Log Analytics); **runtime security events** (Falco или провайдерские — GuardDuty Runtime Monitoring/Container Threat Detection/Defender for Containers — генерируют события о подозрительном поведении внутри контейнеров: неожиданные процессы, изменения файлов, сетевые аномалии); **сетевые логи** (NetworkPolicy logs, VPC/CNI flow logs — кто с кем общался); **метрики** (через Prometheus/CloudWatch — в т.ч. для обнаружения аномалий вроде всплеска ресурсов как признака майнера). Что делать с этим: **централизовать** в логирование облака/SIEM, **коррелировать** (audit logs + runtime events + сетевые — полная картина инцидента), настроить **алерты** на критичные события (создание cluster-admin binding, exec в под в проде, привилегированный под, обращение к C2), **обнаружение угроз** (managed-сервисы провайдера), и обеспечить **сохранность логов** для расследований и соответствия. Итог — включить и централизовать audit logs (часто это первый пропущенный шаг), собрать логи контейнеров, добавить runtime-обнаружение и сетевые логи, коррелировать в SIEM и алертить на подозрительное. Без этого активность в кластере — слепая зона.
+
+> **Новые термины — Kubernetes audit logs, runtime security (Falco).** **Audit logs** — журнал обращений к API-серверу кластера (что и кто делал), основа обнаружения и расследований; в управляемых сервисах нужно включить и направить в логирование. **Runtime security** (например, Falco) — обнаружение подозрительного поведения внутри работающих контейнеров в реальном времени.
+
+---
+
+## DevSecOps-конвейер
+
+> **Что такое DevSecOps.** Это практика встраивания безопасности **в каждый этап** конвейера разработки и доставки ПО (CI/CD), автоматически, а не «навешивания» проверок в конце. Девиз — «shift-left»: находить и устранять проблемы как можно раньше (на этапе кода и сборки), где это дешевле и быстрее. Цель — чтобы безопасность была встроенной и не тормозила доставку. **CI/CD** — Continuous Integration / Continuous Delivery: автоматический конвейер сборки, тестирования и развёртывания кода.
+
+#### Что такое DevSecOps и чем он отличается от DevOps?
+
+**DevOps** — это культура и практики, объединяющие разработку (Dev) и эксплуатацию (Ops) для быстрой и надёжной доставки ПО через автоматизацию (CI/CD), совместную ответственность и быструю обратную связь. Фокус DevOps — скорость и надёжность доставки. Исторически безопасность в DevOps часто оставалась «снаружи»: отдельный этап в конце, ручной аудит безопасности перед релизом, который тормозил быструю доставку и создавал трение между командами.
+
+**DevSecOps** добавляет в эту модель **Sec (безопасность) как встроенную, общую ответственность на каждом этапе**, а не как финальный шлагбаум. Ключевое отличие — безопасность **автоматизирована и встроена в конвейер** (shift-left): проверки кода, зависимостей, секретов, образов и инфраструктуры выполняются автоматически на каждый коммит/сборку, давая разработчику быструю обратную связь прямо в процессе, а не спустя недели. Это решает конфликт «скорость vs безопасность»: вместо того чтобы безопасность замедляла доставку, она становится частью автоматического потока. Культурно DevSecOps означает, что **за безопасность отвечают все** (разработчики, не только security-команда), а security-команда переходит от роли «контролёра на выходе» к роли, которая предоставляет инструменты, «безопасные рельсы» (paved road) и экспертизу. Кратко: DevOps = быстрая доставка через автоматизацию; DevSecOps = то же самое, но с безопасностью, встроенной автоматически в каждый этап и являющейся общей ответственностью, а не отдельным финальным барьером.
+
+#### Какие ключевые компоненты безопасного CI/CD-конвейера?
+
+Безопасный CI/CD встраивает проверки на каждом этапе — от кода до развёртывания. **На этапе кода (pre-commit / commit):** **secret scanning** (поиск случайно закоммиченных ключей/паролей — например, gitleaks, до того как они утекут в историю Git); **SAST** (статический анализ кода на уязвимые паттерны); **pre-commit hooks** и обязательное **ревью кода** (peer review). **На этапе зависимостей:** **SCA (Software Composition Analysis)** — проверка сторонних библиотек на известные уязвимости и проблемные лицензии; генерация **SBOM**. **На этапе сборки/артефактов:** **сканирование образов контейнеров** на уязвимости; **подпись артефактов/образов** (cosign/Sigstore) для целостности; защита самого build-окружения.
+
+**На этапе инфраструктуры:** **IaC-сканирование** (policy-as-code — checkov, tfsec, cfn-guard проверяют шаблоны на небезопасные настройки до развёртывания). **На этапе развёртывания и runtime:** **admission control** (не пускать в кластер неподписанные/уязвимые образы); **DAST** (динамическое тестирование развёрнутого приложения); runtime-защита. **Сквозные компоненты:** **управление секретами конвейера** (никаких долгоживущих ключей — доступ через временные креды/OIDC; секреты из защищённого хранилища); **наименьшие привилегии** для самого конвейера и его сервисных идентичностей; **защита цепочки поставок** (провенанс, SLSA, доверенные источники зависимостей и образов); **аудит и неизменяемость** (кто что деплоил — через Git-историю и логи); **разделение обязанностей** (кто пишет код ≠ кто аппрувит прод-деплой). Принцип построения — проверки на каждом этапе с быстрой обратной связью (shift-left), блокировка только на критичном (чтобы не тормозить поток), безопасный сам конвейер (временные креды, наименьшие привилегии), и защита целостности артефактов от кода до прода.
+
+> **Новый термин — secret scanning.** Автоматический поиск случайно попавших в код секретов (API-ключей, паролей, токенов) — в коммитах, истории Git, конфигах. Критичен, т.к. утёкшие в репозиторий ключи — один из самых частых источников компрометации.
+
+#### Что такое SAST, DAST и SCA, и как они вписываются в конвейер?
+
+Это три взаимодополняющих типа автоматического тестирования безопасности, каждый ловит свой класс проблем на своём этапе. **SAST (Static Application Security Testing)** — **статический** анализ **исходного кода** (без запуска приложения) на уязвимые паттерны: SQL-инъекции, небезопасную работу с данными, хардкод секретов, ошибки логики безопасности. Вписывается **рано** (на этапе кода/коммита/PR) — это самый «левый» (shift-left) тип, даёт быструю обратную связь разработчику до сборки. Плюсы: рано и дёшево; видит весь код. Минусы: не видит проблем времени выполнения и конфигурации, даёт ложные срабатывания. Инструменты: Semgrep, SonarQube, CodeQL.
+
+**SCA (Software Composition Analysis)** — анализ **сторонних зависимостей** (библиотек) на известные уязвимости (CVE) и проблемные лицензии; генерирует/использует SBOM. Вписывается на этапе **сборки/управления зависимостями** (и непрерывно — при выходе новых CVE). Это критично, т.к. большая часть кода приложения — чужие библиотеки (вспомним Log4Shell). Инструменты: Dependabot, Snyk, Trivy, OWASP Dependency-Check. **DAST (Dynamic Application Security Testing)** — **динамическое** тестирование **работающего** приложения снаружи, имитацией атак (как делает злоумышленник): XSS, инъекции, проблемы аутентификации, видимые только в runtime. Вписывается **позже** — на этапе развёрнутого приложения (staging). Плюсы: находит реальные runtime/конфигурационные проблемы, мало ложных срабатываний. Минусы: поздно, не указывает на строку кода, нужен работающий стенд. Инструменты: OWASP ZAP, Burp, провайдерские сканеры. **Как вписываются вместе:** SAST и secret/SCA — на этапе кода/сборки (рано, shift-left); IaC-сканирование — на инфраструктурном этапе; DAST — на этапе тестирования развёрнутого приложения; плюс сканирование образов и admission-контроль. Они **дополняют, а не заменяют** друг друга: SAST смотрит код изнутри, SCA — зависимости, DAST — поведение снаружи. Зрелый конвейер использует все три (плюс IaC-сканирование и сканирование образов) для покрытия разных классов уязвимостей на разных этапах.
+
+#### Как управлять секретами в CI/CD-конвейере?
+
+Секреты в CI/CD (ключи доступа к облаку, токены реестров, пароли) — частая цель и частый источник утечек, поэтому управление ими критично. Главный принцип — **минимизировать долгоживущие секреты, в идеале устранить их**. Лучшая современная практика для доступа к облаку из CI/CD — **OIDC-федерация**: конвейер (GitHub Actions, GitLab CI) обменивает свой подписанный OIDC-токен на **временные облачные креды** через доверие к OIDC-провайдеру (IAM роль с web identity в AWS, Workload Identity Federation в GCP, federated credentials в Azure). Так в настройках пайплайна **вообще не хранятся постоянные облачные ключи** — это устраняет самый частый вектор утечки.
+
+Для секретов, которые всё же нужны: **хранить в защищённом менеджере секретов** (Secrets Manager/Key Vault/Vault, или встроенные защищённые secrets CI-системы), а не в коде, не в переменных в открытом виде, не в логах; **внедрять секреты в рантайме** (конвейер получает секрет на время выполнения по правам, а не хранит); **наименьшие привилегии** (секрет/идентичность конвейера имеет минимальные права на конкретную задачу); **ротация** секретов; **secret scanning** в конвейере и в репозитории (ловить случайно закоммиченные секреты — gitleaks/provider secret scanning); **маскирование секретов в логах** (CI-системы умеют, но нужно проверить, что секрет не печатается); **изоляция секретов между средами** (dev-секреты ≠ prod-секреты; prod-деплой требует отдельного одобрения и доступа). Дополнительно: защищать сам конвейер (кто может его менять — изменение пайплайна может украсть секреты), аудировать использование секретов. Идеальная картина — **никаких статических облачных ключей (OIDC), остальные секреты в менеджере, выдаются временно по наименьшим привилегиям, сканирование на утечки, изоляция prod**. Это закрывает и утечку через репозиторий, и через логи, и через избыточные права.
+
+> **Новый термин — OIDC-федерация для CI/CD.** Механизм, при котором CI-система получает временные облачные креды, предъявляя подписанный OIDC-токен доверенному провайдеру, без хранения постоянных ключей в настройках пайплайна. Главная современная практика устранения статических секретов в CI/CD.
+
+#### Как защитить цепочку поставок ПО (software supply chain)?
+
+**Цепочка поставок ПО** — это всё, что участвует в создании вашего софта: исходный код, сторонние зависимости, инструменты сборки, базовые образы, CI/CD-система, реестры артефактов. **Атака на цепочку поставок** — компрометация через любое из этих звеньев (заражённая библиотека, подменённый базовый образ, скомпрометированный build-сервер), и она опасна тем, что вы доверяете этим компонентам по умолчанию (примеры: SolarWinds, заражённые npm/PyPI-пакеты, Log4Shell). Защита охватывает всю цепочку.
+
+**Зависимости:** **SCA + SBOM** (знать все компоненты и их уязвимости, быстро находить затронутое по новому CVE); использовать доверенные источники и **пиннинг версий** (фиксировать версии/хэши, чтобы не подтянуть подменённую); проверять целостность пакетов; приватные прокси-реестры. **Сборка и артефакты:** **подпись артефактов и образов** (cosign/Sigstore) и проверка подписи при деплое (допуск только подписанного — admission control/Binary Authorization); **провенанс сборки** (записывать, как и из чего собран артефакт) по фреймворку **SLSA** (уровни гарантий целостности сборки); защита и изоляция build-окружения (эфемерные раннеры, минимальные права, отсутствие долгоживущих секретов). **Базовые образы:** доверенные минимальные образы, сканирование, регулярное обновление. **CI/CD-система:** защитить как критичный актив (наименьшие привилегии, OIDC вместо ключей, контроль изменений пайплайна, аудит — компрометация CI = компрометация всего, что он деплоит); **разделение обязанностей** и обязательное ревью. **Код:** защита репозитория (2FA, branch protection, подписанные коммиты), secret scanning. Сквозная идея — **не доверять слепо ни одному звену**: проверять происхождение и целостность компонентов (SBOM, подписи, провенанс, SLSA), допускать в прод только проверенное и подписанное, защитить и саму фабрику (CI/CD). Это превращает цепочку поставок из «слепого доверия» в проверяемую и контролируемую.
+
+> **Новые термины — SLSA, провенанс, подпись артефактов (Sigstore/cosign).** **SLSA** — фреймворк уровней гарантий целостности цепочки поставки ПО (как защищён процесс сборки). **Провенанс** — задокументированное происхождение артефакта (из чего и как собран). **Sigstore/cosign** — инструменты подписания артефактов/образов для проверки их подлинности и целостности.
+
+#### Как интегрировать сканирование безопасности в CI/CD без замедления разработки?
+
+Это про баланс «безопасность vs скорость доставки» применительно к сканированию. Ключевые подходы. **Быстрые проверки — рано и блокирующе, медленные — параллельно/асинхронно.** Лёгкие и быстрые сканы (secret scanning, быстрый SAST на изменённый код, линтеры) ставят на коммит/PR как блокирующие — они отрабатывают за секунды и дают мгновенную обратную связь. Тяжёлые (полный DAST, глубокий анализ) выносят в асинхронные/ночные прогоны или в отдельный этап, не блокирующий каждый коммит, чтобы не заставлять разработчика ждать.
+
+**Блокировать только на критичном (умные gates).** Не «падать» на любой находке — это создаёт шум и фрустрацию, и команды начинают игнорировать/обходить сканеры. Конвейер блокирует деплой только на **критичных/высоких** проблемах (с возможностью обоснованного исключения), а низкие/средние — заводит в тикеты, не останавливая поток. **Инкрементальное сканирование** — сканировать только изменённое (diff), а не весь код каждый раз, что резко ускоряет. **Снижение ложных срабатываний** (тюнинг правил, baseline существующих проблем) — чтобы разработчики доверяли результатам и не тратили время на шум. **Обратная связь в привычных местах** (комментарии прямо в PR, в IDE) — быстрее реакция, меньше переключения контекста. **Кэширование** результатов и параллельное выполнение сканов. **Paved road** — давать заранее безопасные шаблоны/модули, чтобы многие проблемы просто не возникали (профилактика дешевле сканирования). Культурно — позиционировать сканеры как помощь разработчику, а не как барьер. Итог: рано+быстро для лёгких проверок, асинхронно для тяжёлых, блокировка только критичного, инкрементально, с низким шумом и удобной обратной связью — так безопасность встроена в поток, а не тормозит его. Это и есть практическая реализация shift-left без потери developer velocity.
+
+#### Как реализовать policy-as-code в DevSecOps-конвейере?
+
+**Policy-as-code** — это выражение правил безопасности и соответствия в виде **кода**, который автоматически проверяет артефакты (инфраструктурные шаблоны, конфигурации, манифесты) в конвейере, заменяя ручные чек-листы и ревью. Смысл — сделать политики **версионируемыми, тестируемыми, повторяемыми и автоматически принуждаемыми**, как и любой другой код. Это ключевой элемент governance в DevSecOps.
+
+Реализация по областям. **Для инфраструктуры (IaC):** инструменты вроде **checkov, tfsec, cfn-guard, Terrascan** проверяют Terraform/CloudFormation-шаблоны на небезопасные настройки (открытый бакет, незашифрованный том, SG с `0.0.0.0/0`) **до развёртывания** — нарушение блокирует pipeline. **Универсальный движок политик — OPA (Open Policy Agent)** с языком **Rego** и **Conftest**: позволяет писать произвольные политики для любых структурированных конфигов (Kubernetes-манифесты, JSON/YAML), проверяемые в CI. **Для Kubernetes в runtime:** **OPA Gatekeeper** или **Kyverno** как admission-контроллеры принуждают политики уже в кластере (запретить привилегированные поды, требовать labels/limits, допускать только подписанные образы). **Для облачного governance:** SCP (AWS), Azure Policy, Organization Policy (GCP) — политики-as-code на уровне организации. Как встроить: хранить политики в репозитории (под ревью и версионированием), запускать проверки в конвейере на соответствующих этапах (IaC-сканирование при изменении инфраструктуры, манифест-проверки при деплое), **блокировать на нарушении** критичных политик, тестировать сами политики, и применять и в pipeline (превентивно), и в runtime (admission/Config) для defense in depth. Преимущества: единообразное автоматическое принуждение во всех проектах, аудиторский след (политики в Git), быстрая обратная связь, и «безопасно по умолчанию» без зависимости от ручных ревью. Policy-as-code — это то, что превращает требования безопасности из документов в автоматически работающие проверки.
+
+> **Новые термины — OPA / Rego / Gatekeeper / Kyverno.** **OPA (Open Policy Agent)** — универсальный движок политик; **Rego** — его язык. **Conftest** — запуск OPA-политик в CI над конфигами. **Gatekeeper** и **Kyverno** — admission-контроллеры, принуждающие политики в Kubernetes (превентивно, на этапе допуска объектов в кластер).
+
+---
+
+## Заключение
+
+Этот документ охватывает фундаментальные и продвинутые темы облачной безопасности по AWS, GCP, Azure, Kubernetes и DevSecOps. Сквозные принципы, повторяющиеся во всех разделах независимо от провайдера: **наименьшие привилегии**, **временный доступ вместо постоянных ключей**, **защита в глубину (defense in depth)**, **минимизация радиуса поражения**, **безопасно по умолчанию**, **всё как код** (IaC + policy-as-code), **централизованная наблюдаемость**, **шифрование везде**, **неизменяемость критичного**, **автоматизация обнаружения и реагирования**, **непрерывное соответствие** и **shift-left безопасность**. Названия сервисов у провайдеров разные, но концепции едины — освоив их на одном облаке, вы быстро переносите понимание на другие.
+
+> Для подготовки к собеседованию: важнее понимать **почему** применяется тот или иной контроль и какой класс угроз он закрывает, чем заучивать названия сервисов. Интервьюеры ценят способность рассуждать архитектурно (модель угроз, слои защиты, компромиссы), а не перечисление фич.
+
+---
+
+*Конец документа. Оригинальные вопросы: [peachycloudsecurity/awesome-cloud-security-interview](https://github.com/peachycloudsecurity/awesome-cloud-security-interview), лицензия GPL-3.0. Переводы и развёрнутые ответы подготовлены в образовательных целях; сверяйтесь с актуальной документацией провайдеров.*
